@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3891f8ca4c092db448f37779fc3e1a7a, type: 3}
+  m_Name: Pant Shop Item_________
+  m_EditorClassIdentifier: 
+  skinToAttach:
+  - {fileID: 11400000, guid: 4070e5b908c325d4b84e48151afc039a, type: 2}
+  - {fileID: 11400000, guid: 4a7865d52feab534ab6a976dd6bd9f90, type: 2}
+  - {fileID: 11400000, guid: 3d5ff62351a9dcf4999f44018bd2c397, type: 2}
+  - {fileID: 11400000, guid: 2a3eefdeddc85394399385c9aff0aa1d, type: 2}
+  - {fileID: 11400000, guid: c5456410d58e9b94dac74587f2bbcb94, type: 2}
+  - {fileID: 11400000, guid: dbb87fa4534be2b4db3fdd527ec56bbf, type: 2}
+  - {fileID: 11400000, guid: 06e56db7330c23d438f39126dcce97f0, type: 2}
+  - {fileID: 11400000, guid: c989c1fae483d114882dc223eadfe883, type: 2}
+  - {fileID: 11400000, guid: 03bc0b96c43f08a4c8a6adc9ba03f322, type: 2}
+  setSkinToAttach: []
+  gold: 0
+  skinType: 1
+  isUnlock: 0
+  isUnlockedOnce: 0

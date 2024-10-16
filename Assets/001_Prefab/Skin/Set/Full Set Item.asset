@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3891f8ca4c092db448f37779fc3e1a7a, type: 3}
+  m_Name: Full Set Item
+  m_EditorClassIdentifier: 
+  skinToAttach: []
+  setSkinToAttach:
+  - skinOfSet:
+    - {fileID: 11400000, guid: b6ae922f8a2e4a1489c59849d196be98, type: 2}
+    - {fileID: 11400000, guid: 3ace906b55e2e40428e8b9fc20b3f876, type: 2}
+    - {fileID: 11400000, guid: 33b662d866ed45e4dafb82d2b1e6a444, type: 2}
+    - {fileID: 11400000, guid: 827e73a93d2361a4bbcfbec4c36db023, type: 2}
+    - {fileID: 11400000, guid: ff04255b13a329a44b55cd745a6befe0, type: 2}
+  - skinOfSet:
+    - {fileID: 11400000, guid: 00616ea30c2fba945810533ad78fc6fd, type: 2}
+    - {fileID: 11400000, guid: 987a65547d1755443908bef8978bc601, type: 2}
+    - {fileID: 11400000, guid: 29daa659f98550e4793708aa94a87401, type: 2}
+    - {fileID: 11400000, guid: 4194016960c1b3b45821c22b083889ce, type: 2}
+    - {fileID: 11400000, guid: 00d2fc6c17f95bc429a76f69d3dc6116, type: 2}
+  - skinOfSet:
+    - {fileID: 11400000, guid: 1524769037ea4dd48a6f401cebc0ee16, type: 2}
+    - {fileID: 11400000, guid: 837e1cd3c80527841ac8da197bb98006, type: 2}
+    - {fileID: 11400000, guid: e87f13fa1827b7c44ac970cd488cab4c, type: 2}
+    - {fileID: 11400000, guid: 9fd7ac725ea313046b07b1a82dc22b1a, type: 2}
+  - skinOfSet:
+    - {fileID: 11400000, guid: 71607c3369fad5a439fdfb4c2a3337cb, type: 2}
+    - {fileID: 11400000, guid: f8bf8fe2416030140b1f2c96af6d5a6d, type: 2}
+    - {fileID: 11400000, guid: 7c53053b4d8304642829d9f084434e73, type: 2}
+  - skinOfSet:
+    - {fileID: 11400000, guid: beded4ab159a1fe438c99ed59a19079f, type: 2}
+    - {fileID: 11400000, guid: a09d20a27c606894c93e15182a4db7a1, type: 2}
+    - {fileID: 11400000, guid: a7d16af7438d3d34d87d4e435133bc9d, type: 2}
+  gold: 0
+  skinType: 6
+  isUnlock: 0
+  isUnlockedOnce: 0

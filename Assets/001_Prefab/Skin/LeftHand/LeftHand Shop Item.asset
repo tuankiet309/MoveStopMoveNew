@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3891f8ca4c092db448f37779fc3e1a7a, type: 3}
-  m_Name: Devil
+  m_Name: LeftHand Shop Item
   m_EditorClassIdentifier: 
-  skinToAttach: []
+  skinToAttach:
+  - {fileID: 11400000, guid: 9f1966d3a3517ba4fb77876767d766ec, type: 2}
+  - {fileID: 11400000, guid: d59c3eb2c3d4f024784b7d37fa5b4a58, type: 2}
+  setSkinToAttach: []
   gold: 0
-  skinType: 0
+  skinType: 2
   isUnlock: 0
   isUnlockedOnce: 0

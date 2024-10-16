@@ -25,6 +25,6 @@ public class ShopItemSkin : ScriptableObject
 public class SetSkin
 {
     [SerializeField] private Skin[] skinOfSet;
-
+    
     public Skin[] SkinOfSet { get => skinOfSet; set => skinOfSet = value; }
 }

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
-  m_Name: Head Angel
+  m_Name: Deadpool Skin
   m_EditorClassIdentifier: 
-  skinToWear: {fileID: 5907269536682616143, guid: 9d681c3a5ac939f498830ce7177a6482,
+  skinToWear: {fileID: 4226770722443901611, guid: 32c3b338861407e448190b6433d30370,
     type: 3}
-  skinToShow: {fileID: 5907269536682616143, guid: 9d681c3a5ac939f498830ce7177a6482,
+  skinToShow: {fileID: 4226770722443901611, guid: 32c3b338861407e448190b6433d30370,
     type: 3}
-  skinType: 0
-  skinPosOffsetOnWear: {x: 0, y: 0.12, z: 0}
+  skinType: 5
+  skinPosOffsetOnWear: {x: 0, y: 0, z: 0}
   skinRotOffsetOnWear: {x: 0, y: 0, z: 0, w: 0}
   attributeBuffs: 0
   buffMultiplyer: 0
