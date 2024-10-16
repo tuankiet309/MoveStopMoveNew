@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
+  m_Name: Khien
+  m_EditorClassIdentifier: 
+  skinToWear: {fileID: 8069524652351421830, guid: 67ddd54ffdc1f2546adc3c45c47a2de4,
+    type: 3}
+  skinToShow: {fileID: 8069524652351421830, guid: 42a11268f80cced4ebbbdf9dd055ebd2,
+    type: 3}
+  skinType: 2
+  skinPosOffsetOnWear: {x: 0.056, y: 0.098, z: -0.082}
+  skinRotOffsetOnWear: {x: 0.39667416, y: -0.2794213, z: 0.11264967, w: -0.8671121}
+  attributeBuffs: 0
+  buffMultiplyer: 0

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
+  m_Name: Candy 1
+  m_EditorClassIdentifier: 
+  weaponOnHand: {fileID: 1554397906149964604, guid: 7c335a0e9b82baf4d8eac1f355215332,
+    type: 3}
+  weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
+    type: 3}
+  possibleSkinForThisWeapon:
+  - skin: {fileID: 1554397906149964604, guid: 9cdf8c99f5eb00c41b9cd959c4cf6fd3, type: 3}
+    isLocked: 0
+  - skin: {fileID: 1554397906149964604, guid: 5c92e9655f09658479b56e04034b5621, type: 3}
+    isLocked: 0
+  - skin: {fileID: 1554397906149964604, guid: f91047b33b97a5343b08e78d17f98ef0, type: 3}
+    isLocked: 0
+  - skin: {fileID: 1554397906149964604, guid: b5f133fd8eba67141883a11fc5e9796e, type: 3}
+    isLocked: 1
+  - skin: {fileID: 1554397906149964604, guid: 8ede9b433187d114695aaf55ee663735, type: 3}
+    isLocked: 1
+  weaponOffsetPos: {x: -0.139, y: 0.125, z: -0.094}
+  weaponOffsetRot: {x: 0.12056023, y: -0.13430618, z: -0.73194224, w: 0.6570295}
+  weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
+  weaponType: 1
+  buff: 0
+  buffMultiplyer: 3
+  currentIndexOfTheSkin: 1

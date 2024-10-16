@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
+  m_Name: Uzi
+  m_EditorClassIdentifier: 
+  weaponOnHand: {fileID: 7311654500149166743, guid: 514c31e2958952c4a8f75e6a153d974d,
+    type: 3}
+  weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
+    type: 3}
+  possibleSkinForThisWeapon:
+  - skin: {fileID: 7311654500149166743, guid: eab7081f5434ad74f801544e66cc4b63, type: 3}
+    isLocked: 0
+  - skin: {fileID: 7311654500149166743, guid: 2d97f59e567e8504d97d3d0aecaf61e9, type: 3}
+    isLocked: 0
+  - skin: {fileID: 7311654500149166743, guid: 4c60aeeea94816c4cbf6185a76379fd1, type: 3}
+    isLocked: 1
+  - skin: {fileID: 7311654500149166743, guid: 0f966aafe89ef954aa987219be64a483, type: 3}
+    isLocked: 1
+  weaponOffsetPos: {x: -0.103, y: 0.168, z: -0.058}
+  weaponOffsetRot: {x: 0.063717104, y: -0.09700112, z: 0.5453085, w: 0.83016247}
+  weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
+  weaponType: 1
+  buff: 0
+  buffMultiplyer: 8
+  currentIndexOfTheSkin: 2

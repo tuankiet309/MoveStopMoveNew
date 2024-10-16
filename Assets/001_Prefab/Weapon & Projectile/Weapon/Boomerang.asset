@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
+  m_Name: Boomerang
+  m_EditorClassIdentifier: 
+  weaponOnHand: {fileID: 5201478806251685430, guid: 613b9297c4703f742b9120314e22fd26,
+    type: 3}
+  weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
+    type: 3}
+  possibleSkinForThisWeapon:
+  - skin: {fileID: 201651562477070323, guid: c9f16c07ffe9cd3449018d11e8350c96, type: 3}
+    isLocked: 0
+  - skin: {fileID: 201651562477070323, guid: 74a04babd6fe744429033fceab7fe8ca, type: 3}
+    isLocked: 0
+  - skin: {fileID: 201651562477070323, guid: 7e03a1056f8dfa14c905bab7806b9925, type: 3}
+    isLocked: 0
+  - skin: {fileID: 201651562477070323, guid: 1e3c2c271ad9f354b9e23f8b6e394ebf, type: 3}
+    isLocked: 1
+  - skin: {fileID: 201651562477070323, guid: 8d1a88dc34d7428479b01efe864afd44, type: 3}
+    isLocked: 1
+  weaponOffsetPos: {x: -0.166, y: -0.197, z: -0.178}
+  weaponOffsetRot: {x: -0.062365588, y: 0.14999989, z: -0.88789016, w: -0.43042025}
+  weaponOffsetOnThrowPos: {x: -0.35, y: 0, z: 0}
+  weaponType: 2
+  buff: 1
+  buffMultiplyer: 0.25
+  currentIndexOfTheSkin: 1

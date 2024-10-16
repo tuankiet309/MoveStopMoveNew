@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
+  m_Name: Knife
+  m_EditorClassIdentifier: 
+  weaponOnHand: {fileID: 4032192458651232037, guid: ac7b9edfa02500b4c8d8abe88aaf62c4,
+    type: 3}
+  weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
+    type: 3}
+  possibleSkinForThisWeapon:
+  - skin: {fileID: 4032192458651232037, guid: 509f6bbb4e9ec914d8c762b743b6f1ca, type: 3}
+    isLocked: 0
+  - skin: {fileID: 4032192458651232037, guid: d007ab13d20ef4c41b3684781d493973, type: 3}
+    isLocked: 0
+  - skin: {fileID: 4032192458651232037, guid: 07ab2c72f76e1df4a9bc6b2a97d50ded, type: 3}
+    isLocked: 0
+  - skin: {fileID: 4032192458651232037, guid: b972b6e490fdf9447a419f4b6fc31196, type: 3}
+    isLocked: 1
+  - skin: {fileID: 4032192458651232037, guid: e485b433223ce604ead6bb6c5f378ecf, type: 3}
+    isLocked: 1
+  weaponOffsetPos: {x: -0.31, y: 0.11, z: -0.03}
+  weaponOffsetRot: {x: 0.0000003427266, y: -0.000000007450578, z: -0.74951357, w: 0.66198915}
+  weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
+  weaponType: 0
+  buff: 2
+  buffMultiplyer: -0.2
+  currentIndexOfTheSkin: 2
