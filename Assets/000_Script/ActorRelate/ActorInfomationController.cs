@@ -9,7 +9,7 @@ public class ActorInformationController : MonoBehaviour
     [SerializeField] private ActorAtributeController attributesController; 
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI scoreText;
-
+    [SerializeField] private string name;
     private void OnEnable()
     {
         if (attributesController != null)
@@ -37,7 +37,8 @@ public class ActorInformationController : MonoBehaviour
 
     public void UpdateName(string name)
     {
-        nameText.text = name; 
+        this.name = name;
+        nameText.text = this.name; 
     }
 
     internal string GetName()
@@ -48,4 +49,5 @@ public class ActorInformationController : MonoBehaviour
     {
         return int.Parse(scoreText.text);
     }
+
 }

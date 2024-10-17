@@ -159,7 +159,7 @@ public class ShopSkinUI : MonoBehaviour
             if (isUnlock)
             {
                 currentTempSkin = new Skin[] { selectedSkin };
-                skinComp.AssignTempoSkin(currentTempSkin);
+                skinComp.AssignTempoSkin(currentTempSkin,false);
 
                 equipButton.gameObject.SetActive(true);
                 equipButton.onClick.RemoveAllListeners();
@@ -169,7 +169,7 @@ public class ShopSkinUI : MonoBehaviour
             else
             {
                 currentTempSkin = new Skin[] { selectedSkin };
-                skinComp.AssignTempoSkin(currentTempSkin);
+                skinComp.AssignTempoSkin(currentTempSkin,false);
 
                 equipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
@@ -186,7 +186,7 @@ public class ShopSkinUI : MonoBehaviour
             if(isUnlock)
             {
                 currentTempSkin = selectedSkin;
-                skinComp.AssignTempoSkin(currentTempSkin);
+                skinComp.AssignTempoSkin(currentTempSkin,true);
                 equipButton.gameObject.SetActive(true);
                 equipButton.onClick.RemoveAllListeners();
                 equipButton.onClick.AddListener(() => EquipThisStuff(Enum.SkinType.Set, index, thisButton));
@@ -201,7 +201,7 @@ public class ShopSkinUI : MonoBehaviour
         if (currentTempSkin != null && skinComp != null)
         {
             currentlyEquippedSkins[skinType] = currentTempSkin[0];
-            skinComp.AssignNewSkin(currentTempSkin);
+            skinComp.AssignNewSkin(currentTempSkin,skinType == Enum.SkinType.Set);
             UpdateEquipButtonTextAndState(skinType, thisButton);
             currentTempSkin = null;
             thisButton.transform.GetChild(2).gameObject.SetActive(true);

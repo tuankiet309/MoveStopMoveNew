@@ -31,14 +31,12 @@ public class MenuHallUIController : MonoBehaviour
     private void SwitchToShopUI()
     {
         
-        TurnOffUI();
         shopWeaponCanvas.gameObject.SetActive(true);
         
     }
     private void SwitchToSkinUI()
     {
         
-        TurnOffUI();
         shopSkinCanvas.gameObject.SetActive(true);
         GameManager.Instance.SetGameState(Enum.GameState.SkinShop);
     }

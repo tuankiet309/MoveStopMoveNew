@@ -14,6 +14,7 @@ public class SkinComponent : MonoBehaviour
 
     [SerializeField] Skin[] skin;
 
+    private bool isASet = false;
     private List<Skin> skinToChange = new List<Skin>();
     private List<Skin> previousSkins = new List<Skin>();
 
@@ -31,18 +32,23 @@ public class SkinComponent : MonoBehaviour
         WearSkin(skinToChange);
     }
 
-    public void AssignNewSkin(Skin[] newsSkin)
+    public void AssignNewSkin(Skin[] newsSkin, bool isASet)
     {
         skinToChange.Clear();
         skinToChange = newsSkin.ToList();
         previousSkins.Clear();
         previousSkins = skinToChange;
-        WearSkin(skinToChange);
+
+        this.isASet = isASet;
+        ClearAllSkinComponents();
+        WearSkin(skinToChange);   
     }
 
-    public void AssignTempoSkin(Skin[] tempoSkin)
+    public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
     {
         skinToChange = tempoSkin.ToList();
+        this.isASet = isASet;
+        ClearAllSkinComponents();
         WearSkin(skinToChange);
     }
 
@@ -164,5 +170,14 @@ public class SkinComponent : MonoBehaviour
         {
             playerSkinToChange.GetComponent<SkinnedMeshRenderer>().sharedMaterial = originalSkinMaterial;
         }
+    }
+    void ClearAllSkinComponents()
+    {
+        ClearSkin(Enum.SkinType.Hair);
+        ClearSkin(Enum.SkinType.LHand);
+        ClearSkin(Enum.SkinType.Wing);
+        ClearSkin(Enum.SkinType.Tail);
+        ClearSkin(Enum.SkinType.Pant);
+        ClearSkin(Enum.SkinType.Body);
     }
 }
