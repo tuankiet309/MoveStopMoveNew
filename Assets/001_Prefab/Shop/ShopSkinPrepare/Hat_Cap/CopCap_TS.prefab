@@ -76,7 +76,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 7ba258a89483f914d83fe9041183f6e0,
         type: 3}
       propertyPath: m_Name
-      value: Hat_Cap
+      value: CopCap_TS
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7ba258a89483f914d83fe9041183f6e0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

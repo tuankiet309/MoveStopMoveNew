@@ -78,6 +78,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crown_TS
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7c3a21485ea4c6842a5127b4aee8dd57,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1807569118423772415, guid: 7c3a21485ea4c6842a5127b4aee8dd57,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -102,6 +107,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190881706867717713, guid: 7c3a21485ea4c6842a5127b4aee8dd57,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062298363533908531, guid: 7c3a21485ea4c6842a5127b4aee8dd57,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

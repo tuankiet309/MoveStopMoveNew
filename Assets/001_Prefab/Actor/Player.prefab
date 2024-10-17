@@ -5358,7 +5358,8 @@ MonoBehaviour:
   pantToChange: {fileID: 2734720788768711434}
   playerSkinToChange: {fileID: 894108142802583841}
   skin:
-  - {fileID: 11400000, guid: 3be7327713ad9ad45b54cd618f11b406, type: 2}
+  - {fileID: 11400000, guid: c0f1eeffad553174080c07736b0fb2d8, type: 2}
+  - {fileID: 11400000, guid: babb2b76f0494fb43b1f243781581e52, type: 2}
 --- !u!1001 &2472718866064941996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5577,7 +5578,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 212d4102daeaa6447a001d0554db1e37, type: 2}
+      objectReference: {fileID: 2100000, guid: 47758a0de807c0a4aa8a50f998f9a11d, type: 2}
     - target: {fileID: 6311392613006023641, guid: 402140b795fe99e459b0dfaf9750654e,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

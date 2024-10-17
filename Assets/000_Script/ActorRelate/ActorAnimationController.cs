@@ -14,7 +14,10 @@ public class ActorAnimationController : MonoBehaviour
     protected virtual void Start()
     {
         GameManager.Instance.onStateChange.AddListener(UpdateIsWon);
+        GameManager.Instance.onStateChange.AddListener(UpdateIsDance);
     }
+
+    
 
     protected virtual void OnEnable()
     {
@@ -91,5 +94,9 @@ public class ActorAnimationController : MonoBehaviour
         {
             anim.SetTrigger("isWon");
         }
+    }
+    protected virtual void UpdateIsDance(Enum.GameState state)
+    {
+        anim.SetBool("isDance", state == Enum.GameState.SkinShop);
     }
 }

@@ -12,6 +12,10 @@ public class Skin : ScriptableObject
     [SerializeField] Quaternion skinRotOffsetOnWear;
     [SerializeField] Enum.AttributeBuffs attributeBuffs;
     [SerializeField] int buffMultiplyer;
+    [SerializeField] bool isUnlock = false;
+    [SerializeField] bool isUnlockedOnce = false;
+    private bool isEquiped = false;
+    [SerializeField] int gold = 500;
 
     public GameObject SkinToWear { get => skinToWear; set => skinToWear = value; }
     public Enum.SkinType SkinType { get => skinType; set => skinType = value; }
@@ -20,4 +24,8 @@ public class Skin : ScriptableObject
     public Enum.AttributeBuffs AttributeBuffs { get => attributeBuffs; set => attributeBuffs = value; }
     public int BuffMultiplyer { get => buffMultiplyer; set => buffMultiplyer = value; }
     public GameObject SkinToShow { get => skinToShow; set => skinToShow = value; }
+    public int Gold { get => gold; set => gold = value; }
+    public bool IsUnlock { get => isUnlock; set => isUnlock = value; }
+    public bool IsUnlockedOnce { get => isUnlockedOnce; set => isUnlockedOnce = value; }
+    public bool IsEquiped { get => isEquiped; set => isEquiped = value; }
 }

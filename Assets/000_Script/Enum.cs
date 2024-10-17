@@ -15,6 +15,7 @@ public class Enum : MonoBehaviour
         Zone1,
         Zone2,
         Hall,
+        SkinShop,
         ZombiCity,
         Dead,
         Win,

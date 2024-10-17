@@ -76,7 +76,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: d6244be3119850d42a4e73826c7b5e86,
         type: 3}
       propertyPath: m_Name
-      value: Hat_Yellow
+      value: LuffyHat_TS
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: d6244be3119850d42a4e73826c7b5e86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

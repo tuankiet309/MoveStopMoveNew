@@ -75,6 +75,11 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: skin.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2852530234826930237, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: isPlayer

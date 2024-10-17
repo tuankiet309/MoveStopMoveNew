@@ -23,7 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c989c1fae483d114882dc223eadfe883, type: 2}
   - {fileID: 11400000, guid: 03bc0b96c43f08a4c8a6adc9ba03f322, type: 2}
   setSkinToAttach: []
-  gold: 0
   skinType: 1
-  isUnlock: 0
-  isUnlockedOnce: 0
+  posOffsetOfThisType: {x: 0, y: -1.25, z: 0}

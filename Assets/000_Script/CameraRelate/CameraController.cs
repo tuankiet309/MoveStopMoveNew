@@ -3,18 +3,19 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform CameraFollow;  // Camera position target
-    [SerializeField] private Transform CameraArm;     // Camera rotation target
-    [SerializeField] private float followSpeed = 5f;  // Speed for position transition
-    [SerializeField] private float rotationSpeed = 5f;  // Speed for rotation transition
+    [SerializeField] private Transform CameraFollow;  
+    [SerializeField] private Transform CameraArm;     
+    [SerializeField] private float followSpeed = 5f;  
+    [SerializeField] private float rotationSpeed = 5f;  
     [SerializeField] private Camera gameplayCamera;
     [SerializeField] private Camera uiCamera;
 
     private Transform playerTransform;
-    private bool isFollowingPlayer = false; // Track if camera is in follow mode
-    private Coroutine cameraTransitionCoroutine; // To handle smooth transitions
+    private bool isFollowingPlayer = false;
+    private Coroutine cameraTransitionCoroutine; 
 
-    public static CameraController instance;
+    private static CameraController instance;
+    public static CameraController Instance {  get { return instance; } }
 
     private void Awake()
     {
@@ -27,7 +28,6 @@ public class CameraController : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
-        UpdateCameraPosToGameState(Enum.GameState.Hall); 
     }
 
     private void LateUpdate()
@@ -37,6 +37,10 @@ public class CameraController : MonoBehaviour
             FollowPlayer();
         }
     }
+    private void Start()
+    {
+        UpdateCameraPosToGameState(Enum.GameState.Hall);
+    }
 
     private void UpdateCameraPosToGameState(Enum.GameState gameState)
     {
@@ -45,23 +49,55 @@ public class CameraController : MonoBehaviour
             StopCoroutine(cameraTransitionCoroutine);
         }
 
-        if (gameState == Enum.GameState.Zone1 || gameState == Enum.GameState.Zone2)
+        if (gameState == Enum.GameState.SkinShop)
         {
-            playerTransform = Player.Instance.transform;
-            uiCamera.gameObject.SetActive(false);
-            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(CONSTANT_VALUE.OFFSETWHENINPVP.OSposition,CONSTANT_VALUE.OFFSETWHENINPVP.OSrotation,true));
-
+            if (Player.Instance != null)
+            {
+                playerTransform = Player.Instance.transform;
+            }
+            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                CONSTANT_VALUE.OFFSETWHENINSKINSHOP.OSposition,
+                CONSTANT_VALUE.OFFSETWHENINSKINSHOP.OSrotation,
+                false 
+            ));
         }
         else if (gameState == Enum.GameState.Hall)
         {
-            CameraFollow.position = CONSTANT_VALUE.OFFSETWHENHALL.OSposition;
-            CameraArm.rotation = Quaternion.Euler(CONSTANT_VALUE.OFFSETWHENHALL.OSrotation);
-            isFollowingPlayer = false;
-            uiCamera.gameObject.SetActive(true);
+                if(Player.Instance !=null)
+                {
+                    playerTransform = Player.Instance.transform;
+                }
+                uiCamera.gameObject.SetActive(true);
+                cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                CONSTANT_VALUE.OFFSETWHENHALL.OSposition,
+                CONSTANT_VALUE.OFFSETWHENHALL.OSrotation,
+                false 
+            ));
         }
-        else if(gameState == Enum.GameState.Win)
-        {         
-            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(CONSTANT_VALUE.OFFSETWHENHALL.OSposition, CONSTANT_VALUE.OFFSETWHENHALL.OSrotation,false));
+        else if (gameState == Enum.GameState.Zone1 || gameState == Enum.GameState.Zone2)
+        {
+            if (Player.Instance != null)
+            {
+                playerTransform = Player.Instance.transform;
+            }
+            uiCamera.gameObject.SetActive(false); 
+            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                CONSTANT_VALUE.OFFSETWHENINPVP.OSposition,
+                CONSTANT_VALUE.OFFSETWHENINPVP.OSrotation,
+                true 
+            ));
+        }
+        else if (gameState == Enum.GameState.Win)
+        {
+            if (Player.Instance != null)
+            {
+                playerTransform = Player.Instance.transform;
+            }
+            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                CONSTANT_VALUE.OFFSETWHENHALL.OSposition,
+                CONSTANT_VALUE.OFFSETWHENHALL.OSrotation,
+                false 
+            ));
         }
     }
 

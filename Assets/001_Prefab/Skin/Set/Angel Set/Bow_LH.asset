@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Bow_LH
   m_EditorClassIdentifier: 
-  skinToWear: {fileID: 0}
-  skinToShow: {fileID: 0}
-  skinType: 0
+  skinToWear: {fileID: 579352926875582589, guid: 1353d2866904b09479b3dd0ebd2e1d57,
+    type: 3}
+  skinToShow: {fileID: 579352926875582589, guid: 1353d2866904b09479b3dd0ebd2e1d57,
+    type: 3}
+  skinType: 2
   skinPosOffsetOnWear: {x: 0, y: 0, z: 0}
   skinRotOffsetOnWear: {x: 0, y: 0, z: 0, w: 0}
   attributeBuffs: 0
   buffMultiplyer: 0
+  isUnlock: 0
+  isUnlockedOnce: 0
+  gold: 500

@@ -42,6 +42,10 @@ public class CONSTANT_VALUE : MonoBehaviour
         new Vector3(0.200000003f, 18.6200008f, -15.0600004f),
         new Vector3(43.58778f, 0, 0)
     );
+    public static readonly OFFSETFORCAMERA OFFSETWHENINSKINSHOP = new OFFSETFORCAMERA(
+        new Vector3(0, 1.51999998f, -8.35000038f),
+        new Vector3(16.4269943f, 0, 0)
+    );
 
     public static readonly OFFSETFORCAMERA OFFSETWHENHALL = new OFFSETFORCAMERA(
         new Vector3(0, 3.9000001f, -8.02999973f),
