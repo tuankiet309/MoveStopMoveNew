@@ -20,6 +20,7 @@ public class DeadUIController : MonoBehaviour
     private float originalSize;
     private void Start()
     {
+        continueBtn.onClick.AddListener(OnContinueClick);
         rankedText.text = (EnemySpawner.Instance.NumberOfEnemiesLeft + 1).ToString();
         KillerText.text = Player.Instance.GetComponent<LifeComponent>().KillerName;
         int score = Player.Instance.GetComponent<ActorInformationController>().GetScore();
@@ -37,8 +38,7 @@ public class DeadUIController : MonoBehaviour
             gold.text = score.ToString();
             reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(true);
-        }
-        continueBtn.onClick.AddListener(OnContinueClick);
+        } 
     }
     private void OnContinueClick()
     {

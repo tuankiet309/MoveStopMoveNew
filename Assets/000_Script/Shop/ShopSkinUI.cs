@@ -26,6 +26,7 @@ public class ShopSkinUI : MonoBehaviour
     [SerializeField] ScrollRect scrollRect;
     [Space]
     [SerializeField] Button equipButton;
+    [SerializeField] Button unequipButton;
     [SerializeField] RectTransform IfNotBuyYet;
     [SerializeField] Button buyButton;
     [SerializeField] Button buyOneTimeButton;
@@ -104,6 +105,7 @@ public class ShopSkinUI : MonoBehaviour
             GameObject objectToShow = Instantiate(item.SkinToShow, button1.transform.GetChild(0));
             objectToShow.transform.localPosition = shopItemSkin.PosOffsetOfThisType;
             int capturedIndex = index;
+            button1.onClick.AddListener(() => skinComp.RevertSkin(true));
             button1.onClick.AddListener(() => EventForChoseSkinButton(capturedIndex, shopItemSkin.SkinType, item.IsUnlock, button1));
             buttonList.Add(new ButtonAndType(button1,shopItemSkin.SkinType));
             index++;
@@ -119,7 +121,8 @@ public class ShopSkinUI : MonoBehaviour
             button1.transform.GetChild(2).gameObject.SetActive(false);
             Image image = Instantiate(item.ImageToShow, button1.transform);
             int capturedIndex = index;
-            button1.onClick.AddListener(() => EventForChosenSetButton(capturedIndex, item.IsUnlock, button1));
+            button1.onClick.AddListener(() => skinComp.RevertSkin(true));
+            button1.onClick.AddListener(() => EventForChosenSetButton(capturedIndex, item.IsUnlock, button1)); 
             buttonList.Add(new ButtonAndType(button1, Enum.SkinType.Set));
             index++;
         }
@@ -159,43 +162,92 @@ public class ShopSkinUI : MonoBehaviour
             if (isUnlock)
             {
                 currentTempSkin = new Skin[] { selectedSkin };
-                skinComp.AssignTempoSkin(currentTempSkin,false);
+                skinComp.AssignTempoSkin(currentTempSkin, false);
 
-                equipButton.gameObject.SetActive(true);
-                equipButton.onClick.RemoveAllListeners();
-                equipButton.onClick.AddListener(() => EquipThisStuff(skinType, index, thisButton));
+                bool isCurrentlyEquipped = skinComp.IsSkinCurrentlyEquipped(skinType, selectedSkin);
+
+                if (isCurrentlyEquipped)
+                {
+                    unequipButton.gameObject.SetActive(true);
+                    equipButton.gameObject.SetActive(false);
+
+                    unequipButton.onClick.RemoveAllListeners();
+                    unequipButton.onClick.AddListener(() => UnequipSkin(skinType, thisButton));
+                }
+                else
+                {
+                    equipButton.gameObject.SetActive(true);
+                    unequipButton.gameObject.SetActive(false);
+
+                    equipButton.onClick.RemoveAllListeners();
+                    equipButton.onClick.AddListener(() => EquipThisStuff(skinType, index, thisButton));
+                }
                 IfNotBuyYet.gameObject.SetActive(false);
             }
             else
             {
                 currentTempSkin = new Skin[] { selectedSkin };
-                skinComp.AssignTempoSkin(currentTempSkin,false);
+                skinComp.AssignTempoSkin(currentTempSkin, false);
 
                 equipButton.gameObject.SetActive(false);
+                unequipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
             }
+            UnloadRing(thisButton);
         }
     }
-
 
     void EventForChosenSetButton(int index, bool isUnlock, Button thisButton)
     {
-        Skin[] selectedSkin = fullSetItems.SetSkinToAttach[index].SkinOfSet;
-        if(selectedSkin != null)
+        Skin[] selectedSkinSet = fullSetItems.SetSkinToAttach[index].SkinOfSet;
+        if (selectedSkinSet != null)
         {
-            if(isUnlock)
+            if (isUnlock)
             {
-                currentTempSkin = selectedSkin;
-                skinComp.AssignTempoSkin(currentTempSkin,true);
-                equipButton.gameObject.SetActive(true);
-                equipButton.onClick.RemoveAllListeners();
-                equipButton.onClick.AddListener(() => EquipThisStuff(Enum.SkinType.Set, index, thisButton));
+                currentTempSkin = selectedSkinSet;
+                skinComp.AssignTempoSkin(currentTempSkin, true);
+                bool isCurrentlyEquipped = skinComp.IsSetCurrentlyEquipped(selectedSkinSet);
+                if (isCurrentlyEquipped)
+                {
+                    unequipButton.gameObject.SetActive(true);
+                    equipButton.gameObject.SetActive(false);
+
+                    unequipButton.onClick.RemoveAllListeners();
+                    unequipButton.onClick.AddListener(() => UnequipSkin(Enum.SkinType.Set, thisButton));
+                }
+                else
+                {
+                    equipButton.gameObject.SetActive(true);
+                    unequipButton.gameObject.SetActive(false);
+                    equipButton.onClick.RemoveAllListeners();
+                    equipButton.onClick.AddListener(() => EquipThisStuff(Enum.SkinType.Set, index, thisButton));
+                }
+                thisButton.transform.GetChild(3).gameObject.SetActive(true);
                 IfNotBuyYet.gameObject.SetActive(false);
             }
-        }
+            else
+            {
+                currentTempSkin = selectedSkinSet;
+                skinComp.AssignTempoSkin(currentTempSkin, true);
 
+                equipButton.gameObject.SetActive(false);
+                unequipButton.gameObject.SetActive(false);
+                IfNotBuyYet.gameObject.SetActive(true);
+            }
+            UnloadRing(thisButton);
+
+        }
     }
 
+    void UnloadRing(Button thisButton)
+    {
+        foreach(ButtonAndType bt in buttonList)
+        {
+            bt.button.transform.GetChild(3).gameObject.SetActive(false);
+        }
+        if(thisButton != null)
+            thisButton.transform.GetChild(3).gameObject.SetActive(true);
+    }
     void EquipThisStuff(Enum.SkinType skinType, int index, Button thisButton)
     {
         if (currentTempSkin != null && skinComp != null)
@@ -205,9 +257,20 @@ public class ShopSkinUI : MonoBehaviour
             UpdateEquipButtonTextAndState(skinType, thisButton);
             currentTempSkin = null;
             thisButton.transform.GetChild(2).gameObject.SetActive(true);
+            equipButton.gameObject.SetActive(false);
+            unequipButton.gameObject.SetActive(true);
+            unequipButton.onClick.AddListener(() => UnequipSkin(Enum.SkinType.Set, thisButton));
         }
     }
-
+    public void UnequipSkin(Enum.SkinType skinType, Button thisButton)
+    {
+        skinComp.UnequipCurrentSkin(skinType);
+        thisButton.transform.GetChild(2).gameObject.SetActive(false);
+        thisButton.transform.GetChild(3).gameObject.SetActive(false);
+        unequipButton.gameObject.SetActive(false);
+        thisButton.interactable = true;
+       
+    }
     void ClearAllSkinComponents()
     {
         skinComp.ClearSkin(Enum.SkinType.Hair);
@@ -218,7 +281,6 @@ public class ShopSkinUI : MonoBehaviour
         skinComp.ClearSkin(Enum.SkinType.Body);
     }
 }
-
 class ButtonAndType
 {
     public Button button;

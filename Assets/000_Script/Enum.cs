@@ -19,7 +19,8 @@ public class Enum : MonoBehaviour
         ZombiCity,
         Dead,
         Win,
-        Ads
+        Ads,
+        Revive
     }
     public enum AttributeBuffs
     {

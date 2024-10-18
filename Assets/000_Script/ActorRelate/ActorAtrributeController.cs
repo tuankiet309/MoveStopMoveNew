@@ -33,7 +33,6 @@ public class ActorAtributeController : MonoBehaviour
         scoreMilestoneIncreaser = CONSTANT_VALUE.SCORE_MILESTONE_INCREASER;
         bodyScalerIncreaser = CONSTANT_VALUE.BODY_SCALER_INCREASER;
     }
-
     private void OnEnable()
     {
         if (attacker != null)
@@ -51,7 +50,6 @@ public class ActorAtributeController : MonoBehaviour
         if (attacker != null)
             attacker.onKillSomeone.RemoveListener(UpdateScore); 
     }
-
     private void UpdateScore()
     {
         score++;
@@ -65,7 +63,6 @@ public class ActorAtributeController : MonoBehaviour
             UpgradePlayer(); 
         }
     }
-
     private void UpgradePlayer()
     {
         playerVisualize.localScale += new Vector3(bodyScalerIncreaser, bodyScalerIncreaser, bodyScalerIncreaser);

@@ -58,9 +58,9 @@ public class Player : MonoBehaviour
             CanvasNeedToTurnOnOff[i].gameObject.SetActive(check);
         }
     }
-
+    
     public void PrepareForDestroy()
     {
-        GameManager.Instance.SetGameState(Enum.GameState.Dead);
+        GameManager.Instance.SetGameState(Enum.GameState.Revive);
     }
 }

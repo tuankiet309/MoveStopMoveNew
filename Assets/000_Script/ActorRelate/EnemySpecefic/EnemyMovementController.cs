@@ -133,8 +133,11 @@ public class EnemyMovementController : MonoBehaviour
             targetDes = target.transform;
             isAttacking = true;
             agent.isStopped = true;
-            agent.SetDestination(GetRandomPoint(transform.position, CONSTANT_VALUE.AI_SEARCH_FOR_NEW_DES));
-
+            int randomRang = Random.Range(0, 100);
+            if (randomRang < 50)
+                agent.SetDestination(GetRandomPoint(transform.position, CONSTANT_VALUE.AI_SEARCH_FOR_NEW_DES));
+            else
+                agent.SetDestination(transform.position);
         }
         else
         {

@@ -11,17 +11,21 @@ public class GamePlayUIController : MonoBehaviour
     [SerializeField] Canvas settingUI;
     [SerializeField] Canvas deadUI;
     [SerializeField] Canvas winUI;
+    [SerializeField] Canvas reviveUI;
     [SerializeField] Button continueBtn;
     [SerializeField] Button restartBtn;
     [SerializeField] Button settingBtn;
+    [SerializeField] Button close;
 
     private void Start()
     {
         continueBtn.onClick.AddListener(SwitchToIngame);
         settingBtn.onClick.AddListener(SwitchToSetting);
         restartBtn.onClick.AddListener(SwitchToHallUI);
+        close.onClick.AddListener(()=>GameManager.Instance.SetGameState(Enum.GameState.Dead));
         GameManager.Instance.onStateChange.AddListener(SwitchToWinUI);
         GameManager.Instance.onStateChange.AddListener(SwitchToDeadUI);
+        GameManager.Instance.onStateChange.AddListener(SwitchToRevieUI);
         SwitchToIngame();
     }
     private void SwitchToIngame()
@@ -50,6 +54,14 @@ public class GamePlayUIController : MonoBehaviour
             winUI.gameObject.SetActive(true);
         }
     }
+    private void SwitchToRevieUI(Enum.GameState gameState)
+    {
+        if(gameState == Enum.GameState.Revive)
+        {
+            TurnOffOtherUI();
+            reviveUI.gameObject.SetActive(true);
+        }
+    }
     private void TurnOffOtherUI()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -57,9 +69,11 @@ public class GamePlayUIController : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(false);
         }
     }
+    
     private void SwitchToHallUI()
     {
         TurnOffOtherUI();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+   
 }

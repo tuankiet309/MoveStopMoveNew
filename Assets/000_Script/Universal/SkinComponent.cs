@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Enum;
 
 public class SkinComponent : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class SkinComponent : MonoBehaviour
     [SerializeField] GameObject pantToChange;
     [SerializeField] GameObject playerSkinToChange;
 
-    [SerializeField] Skin[] skin;
+    [SerializeField] Skin[] defaultSkin;
 
     private bool isASet = false;
     private List<Skin> skinToChange = new List<Skin>();
@@ -22,42 +23,50 @@ public class SkinComponent : MonoBehaviour
     private Material originalPantMaterial;
     private Material originalSkinMaterial;
 
-
-
     private void Start()
     {
         skinToChange.Clear();
-        skinToChange = skin.ToList();
+        skinToChange = defaultSkin.ToList();
         SaveOriginalMaterials();
         WearSkin(skinToChange);
     }
 
-    public void AssignNewSkin(Skin[] newsSkin, bool isASet)
+    public void AssignNewSkin(Skin[] newSkin, bool isASet)
     {
-        skinToChange.Clear();
-        skinToChange = newsSkin.ToList();
-        previousSkins.Clear();
-        previousSkins = skinToChange;
-
+        skinToChange = newSkin.ToList();
+        if (this.isASet)
+        {
+            ClearAllSkinComponents();
+            previousSkins.Clear();
+            previousSkins = skinToChange;
+        }
+        else 
+            foreach (Skin skin in skinToChange)
+            {
+            Skin existingSkin = previousSkins.FirstOrDefault(s => s.SkinType == skin.SkinType);
+            if (existingSkin != null)
+            {
+                previousSkins.Remove(existingSkin);
+            }
+            previousSkins.Add(skin);
+            }
         this.isASet = isASet;
-        ClearAllSkinComponents();
-        WearSkin(skinToChange);   
-    }
-
-    public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
-    {
-        skinToChange = tempoSkin.ToList();
-        this.isASet = isASet;
-        ClearAllSkinComponents();
         WearSkin(skinToChange);
     }
-
+    public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
+    {
+        if (this.isASet)
+            ClearAllSkinComponents();
+        skinToChange = tempoSkin.ToList();
+        WearSkin(skinToChange);
+    }
     public void RevertSkin(bool revertMaterials = false)
     {
         for (int i = 0; i < skinToChange.Count; i++)
         {
             ClearSkin(skinToChange[i].SkinType);
         }
+      
         skinToChange = previousSkins;
         WearSkin(skinToChange);
     }
@@ -129,6 +138,24 @@ public class SkinComponent : MonoBehaviour
             playerSkinToChange.GetComponent<SkinnedMeshRenderer>().sharedMaterial = originalSkinMaterial;
         }
     }
+    public bool IsSkinCurrentlyEquipped(Enum.SkinType skinType, Skin skin)
+    {
+        Skin equippedSkin = previousSkins.FirstOrDefault(s => s.SkinType == skinType);
+        return equippedSkin != null && equippedSkin == skin;
+    }
+
+    public bool IsSetCurrentlyEquipped(Skin[] skinSet)
+    {
+        foreach (Skin skin in skinSet)
+        {
+            Skin equippedSkin = previousSkins.FirstOrDefault(s => s.SkinType == skin.SkinType);
+            if (equippedSkin == null || equippedSkin != skin)
+            {
+                return false; 
+            }
+        }
+        return true;
+    }
 
     public void ClearSkin(Enum.SkinType typeToDelete)
     {
@@ -170,6 +197,18 @@ public class SkinComponent : MonoBehaviour
         {
             playerSkinToChange.GetComponent<SkinnedMeshRenderer>().sharedMaterial = originalSkinMaterial;
         }
+    }
+    public void UnequipCurrentSkin(Enum.SkinType skinType)
+    {
+        if (skinType == Enum.SkinType.Set)
+        {
+            ClearAllSkinComponents();
+            skinToChange = defaultSkin.ToList();
+            previousSkins = skinToChange;
+        }
+        ClearSkin(skinType);
+        skinToChange.RemoveAll(skin => skin.SkinType == skinType);
+        previousSkins.RemoveAll(skin => skin.SkinType == skinType);
     }
     void ClearAllSkinComponents()
     {
