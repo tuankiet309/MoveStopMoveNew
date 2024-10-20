@@ -1,21 +1,23 @@
 using System.Collections;
 using UnityEngine;
-
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform CameraFollow;  
-    [SerializeField] private Transform CameraArm;     
-    [SerializeField] private float followSpeed = 5f;  
-    [SerializeField] private float rotationSpeed = 5f;  
+    [SerializeField] private Transform CameraFollow;
+    [SerializeField] private Transform CameraArm;
+    [SerializeField] private float followSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private Camera gameplayCamera;
     [SerializeField] private Camera uiCamera;
 
+    [SerializeField] private float cameraDistanceScaler = 1f;
     private Transform playerTransform;
     private bool isFollowingPlayer = false;
-    private Coroutine cameraTransitionCoroutine; 
+    private Coroutine cameraTransitionCoroutine;
 
     private static CameraController instance;
-    public static CameraController Instance {  get { return instance; } }
+    public static CameraController Instance { get { return instance; } }
+
+    private Vector3 posForCam;
 
     private void Awake()
     {
@@ -23,11 +25,22 @@ public class CameraController : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+
+        posForCam = CONSTANT_VALUE.OFFSETWHENINPVP.OSposition;
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
+        
+        
+    }
+
+    private void OnDisable()
+    {
+        if (Player.Instance != null)
+        {
+            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded -= AdjustCameraDistance;
+        }
     }
 
     private void LateUpdate()
@@ -37,9 +50,15 @@ public class CameraController : MonoBehaviour
             FollowPlayer();
         }
     }
+
     private void Start()
     {
         UpdateCameraPosToGameState(Enum.GameState.Hall);
+        GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
+        if (Player.Instance != null)
+        {
+            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded += AdjustCameraDistance;
+        }
     }
 
     private void UpdateCameraPosToGameState(Enum.GameState gameState)
@@ -55,36 +74,36 @@ public class CameraController : MonoBehaviour
             {
                 playerTransform = Player.Instance.transform;
             }
-            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
                 CONSTANT_VALUE.OFFSETWHENINSKINSHOP.OSposition,
                 CONSTANT_VALUE.OFFSETWHENINSKINSHOP.OSrotation,
-                false 
+                false
             ));
         }
         else if (gameState == Enum.GameState.Hall)
-        {
-                if(Player.Instance !=null)
-                {
-                    playerTransform = Player.Instance.transform;
-                }
-                uiCamera.gameObject.SetActive(true);
-                cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
-                CONSTANT_VALUE.OFFSETWHENHALL.OSposition,
-                CONSTANT_VALUE.OFFSETWHENHALL.OSrotation,
-                false 
-            ));
-        }
-        else if (gameState == Enum.GameState.Zone1 || gameState == Enum.GameState.Zone2)
         {
             if (Player.Instance != null)
             {
                 playerTransform = Player.Instance.transform;
             }
-            uiCamera.gameObject.SetActive(false); 
+            uiCamera.gameObject.SetActive(true);
             cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
-                CONSTANT_VALUE.OFFSETWHENINPVP.OSposition,
+                CONSTANT_VALUE.OFFSETWHENHALL.OSposition,
+                CONSTANT_VALUE.OFFSETWHENHALL.OSrotation,
+                false
+            ));
+        }
+        else if (gameState == Enum.GameState.Ingame)
+        {
+            if (Player.Instance != null)
+            {
+                playerTransform = Player.Instance.transform;
+            }
+                uiCamera.gameObject.SetActive(false);
+                cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                posForCam,
                 CONSTANT_VALUE.OFFSETWHENINPVP.OSrotation,
-                true 
+                true
             ));
         }
         else if (gameState == Enum.GameState.Win)
@@ -93,10 +112,10 @@ public class CameraController : MonoBehaviour
             {
                 playerTransform = Player.Instance.transform;
             }
-            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+                cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
                 CONSTANT_VALUE.OFFSETWHENHALL.OSposition,
                 CONSTANT_VALUE.OFFSETWHENHALL.OSrotation,
-                false 
+                false
             ));
         }
     }
@@ -107,7 +126,7 @@ public class CameraController : MonoBehaviour
         Vector3 targetPosition = playerTransform.position + pos;
         Quaternion targetRotation = Quaternion.Euler(rot);
         float elapsedTime = 0f;
-        float duration =0.5f;  
+        float duration = 0.5f;
         Vector3 initialPosition = CameraFollow.position;
         Quaternion initialRotation = CameraArm.rotation;
 
@@ -126,12 +145,18 @@ public class CameraController : MonoBehaviour
         isFollowingPlayer = followPlayerAfterThis;
     }
 
+    private void AdjustCameraDistance()
+    {
+        
+        Vector3 newOffset = posForCam * cameraDistanceScaler;
+        posForCam = newOffset;
+    }
+
     private void FollowPlayer()
     {
-        Vector3 targetPosition = playerTransform.position + CONSTANT_VALUE.OFFSETWHENINPVP.OSposition;
+        Vector3 targetPosition = playerTransform.position + posForCam;
         CameraFollow.position = targetPosition;
     }
-    
 }
 public class OFFSETFORCAMERA
 {

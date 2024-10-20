@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
 
         }
-        if (gameState == Enum.GameState.Zone1)
+        if (gameState == Enum.GameState.Ingame)
         {
             transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(0, 0, 0);

@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     private void SwitchToGamePlayUI()
     {
         UIGameplay.gameObject.SetActive(true);
-        GameManager.Instance.SetGameState(Enum.GameState.Zone1);
+        GameManager.Instance.SetGameState(Enum.GameState.Ingame);
         thisCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
     }
     private void SwitchToHallUI()

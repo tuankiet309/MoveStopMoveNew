@@ -12,15 +12,20 @@ public class Enum : MonoBehaviour
     }
     public enum GameState
     {
-        Zone1,
-        Zone2,
+        Ingame,
         Hall,
         SkinShop,
-        ZombiCity,
         Dead,
         Win,
         Ads,
         Revive
+    }
+
+    public enum InGameState
+    {
+        Zone1,
+        Zone2,
+        Zombie
     }
     public enum AttributeBuffs
     {

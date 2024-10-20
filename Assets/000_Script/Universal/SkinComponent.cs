@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static Enum;
 
 public class SkinComponent : MonoBehaviour
@@ -10,8 +12,11 @@ public class SkinComponent : MonoBehaviour
     [SerializeField] Transform LHandHolder;
     [SerializeField] Transform wingHolder;
     [SerializeField] Transform tailHolder;
-    [SerializeField] GameObject pantToChange;
-    [SerializeField] GameObject playerSkinToChange;
+    [SerializeField] SkinnedMeshRenderer pantToChange;
+    [SerializeField] SkinnedMeshRenderer playerSkinToChange;
+    [Space]
+    [SerializeField] TextMeshProUGUI nameToChange;
+    [SerializeField] Image imageToChange;
 
     [SerializeField] Skin[] defaultSkin;
 
@@ -34,7 +39,7 @@ public class SkinComponent : MonoBehaviour
     public void AssignNewSkin(Skin[] newSkin, bool isASet)
     {
         skinToChange = newSkin.ToList();
-        if (this.isASet)
+        if (this.isASet || isASet)
         {
             ClearAllSkinComponents();
             previousSkins.Clear();
@@ -55,7 +60,7 @@ public class SkinComponent : MonoBehaviour
     }
     public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
     {
-        if (this.isASet)
+        if (this.isASet || isASet)
             ClearAllSkinComponents();
         skinToChange = tempoSkin.ToList();
         WearSkin(skinToChange);
@@ -103,11 +108,17 @@ public class SkinComponent : MonoBehaviour
             }
             if (skin.SkinType == Enum.SkinType.Pant)
             {
-                pantToChange.GetComponent<SkinnedMeshRenderer>().sharedMaterial = skin.SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
+                pantToChange.sharedMaterial = skin.SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
+                
             }
             if (skin.SkinType == Enum.SkinType.Body)
             {
-                playerSkinToChange.GetComponent<SkinnedMeshRenderer>().sharedMaterial = skin.SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
+                playerSkinToChange.sharedMaterial = skin.SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
+                if (imageToChange != null && nameToChange != null)
+                {
+                    imageToChange.color = playerSkinToChange.sharedMaterial.color;
+                    nameToChange.color = playerSkinToChange.sharedMaterial.color;
+                }
             }
         }
     }

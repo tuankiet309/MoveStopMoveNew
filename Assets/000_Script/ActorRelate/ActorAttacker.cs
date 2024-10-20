@@ -12,12 +12,15 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     protected GameObject targetToAttack = null;
     protected Vector3 targetToAttackPos = Vector3.zero;
     protected Projectile weaponToThrow;
+    private bool isUlti = true;
 
     public delegate void OnActorAttack(Vector2 pos);
     public event OnActorAttack onActorAttack;
 
     public delegate void OnHaveTarget(GameObject target);
     public event OnHaveTarget onHaveTarget;
+
+    public UnityEvent<bool> onHaveUlti;
 
     public UnityEvent onKillSomeone;
 
@@ -28,7 +31,8 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             attackCircle.onTriggerContact += UpdateEnemyList;
         }
 
-        ResetState(); 
+        ResetState();
+        onHaveUlti.AddListener(SetUlti);
     }
 
     protected virtual void OnDisable()
@@ -109,20 +113,19 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         LifeComponent deadController = target.GetComponent<LifeComponent>();
         return deadController != null && !deadController.IsDead;
     }
-
     protected virtual void Attack(Vector3 enemyLoc)
     {
         Vector3 throwDirection = enemyLoc - throwLocation.position;
         throwDirection.y = 0;  
-
         Quaternion throwRotation = Quaternion.LookRotation(throwDirection);
-
         Projectile newProjectile = Instantiate(weaponToThrow, throwLocation.position, throwRotation);
         newProjectile.gameObject.SetActive(true);
-
         newProjectile.Init(this, weaponToThrow.WeaponType);
-
-        newProjectile.FlyToPos(enemyLoc);
+        newProjectile.FlyToPos(enemyLoc, isUlti);
+        if(isUlti)
+        {
+            onHaveUlti?.Invoke(false);
+        }
     }
     public void EventIfKillSomeone()
     {
@@ -146,5 +149,9 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         onHaveTarget?.Invoke(null);
         targetToAttack = null;
         targetToAttackPos = Vector3.zero;
+    }
+    private void SetUlti(bool isHaveUlti)
+    {
+        isUlti = isHaveUlti;
     }
 }

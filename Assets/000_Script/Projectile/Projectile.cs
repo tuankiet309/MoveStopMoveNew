@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour, IProjectile
     Enum.WeaponType weaponType;
     private Vector3 flyDirection;
     ActorAttacker actorAttacker;
+    private Vector3 tempoScale;
 
     [SerializeField] DamageComponent damageComponent;
     [SerializeField] Rigidbody rb;
@@ -19,6 +20,7 @@ public class Projectile : MonoBehaviour, IProjectile
     private void Start()
     {
         distanceTilDie = CONSTANT_VALUE.FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
+        tempoScale = transform.localScale * 3f;
     }
     public virtual void Init(ActorAttacker Initiator,WeaponType weaponType)
     { 
@@ -32,11 +34,14 @@ public class Projectile : MonoBehaviour, IProjectile
         if(attributeBuffs == Enum.AttributeBuffs.Range)
             this.distanceTilDie += distanceTilDie;
     }    
-    public virtual void FlyToPos(Vector3 Enemy)
+    public virtual void FlyToPos(Vector3 Enemy, bool isSpeacial)
     {
         Vector3 flyDirection = Enemy - transform.position;
         flyDirection = new Vector3(flyDirection.x,transform.position.y,flyDirection.z).normalized;
-        StartCoroutine(Fly(transform.position,flyDirection.normalized));
+        if (isSpeacial)
+            StartCoroutine(SpeacialFly(transform.position, flyDirection.normalized));
+        else
+            StartCoroutine(Fly(transform.position,flyDirection.normalized));
     }
     IEnumerator Fly(Vector3 initDistance,Vector3 flyDir)
     {
@@ -67,6 +72,23 @@ public class Projectile : MonoBehaviour, IProjectile
                 yield return null;
             }
         }
+        SelfDestroy();
+    }
+    IEnumerator SpeacialFly(Vector3 initDistance, Vector3 flyDir)
+    {
+        while (distanceTilDie*2 > Vector3.Distance(transform.position, initDistance))
+        {
+            rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED);
+            transform.localScale = Vector3.Lerp(transform.localScale, tempoScale, 0.03f);
+            if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
+            {
+                float rotationSpeed = CONSTANT_VALUE.PROJECTILE_ROTATE_SPEED;
+                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed/2, 0f);
+                rb.MoveRotation(rb.rotation * rotation);
+            }
+            yield return null;
+        }
+       
         SelfDestroy();
     }
     private void SelfDestroy()

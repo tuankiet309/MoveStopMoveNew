@@ -13,7 +13,7 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const float CIRCLE_RADIUS_INCREASER = 0.75f;
     public const float BODY_SCALER_INCREASER = 0.1F;
     //////////////MOVEMENT_INFO/////////////////
-    public const float FIRST_MOVESPEED = 7f;
+    public const float FIRST_MOVESPEED = 5f;
     public const float FIRST_MOVESPEED_ENEMY = 5f;
     public const float FIRST_ROTATIONSPEED = 15F;
     public const float AI_SEARCH_FOR_NEW_DES = 40f;
@@ -37,10 +37,10 @@ public class CONSTANT_VALUE : MonoBehaviour
 
 
     ///////////CAMERA///////////////////////////
-    public const float CAMERA_OFFSET_INCREASER = 2f;
+    public const float CAMERA_OFFSET_INCREASER = 0.1f;
     public static readonly OFFSETFORCAMERA OFFSETWHENINPVP = new OFFSETFORCAMERA(
-        new Vector3(0.200000003f, 18.6200008f, -15.0600004f),
-        new Vector3(43.58778f, 0, 0)
+        new Vector3(0, 14.9799995f, -11.1f),
+        new Vector3(50, 0, 0)
     );
     public static readonly OFFSETFORCAMERA OFFSETWHENINSKINSHOP = new OFFSETFORCAMERA(
         new Vector3(0, 1.51999998f, -8.35000038f),

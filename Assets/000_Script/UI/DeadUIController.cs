@@ -17,7 +17,11 @@ public class DeadUIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gold;
     [SerializeField] private RectTransform reviveHolder;
     [SerializeField] private Button reviveButton;
+
+
     private float originalSize;
+    private AsyncOperation asyncOperation;
+
     private void Start()
     {
         continueBtn.onClick.AddListener(OnContinueClick);
@@ -38,11 +42,22 @@ public class DeadUIController : MonoBehaviour
             gold.text = score.ToString();
             reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(true);
-        } 
+        }
+        StartCoroutine(LoadSceneAsync());
+    }
+    private IEnumerator LoadSceneAsync()
+    {
+        asyncOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        asyncOperation.allowSceneActivation = false;
+        while (asyncOperation.progress < 0.9f)
+        {
+            yield return null;
+        }
+        continueBtn.gameObject.SetActive(true);
     }
     private void OnContinueClick()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        asyncOperation.allowSceneActivation = true;
     }
 
 }

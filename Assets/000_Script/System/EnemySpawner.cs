@@ -1,20 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine;
+
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Enemy enemyPreb; 
+    [SerializeField] private Enemy enemyPreb;
     [SerializeField] private EnemyPool enemyPool;
-    [SerializeField] private Material[] skinColorToSpawn;
-    [SerializeField] private Material[] pantColorToSpawn;
+
+    [SerializeField] private Skin[] pantToSpawn;
+    [SerializeField] private Skin[] bodyToSpawn;  // All available body skins
+    [SerializeField] private Skin[] headSetToSpawn;
+    [SerializeField] private Skin[] leftHandToSpawn;
+
     [SerializeField] private Weapon[] weaponToSpawnWith;
     [SerializeField] private string[] nameToSpawnWith;
     [SerializeField] private Transform transformHolder;
     [SerializeField] protected int numberOfMaxEnemies = 0;
-    [SerializeField] protected int numberOfMaxEnemiesAtATime = 0;
+    [SerializeField][Range(0,12)] protected int numberOfMaxEnemiesAtATime = 0;
 
     private int numberOfEnemiesSpawned = 0;
     private int numberOfEnemiesLeft;
@@ -22,8 +25,8 @@ public class EnemySpawner : MonoBehaviour
     private bool gameStateChanged = false;
     private Camera mainCamera;
 
-    private List<Material> availableSkin;
-
+    // List to hold available body skins for assignment
+    public  List<Skin> availableBodySkins;
 
     public UnityEvent<int> OnNumberOfEnemiesDecrease;
 
@@ -41,7 +44,6 @@ public class EnemySpawner : MonoBehaviour
     {
         GameManager.Instance.onStateChange.AddListener(SelfActive);
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
-        availableSkin = new List<Material>(skinColorToSpawn);
     }
 
     private void Awake()
@@ -60,7 +62,9 @@ public class EnemySpawner : MonoBehaviour
         previousNumberOfEnemiesLeft = numberOfEnemiesLeft;
         Enemy.numberOfEnemyHasDie = 0;
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
-        availableSkin = new List<Material>(skinColorToSpawn);
+
+        // Initialize the list with all available body skins
+        availableBodySkins = new List<Skin>(bodyToSpawn);
     }
 
     private void Update()
@@ -75,7 +79,7 @@ public class EnemySpawner : MonoBehaviour
 
     protected virtual bool CanSpawn()
     {
-        return numberOfEnemiesSpawned < numberOfMaxEnemies && Enemy.numberOfEnemyRightnow < numberOfMaxEnemiesAtATime;
+        return numberOfEnemiesSpawned < numberOfMaxEnemies && Enemy.numberOfEnemyRightnow < numberOfMaxEnemiesAtATime && availableBodySkins.Count > 0;
     }
 
     protected virtual void SpawnEntity()
@@ -89,8 +93,11 @@ public class EnemySpawner : MonoBehaviour
 
     protected virtual void InitializeEntity(Enemy enemy)
     {
-        int randomSkin = Random.Range(0,availableSkin.Count);
-        int randomPant = Random.Range(0, pantColorToSpawn.Length);
+        int bodySkinIndex = Random.Range(0, availableBodySkins.Count);
+
+        int randomPant = Random.Range(0, pantToSpawn.Length);
+        int randomHeadset = Random.Range(0, headSetToSpawn.Length);
+        int randomLeftHand = Random.Range(0, leftHandToSpawn.Length);
         int randomWeapon = Random.Range(0, weaponToSpawnWith.Length);
         int randomName = Random.Range(0, nameToSpawnWith.Length);
         Vector3 pos;
@@ -100,10 +107,12 @@ public class EnemySpawner : MonoBehaviour
             pos = transformHolder.GetChild(randomPos).position;
             pos = new Vector3(pos.x, enemy.transform.position.y, pos.z);
         } while (IsOnScreen(pos));
+
         enemy.transform.position = pos;
-        enemy.Initialize(skinColorToSpawn[randomSkin], pantColorToSpawn[randomPant], weaponToSpawnWith[randomWeapon],nameToSpawnWith[randomName],enemyPool);
-        Debug.Log("Removing skin: " + availableSkin[randomSkin].name);
-        availableSkin.Remove(availableSkin[randomSkin]);
+        enemy.Initialize(availableBodySkins[bodySkinIndex], pantToSpawn[randomPant], headSetToSpawn[randomHeadset], leftHandToSpawn[randomLeftHand], weaponToSpawnWith[randomWeapon], nameToSpawnWith[randomName], enemyPool);
+        Skin body = availableBodySkins[bodySkinIndex];
+        enemy.onEnemyDie.AddListener(() => ReturnSkinToPool(body));
+        availableBodySkins.Remove(availableBodySkins[bodySkinIndex]);
     }
 
     private bool IsOnScreen(Vector3 position)
@@ -127,20 +136,20 @@ public class EnemySpawner : MonoBehaviour
             GameManager.Instance.SetGameState(Enum.GameState.Win);
         }
     }
+
     private void SelfActive(Enum.GameState gameState)
     {
         if (gameState == Enum.GameState.Win || gameState == Enum.GameState.Hall)
             gameObject.SetActive(false);
-        if (gameState == Enum.GameState.Zone1 || gameState == Enum.GameState.Zone2)
+        if (gameState == Enum.GameState.Ingame )
             gameObject.SetActive(true);
     }
 
-    public void ReturnSkinToPool(Material skin)
+    public void ReturnSkinToPool(Skin skin)
     {
-        if (!availableSkin.Contains(skin))
+        if (!availableBodySkins.Contains(skin))
         {
-            availableSkin.Add(skin);
-            Debug.Log("Skin returned to pool: " + skin.name);
+            availableBodySkins.Add(skin);
         }
     }
 }

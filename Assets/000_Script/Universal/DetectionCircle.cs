@@ -59,9 +59,9 @@ public class DetectionCircle : MonoBehaviour
         }
     }
 
-    public void UpdateCircleRadius()
+    public void UpdateCircleRadius(float howMuc)
     {
-        circleRadius += circleRadiusIncreaser;
+        circleRadius += howMuc;
         colliderToChanged.radius = circleRadius;
     }
 

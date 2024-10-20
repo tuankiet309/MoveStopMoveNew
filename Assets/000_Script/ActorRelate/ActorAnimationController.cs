@@ -40,8 +40,10 @@ public class ActorAnimationController : MonoBehaviour
             lifeComponent.onLifeEnds.AddListener(UpdatePlayerDead);
 
         if (attacker != null)
+        {
             attacker.onHaveTarget += UpdateHaveTarget;
-
+            attacker.onHaveUlti.AddListener(UpdateHaveUlti);
+        }
         if (enemyMovementController != null)
             enemyMovementController.onEnemyMoving += UpdateMoveAnimation;
     }
@@ -57,8 +59,10 @@ public class ActorAnimationController : MonoBehaviour
             lifeComponent.onLifeEnds.RemoveListener(UpdatePlayerDead);
 
         if (attacker != null)
+        {
             attacker.onHaveTarget -= UpdateHaveTarget;
-
+            attacker.onHaveUlti.RemoveListener(UpdateHaveUlti);
+        }
         if (enemyMovementController != null)
             enemyMovementController.onEnemyMoving -= UpdateMoveAnimation;
         if(GameManager.Instance != null)
@@ -83,6 +87,10 @@ public class ActorAnimationController : MonoBehaviour
         {
             anim.SetBool("haveEnemy", false);
         }
+    }
+    protected virtual void UpdateHaveUlti(bool haveUlti)
+    {
+        anim.SetBool("haveUlti", haveUlti);
     }
     protected virtual void UpdateHavingWeapon(bool haveWeapon)
     {
