@@ -33,7 +33,7 @@ public class ReviveUIController : MonoBehaviour
         else if (!isDenied) 
         {
             isDenied = true;
-            GameManager.Instance.SetGameState(Enum.GameState.Dead);
+            GameManager.Instance.SetGameStates(Enum.GameState.Dead, Enum.InGameState.PVE);
         }
     }
 }

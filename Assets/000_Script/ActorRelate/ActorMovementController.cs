@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ActorMovementController : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class ActorMovementController : MonoBehaviour
     protected Vector3 moveVelocity = Vector3.zero;
     protected Vector3 rotateDir = Vector3.zero;
 
-    public delegate void OnActorMoving(Vector3 moveVec);
-    public event OnActorMoving onActorMoving;
+    public UnityEvent<Vector3> onActorMoving;
 
     protected virtual void Awake()
     {
@@ -26,7 +26,7 @@ public class ActorMovementController : MonoBehaviour
         if (moveStick != null)
             moveStick.onThumbstickValueChanged.AddListener(moveStickInputHandler);
         if (attacker != null)
-            attacker.onHaveTarget += RotateToTarget;
+            attacker.onHaveTarget.AddListener(RotateToTarget);
     }
 
     protected virtual void OnDisable()
@@ -34,7 +34,7 @@ public class ActorMovementController : MonoBehaviour
         if (moveStick != null)
             moveStick.onThumbstickValueChanged.RemoveListener(moveStickInputHandler);
         if (attacker != null)
-            attacker.onHaveTarget -= RotateToTarget;
+            attacker.onHaveTarget.RemoveListener(RotateToTarget);
     }
 
     protected virtual void Update()

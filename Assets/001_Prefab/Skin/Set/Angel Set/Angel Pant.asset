@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Angel Pant
   m_EditorClassIdentifier: 
-  skinToWear: {fileID: 2650434664144192705, guid: ac1b993aefa912c40b5d2c67a3f2231a,
+  skinToWear: {fileID: 7265786607980737179, guid: 6c27fd70f72a98f45b9e47b9208d3437,
     type: 3}
-  skinToShow: {fileID: 2650434664144192705, guid: ac1b993aefa912c40b5d2c67a3f2231a,
+  skinToShow: {fileID: 7265786607980737179, guid: 6c27fd70f72a98f45b9e47b9208d3437,
     type: 3}
   skinType: 1
   skinPosOffsetOnWear: {x: 0, y: 0, z: 0}

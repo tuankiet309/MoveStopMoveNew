@@ -23,19 +23,18 @@ public class Player : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.onStateChange.AddListener(PrepareGamestate);
-        PrepareGamestate(Enum.GameState.Hall);
+        PrepareGamestate(Enum.GameState.Hall, Enum.InGameState.PVE);
     }
-    private void PrepareGamestate(Enum.GameState gameState)
+    private void PrepareGamestate(Enum.GameState gameState, Enum.InGameState inGameState)
     {
+        
         if (gameState == Enum.GameState.Hall )
         {
             transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(0, 180, 0);
             TurnWorldCanvas(false);
-
-
         }
-        if (gameState == Enum.GameState.Ingame)
+        if ((gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.PVE)|| (gameState == Enum.GameState.Begin && inGameState == Enum.InGameState.Zombie))
         {
             transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -61,6 +60,6 @@ public class Player : MonoBehaviour
     
     public void PrepareForDestroy()
     {
-        GameManager.Instance.SetGameState(Enum.GameState.Revive);
+        GameManager.Instance.SetGameStates(Enum.GameState.Revive, GameManager.Instance.CurrentInGameState);
     }
 }

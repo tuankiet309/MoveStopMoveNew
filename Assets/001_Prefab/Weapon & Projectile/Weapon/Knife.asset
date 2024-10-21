@@ -32,5 +32,5 @@ MonoBehaviour:
   weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
   weaponType: 0
   buff: 2
-  buffMultiplyer: -0.2
+  buffMultiplyer: 0.3
   currentIndexOfTheSkin: 2

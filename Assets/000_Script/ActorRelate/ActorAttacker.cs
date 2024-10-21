@@ -12,23 +12,19 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     protected GameObject targetToAttack = null;
     protected Vector3 targetToAttackPos = Vector3.zero;
     protected Projectile weaponToThrow;
-    private bool isUlti = true;
+    private bool isUlti = false;
 
-    public delegate void OnActorAttack(Vector2 pos);
-    public event OnActorAttack onActorAttack;
 
-    public delegate void OnHaveTarget(GameObject target);
-    public event OnHaveTarget onHaveTarget;
-
+    public UnityEvent<Vector2> onActorAttack;
+    public UnityEvent<GameObject> onHaveTarget;
     public UnityEvent<bool> onHaveUlti;
-
     public UnityEvent onKillSomeone;
 
     protected virtual void OnEnable()
     {
         if (attackCircle != null)
         {
-            attackCircle.onTriggerContact += UpdateEnemyList;
+            attackCircle.onTriggerContact.AddListener(UpdateEnemyList);
         }
 
         ResetState();
@@ -39,9 +35,9 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
         if (attackCircle != null)
         {
-            attackCircle.onTriggerContact -= UpdateEnemyList;
+            attackCircle.onTriggerContact.RemoveListener(UpdateEnemyList);
         }
-        ResetState(); 
+        ResetState();
     }
 
     protected virtual void Update()
@@ -57,13 +53,13 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             {
                 enemyAttackers.Add(target);
             }
-            onHaveTarget?.Invoke(target); 
+            onHaveTarget?.Invoke(target);
         }
         else
         {
             enemyAttackers.Remove(target);
             if (enemyAttackers.Count == 0)
-                onHaveTarget?.Invoke(null); 
+                onHaveTarget?.Invoke(null);
         }
     }
 
@@ -116,13 +112,13 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     protected virtual void Attack(Vector3 enemyLoc)
     {
         Vector3 throwDirection = enemyLoc - throwLocation.position;
-        throwDirection.y = 0;  
+        throwDirection.y = 0;
         Quaternion throwRotation = Quaternion.LookRotation(throwDirection);
         Projectile newProjectile = Instantiate(weaponToThrow, throwLocation.position, throwRotation);
         newProjectile.gameObject.SetActive(true);
-        newProjectile.Init(this, weaponToThrow.WeaponType);
+        newProjectile.InitForProjectileToThrow(this,weaponToThrow.WeaponType,weaponToThrow.DistanceTilDie);
         newProjectile.FlyToPos(enemyLoc, isUlti);
-        if(isUlti)
+        if (isUlti)
         {
             onHaveUlti?.Invoke(false);
         }
@@ -141,8 +137,9 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     public void InitWeapon(Projectile weaponToThrow)
     {
         this.weaponToThrow = weaponToThrow;
+        
     }
-    
+
     private void ResetState()
     {
         enemyAttackers.Clear();
@@ -153,5 +150,9 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     private void SetUlti(bool isHaveUlti)
     {
         isUlti = isHaveUlti;
+    }
+    public void UpgradeWeapon()
+    {
+        weaponToThrow.UpdateDistance();
     }
 }

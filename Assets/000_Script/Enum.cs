@@ -18,15 +18,16 @@ public class Enum : MonoBehaviour
         Dead,
         Win,
         Ads,
-        Revive
+        Revive,
+        Begin,
     }
 
     public enum InGameState
     {
-        Zone1,
-        Zone2,
+        PVE,
         Zombie
     }
+
     public enum AttributeBuffs
     {
         Range,
@@ -44,5 +45,10 @@ public class Enum : MonoBehaviour
         Wing,
         Body,
         Set
+    }
+
+    public enum PowerType 
+    {
+
     }
 }

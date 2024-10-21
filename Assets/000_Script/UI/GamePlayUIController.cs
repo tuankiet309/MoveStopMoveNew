@@ -22,7 +22,7 @@ public class GamePlayUIController : MonoBehaviour
         continueBtn.onClick.AddListener(SwitchToIngame);
         settingBtn.onClick.AddListener(SwitchToSetting);
         restartBtn.onClick.AddListener(SwitchToHallUI);
-        close.onClick.AddListener(()=>GameManager.Instance.SetGameState(Enum.GameState.Dead));
+        close.onClick.AddListener(()=>GameManager.Instance.SetGameStates(Enum.GameState.Dead, Enum.InGameState.PVE));
         GameManager.Instance.onStateChange.AddListener(SwitchToWinUI);
         GameManager.Instance.onStateChange.AddListener(SwitchToDeadUI);
         GameManager.Instance.onStateChange.AddListener(SwitchToRevieUI);
@@ -38,7 +38,7 @@ public class GamePlayUIController : MonoBehaviour
         TurnOffOtherUI();
         settingUI.gameObject.SetActive(true);
     }
-    private void SwitchToDeadUI(Enum.GameState gameState)
+    private void SwitchToDeadUI(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameState == Enum.GameState.Dead)
         {
@@ -46,7 +46,7 @@ public class GamePlayUIController : MonoBehaviour
             deadUI.gameObject.SetActive(true);
         }
     }
-    private void SwitchToWinUI(Enum.GameState gameState)
+    private void SwitchToWinUI(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameState == Enum.GameState.Win)
         {
@@ -54,7 +54,7 @@ public class GamePlayUIController : MonoBehaviour
             winUI.gameObject.SetActive(true);
         }
     }
-    private void SwitchToRevieUI(Enum.GameState gameState)
+    private void SwitchToRevieUI(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if(gameState == Enum.GameState.Revive)
         {
@@ -73,7 +73,7 @@ public class GamePlayUIController : MonoBehaviour
     private void SwitchToHallUI()
     {
         TurnOffOtherUI();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneController.Instance.LoadSceneRightAway(SceneManager.GetActiveScene());
     }
    
 }

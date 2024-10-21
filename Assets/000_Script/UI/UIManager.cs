@@ -16,23 +16,24 @@ public class UIManager : MonoBehaviour
     {
         PlayBTN.onClick.AddListener(SwitchToGamePlayUI);
         MainMenuBTN.onClick.AddListener(SwitchToHallUI);
-        SwitchToHallUI();
+        
     }
     private void Start()
     {
         inputName.onEndEdit.AddListener(UpdateNameForPlayer);
+        SwitchToHallUI();
     }
     private void SwitchToGamePlayUI()
     {
         UIGameplay.gameObject.SetActive(true);
-        GameManager.Instance.SetGameState(Enum.GameState.Ingame);
+        GameManager.Instance.SetGameStates(Enum.GameState.Ingame, Enum.InGameState.PVE);
         thisCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
     }
     private void SwitchToHallUI()
     {
         TurnOffUI();
         UIHall.gameObject.SetActive(true);
-        GameManager.Instance.SetGameState(Enum.GameState.Hall);
+        GameManager.Instance.SetGameStates(Enum.GameState.Hall, Enum.InGameState.PVE);
         thisCanvas.renderMode = RenderMode.ScreenSpaceCamera;
     }
     private void TurnOffUI()

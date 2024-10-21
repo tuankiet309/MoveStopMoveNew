@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WeaponComponent : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class WeaponComponent : MonoBehaviour
     private GameObject weaponOnHand;
     private Projectile weaponOffHand;
 
-    public delegate void OnHavingWeapon(bool isHavingWeapon);
-    public event OnHavingWeapon onHavingWeapon;
+    public UnityEvent<bool> onHavingWeapon;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class WeaponComponent : MonoBehaviour
         SetupWeaponOffHand();
 
         attacker.InitWeapon(weaponOffHand);
-        attacker.onActorAttack += OnThrowAwayWeapon;
+        attacker.onActorAttack.AddListener(OnThrowAwayWeapon);
         onHavingWeapon?.Invoke(true);
     }
 
@@ -53,12 +53,13 @@ public class WeaponComponent : MonoBehaviour
     private void SetupWeaponOffHand()
     {
         weaponOffHand = Instantiate(weapon.WeaponThrowAway, transform);
+        weaponOffHand.InitForProjectileToHold(weapon.BuffMultiplyer, weapon.Buff, weapon.WeaponType);
         weaponOffHand.transform.rotation = Quaternion.Euler(Vector3.zero);
         weaponOffHand.gameObject.SetActive(false);
         GameObject weaponVisualize = Instantiate(weapon.WeaponOnHand, weaponOffHand.transform);
         weaponVisualize.transform.localPosition = weapon.WeaponOffsetOnThrow;
         ApplyWeaponSkin(weaponVisualize, weapon.CurrentIndexOfTheSkin);
-        weaponOffHand.SetUpWeapon(weapon.WeaponType,weapon.BuffMultiplyer,weapon.Buff);
+        
     }
 
     private void ApplyWeaponSkin(GameObject weaponObject, int skinIndex)

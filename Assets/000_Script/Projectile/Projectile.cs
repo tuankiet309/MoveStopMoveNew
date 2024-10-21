@@ -6,8 +6,7 @@ using static Enum;
 
 public class Projectile : MonoBehaviour, IProjectile
 {
-    float distanceTilDie = 2f;
-    float distanceBuff = 0f;
+    float distanceTilDie = 0f;
     float distanceComeBackAccept = 1f;
     Enum.WeaponType weaponType;
     private Vector3 flyDirection;
@@ -16,26 +15,35 @@ public class Projectile : MonoBehaviour, IProjectile
 
     [SerializeField] DamageComponent damageComponent;
     [SerializeField] Rigidbody rb;
-    public WeaponType WeaponType { get => weaponType; set => weaponType = value; }
-    private void Start()
+
+    public WeaponType WeaponType { get => weaponType; private set { } }
+    public float DistanceTilDie { get => distanceTilDie; private set { } }
+
+    private void Awake()
     {
         distanceTilDie = CONSTANT_VALUE.FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
         tempoScale = transform.localScale * 3f;
     }
-    public virtual void Init(ActorAttacker Initiator,WeaponType weaponType)
+
+    public virtual void InitForProjectileToThrow(ActorAttacker Initiator,Enum.WeaponType weapon, float distanceBuff)
     { 
         actorAttacker = Initiator;
         damageComponent.InitIAttacker(Initiator);
-        this.weaponType = weaponType;
+        this.weaponType = weapon;
+        distanceTilDie = distanceBuff;
     }
-    public virtual void SetUpWeapon(Enum.WeaponType weaponType, float distanceTilDie, Enum.AttributeBuffs attributeBuffs)
+    public virtual void InitForProjectileToHold(float distanceTilDie, Enum.AttributeBuffs attributeBuffs, Enum.WeaponType weaponType)
     {
-        this.weaponType = weaponType;
         if(attributeBuffs == Enum.AttributeBuffs.Range)
             this.distanceTilDie += distanceTilDie;
+        this.weaponType = weaponType;
     }    
     public virtual void FlyToPos(Vector3 Enemy, bool isSpeacial)
     {
+        if(actorAttacker.gameObject.CompareTag("Player"))
+        {
+            Debug.Log(distanceTilDie);
+        }
         Vector3 flyDirection = Enemy - transform.position;
         flyDirection = new Vector3(flyDirection.x,transform.position.y,flyDirection.z).normalized;
         if (isSpeacial)
@@ -76,15 +84,13 @@ public class Projectile : MonoBehaviour, IProjectile
     }
     IEnumerator SpeacialFly(Vector3 initDistance, Vector3 flyDir)
     {
-        while (distanceTilDie*2 > Vector3.Distance(transform.position, initDistance))
+        while (distanceTilDie*2.5f > Vector3.Distance(transform.position, initDistance))
         {
             rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED);
             transform.localScale = Vector3.Lerp(transform.localScale, tempoScale, 0.03f);
             if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
             {
-                float rotationSpeed = CONSTANT_VALUE.PROJECTILE_ROTATE_SPEED;
-                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed/2, 0f);
-                rb.MoveRotation(rb.rotation * rotation);
+                transform.localRotation = Quaternion.LookRotation(-flyDir);
             }
             yield return null;
         }
@@ -94,5 +100,9 @@ public class Projectile : MonoBehaviour, IProjectile
     private void SelfDestroy()
     {
         Destroy(gameObject);
+    }
+    public void UpdateDistance()
+    {
+        distanceTilDie += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
     }
 }

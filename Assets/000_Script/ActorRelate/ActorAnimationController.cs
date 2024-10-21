@@ -31,40 +31,40 @@ public class ActorAnimationController : MonoBehaviour
     protected virtual void EnableEventListeners()
     {
         if (weaponComponent != null)
-            weaponComponent.onHavingWeapon += UpdateHavingWeapon;
+            weaponComponent.onHavingWeapon.AddListener(UpdateHavingWeapon);
 
         if (actorMovementController != null)
-            actorMovementController.onActorMoving += UpdateMoveAnimation;
+            actorMovementController.onActorMoving.AddListener(UpdateMoveAnimation);
 
         if (lifeComponent != null)
             lifeComponent.onLifeEnds.AddListener(UpdatePlayerDead);
 
         if (attacker != null)
         {
-            attacker.onHaveTarget += UpdateHaveTarget;
+            attacker.onHaveTarget.AddListener(UpdateHaveTarget);
             attacker.onHaveUlti.AddListener(UpdateHaveUlti);
         }
         if (enemyMovementController != null)
-            enemyMovementController.onEnemyMoving += UpdateMoveAnimation;
+            enemyMovementController.onEnemyMoving.AddListener(UpdateMoveAnimation);
     }
     protected virtual void DisableEventListeners()
     {
         if (weaponComponent != null)
-            weaponComponent.onHavingWeapon -= UpdateHavingWeapon;
+            weaponComponent.onHavingWeapon.RemoveListener(UpdateHavingWeapon);
 
         if (actorMovementController != null)
-            actorMovementController.onActorMoving -= UpdateMoveAnimation;
+            actorMovementController.onActorMoving.RemoveListener(UpdateMoveAnimation);
 
         if (lifeComponent != null)
             lifeComponent.onLifeEnds.RemoveListener(UpdatePlayerDead);
 
         if (attacker != null)
         {
-            attacker.onHaveTarget -= UpdateHaveTarget;
+            attacker.onHaveTarget.RemoveListener(UpdateHaveTarget);
             attacker.onHaveUlti.RemoveListener(UpdateHaveUlti);
         }
         if (enemyMovementController != null)
-            enemyMovementController.onEnemyMoving -= UpdateMoveAnimation;
+            enemyMovementController.onEnemyMoving.RemoveListener(UpdateMoveAnimation);
         if(GameManager.Instance != null)
             GameManager.Instance.onStateChange.RemoveListener(UpdateIsWon);
     }
@@ -96,14 +96,14 @@ public class ActorAnimationController : MonoBehaviour
     {
         anim.SetBool("haveWeapon", haveWeapon);
     }
-    protected virtual void UpdateIsWon(Enum.GameState gameState)
+    protected virtual void UpdateIsWon(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameState == Enum.GameState.Win)
         {
             anim.SetTrigger("isWon");
         }
     }
-    protected virtual void UpdateIsDance(Enum.GameState state)
+    protected virtual void UpdateIsDance(Enum.GameState state, Enum.InGameState inGameState)
     {
         anim.SetBool("isDance", state == Enum.GameState.SkinShop);
     }

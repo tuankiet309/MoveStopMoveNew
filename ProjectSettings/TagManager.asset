@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - Map
   - Holder
+  - Zombie
   layers:
   - Default
   - TransparentFX

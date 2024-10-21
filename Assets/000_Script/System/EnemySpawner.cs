@@ -133,11 +133,11 @@ public class EnemySpawner : MonoBehaviour
         if (numberOfEnemiesLeft <= 0 && !gameStateChanged && GameManager.Instance.CurrentGameState != Enum.GameState.Dead)
         {
             gameStateChanged = true;
-            GameManager.Instance.SetGameState(Enum.GameState.Win);
+            GameManager.Instance.SetGameStates(Enum.GameState.Win, Enum.InGameState.PVE);
         }
     }
 
-    private void SelfActive(Enum.GameState gameState)
+    private void SelfActive(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameState == Enum.GameState.Win || gameState == Enum.GameState.Hall)
             gameObject.SetActive(false);

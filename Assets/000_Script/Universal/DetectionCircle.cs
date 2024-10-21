@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DetectionCircle : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class DetectionCircle : MonoBehaviour
 
     public float CircleRadius { get => circleRadius; }
 
-    public delegate void OnTriggerContact(GameObject attacker, bool isIn);
-    public event OnTriggerContact onTriggerContact;
+    public UnityEvent<GameObject,bool> onTriggerContact;
 
 
     private void Awake()
@@ -39,6 +39,7 @@ public class DetectionCircle : MonoBehaviour
         else if (attacker != null)
         {
             onTriggerContact?.Invoke(other.gameObject, true);
+            Debug.Log("Enemy comming in");
         }
     }
 

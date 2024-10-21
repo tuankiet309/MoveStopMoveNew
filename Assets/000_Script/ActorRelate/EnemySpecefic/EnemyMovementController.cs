@@ -1,6 +1,7 @@
 using UnityEngine.AI;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class EnemyMovementController : MonoBehaviour
 {
@@ -16,8 +17,7 @@ public class EnemyMovementController : MonoBehaviour
     private bool isAttacking;
     private Transform targetDes = null;
 
-    public delegate void OnEnemyMoving(Vector3 moveSpeed);
-    public event OnEnemyMoving onEnemyMoving;
+    public UnityEvent<Vector3> onEnemyMoving;
 
     private void Awake()
     {
@@ -32,9 +32,9 @@ public class EnemyMovementController : MonoBehaviour
         agent.isStopped = false; 
         isWaiting = false;
         agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
-        attacker.onHaveTarget += IsTargetInRange;
-        attacker.onActorAttack += IsAttackingRightNow;
-        weapon.onHavingWeapon += OnHavingWeapon;
+        attacker.onHaveTarget.AddListener(IsTargetInRange);
+        attacker.onActorAttack.AddListener(IsAttackingRightNow);
+        weapon.onHavingWeapon.AddListener(OnHavingWeapon);
     }
     private void Start()
     {
@@ -42,9 +42,9 @@ public class EnemyMovementController : MonoBehaviour
     }
     private void OnDisable()
     {
-        attacker.onHaveTarget -= IsTargetInRange;
-        attacker.onActorAttack -= IsAttackingRightNow;
-        weapon.onHavingWeapon -= OnHavingWeapon;
+        attacker.onHaveTarget.RemoveListener(IsTargetInRange);
+        attacker.onActorAttack.AddListener(IsAttackingRightNow);
+        weapon.onHavingWeapon.RemoveListener( OnHavingWeapon);
     }
 
     private void Update()

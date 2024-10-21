@@ -5171,6 +5171,9 @@ MonoBehaviour:
   attackCircle: {fileID: 7817232029965059336}
   throwLocation: {fileID: 3524834826174316529}
   targetCircleInstance: {fileID: 2376270487827787543}
+  onHaveUlti:
+    m_PersistentCalls:
+      m_Calls: []
   onKillSomeone:
     m_PersistentCalls:
       m_Calls: []
@@ -5358,8 +5361,8 @@ MonoBehaviour:
   tailHolder: {fileID: 1537851030768076732}
   pantToChange: {fileID: 468531629716787949}
   playerSkinToChange: {fileID: 8746433057760434062}
-  nameToChange: {fileID: 3609808356840791668}
-  imageToChange: {fileID: 8762433518350507325}
+  nameToChange: {fileID: 0}
+  imageToChange: {fileID: 0}
   defaultSkin:
   - {fileID: 11400000, guid: c0f1eeffad553174080c07736b0fb2d8, type: 2}
   - {fileID: 11400000, guid: babb2b76f0494fb43b1f243781581e52, type: 2}
@@ -5960,6 +5963,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8212778581410472563}
     m_Modifications:
+    - target: {fileID: 2189357544881803194, guid: b58f69c8baa88ef44a5c470ccdee96aa,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.18823531
+      objectReference: {fileID: 0}
+    - target: {fileID: 2189357544881803194, guid: b58f69c8baa88ef44a5c470ccdee96aa,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.6392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 2189357544881803194, guid: b58f69c8baa88ef44a5c470ccdee96aa,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5278329770978790702, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6060,6 +6078,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6188190363467451635, guid: b58f69c8baa88ef44a5c470ccdee96aa,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.13725491
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188190363467451635, guid: b58f69c8baa88ef44a5c470ccdee96aa,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.6156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188190363467451635, guid: b58f69c8baa88ef44a5c470ccdee96aa,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280524287
+      objectReference: {fileID: 0}
     - target: {fileID: 7771353122736788974, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}
       propertyPath: m_Name
@@ -6104,17 +6137,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8762433518350507325 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2189357544881803194, guid: b58f69c8baa88ef44a5c470ccdee96aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 7491812516339798663}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -77,9 +77,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
+      propertyPath: nameToChange
+      value: 
+      objectReference: {fileID: 751155037089536447}
+    - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
       propertyPath: pantToChange
       value: 
       objectReference: {fileID: 4536445463301264678}
+    - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: imageToChange
+      value: 
+      objectReference: {fileID: 4750827883366111990}
     - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: skin.Array.size
@@ -391,6 +401,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1869036431221071663}
   m_SourcePrefab: {fileID: 100100000, guid: 967e129759ed1cb40b79bcd036fd1fba, type: 3}
+--- !u!114 &751155037089536447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3609808356840791668, guid: 967e129759ed1cb40b79bcd036fd1fba,
+    type: 3}
+  m_PrefabInstance: {fileID: 4067944627436308427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2938341805698526503 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1203349884147329772, guid: 967e129759ed1cb40b79bcd036fd1fba,
@@ -415,6 +437,18 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 4067944627436308427}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4750827883366111990 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8762433518350507325, guid: 967e129759ed1cb40b79bcd036fd1fba,
+    type: 3}
+  m_PrefabInstance: {fileID: 4067944627436308427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &5519497722551903807 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 8425408046829953524, guid: 967e129759ed1cb40b79bcd036fd1fba,
@@ -439,6 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090f9ec80996c834482e134a530b69d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onEnemyDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4381523135996693944
 MonoBehaviour:
   m_ObjectHideFlags: 0

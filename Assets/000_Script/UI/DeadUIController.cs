@@ -20,7 +20,6 @@ public class DeadUIController : MonoBehaviour
 
 
     private float originalSize;
-    private AsyncOperation asyncOperation;
 
     private void Start()
     {
@@ -43,21 +42,12 @@ public class DeadUIController : MonoBehaviour
             reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(true);
         }
-        StartCoroutine(LoadSceneAsync());
+        SceneController.Instance.LoadSceneAsyncWay(SceneManager.GetActiveScene());
     }
-    private IEnumerator LoadSceneAsync()
-    {
-        asyncOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        asyncOperation.allowSceneActivation = false;
-        while (asyncOperation.progress < 0.9f)
-        {
-            yield return null;
-        }
-        continueBtn.gameObject.SetActive(true);
-    }
+   
     private void OnContinueClick()
     {
-        asyncOperation.allowSceneActivation = true;
+        SceneController.Instance.AddThisEventToActiveScene();
     }
 
 }

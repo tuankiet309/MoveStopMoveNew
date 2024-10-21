@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform CameraArm;
     [SerializeField] private float followSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
+
     [SerializeField] private Camera gameplayCamera;
     [SerializeField] private Camera uiCamera;
 
@@ -39,7 +40,7 @@ public class CameraController : MonoBehaviour
     {
         if (Player.Instance != null)
         {
-            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded -= AdjustCameraDistance;
+            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.RemoveListener(AdjustCameraDistance);
         }
     }
 
@@ -53,15 +54,15 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        UpdateCameraPosToGameState(Enum.GameState.Hall);
         GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
         if (Player.Instance != null)
         {
-            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded += AdjustCameraDistance;
+            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(AdjustCameraDistance);
         }
+        UpdateCameraPosToGameState(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
 
-    private void UpdateCameraPosToGameState(Enum.GameState gameState)
+    private void UpdateCameraPosToGameState(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (cameraTransitionCoroutine != null)
         {

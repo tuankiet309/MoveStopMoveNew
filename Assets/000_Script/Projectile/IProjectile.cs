@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IProjectile
 {
-    void Init(ActorAttacker Initiator,Enum.WeaponType weaponType);
+    void InitForProjectileToThrow(ActorAttacker Initiator,Enum.WeaponType weaponType, float distanceBuffEach);
     void FlyToPos(Vector3 Enemy, bool isSpeacial);
 
 }

@@ -13,13 +13,13 @@ public class ActorInformationController : MonoBehaviour
     private void OnEnable()
     {
         if (attributesController != null)
-            attributesController.onScoreChanged += UpdateScoreDisplay; 
+            attributesController.onScoreChanged.AddListener(UpdateScoreDisplay); 
     }
 
     private void OnDisable()
     {
         if (attributesController != null)
-            attributesController.onScoreChanged -= UpdateScoreDisplay; 
+            attributesController.onScoreChanged.RemoveListener(UpdateScoreDisplay); 
     }
 
     private void Start()

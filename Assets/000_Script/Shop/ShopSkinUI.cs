@@ -259,7 +259,7 @@ public class ShopSkinUI : MonoBehaviour
             thisButton.transform.GetChild(2).gameObject.SetActive(true);
             equipButton.gameObject.SetActive(false);
             unequipButton.gameObject.SetActive(true);
-            unequipButton.onClick.AddListener(() => UnequipSkin(Enum.SkinType.Set, thisButton));
+            unequipButton.onClick.AddListener(() => UnequipSkin(skinType, thisButton));
         }
     }
     public void UnequipSkin(Enum.SkinType skinType, Button thisButton)

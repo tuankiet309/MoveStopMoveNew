@@ -3,36 +3,37 @@ using UnityEngine.Events;
 
 public class ActorAtributeController : MonoBehaviour
 {
-    private int score;
-    private int scoreMilestone;
-    private int scoreMilestoneIncreaser;
-    private float bodyScalerIncreaser;
+    protected int score;
+    protected int scoreMilestone;
+    protected int scoreMilestoneIncreaser;
+    protected float bodyScalerIncreaser;
 
-    [SerializeField] private DetectionCircle circle;
-    [SerializeField] private ActorAttacker attacker;
-    [SerializeField] private Transform playerVisualize;
-    [SerializeField] private RectTransform visualizeCircle;
+    [SerializeField] protected DetectionCircle circle;
+    [SerializeField] protected ActorAttacker attacker;
+    [SerializeField] protected Transform playerVisualize;
+    [SerializeField] protected RectTransform visualizeCircle;
 
-    public delegate void ScoreChanged();
-    public event ScoreChanged onScoreChanged;
+    [SerializeField] protected SkinComponent skinComponent;
+    
 
-    public delegate void PlayerUpgraded();
-    public event PlayerUpgraded onPlayerUpgraded;
+    public UnityEvent onScoreChanged;
+
+    public UnityEvent onPlayerUpgraded;
 
     public int Score
     {
         get => score;
-        private set { }
+        protected set { }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         scoreMilestone = CONSTANT_VALUE.FIRST_SCORE_MILESTONE;
         scoreMilestoneIncreaser = CONSTANT_VALUE.SCORE_MILESTONE_INCREASER;
         bodyScalerIncreaser = CONSTANT_VALUE.BODY_SCALER_INCREASER;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if (attacker != null)
         {
@@ -41,63 +42,65 @@ public class ActorAtributeController : MonoBehaviour
         }
     }
 
-    private void Start()
+    // Changed to protected virtual
+    protected virtual void Start()
     {
         if (visualizeCircle != null)
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
     }
 
-    private void OnDisable()
+    // Changed to  virtual
+    protected virtual void OnDisable()
     {
         if (attacker != null)
             attacker.onKillSomeone.RemoveListener(UpdateScore);
     }
 
-    private void UpdateScore()
+    protected virtual void UpdateScore()
     {
         score++;
         onScoreChanged?.Invoke();
         CheckForUpgrade();
     }
 
-    private void CheckForUpgrade()
+    protected virtual void CheckForUpgrade()
     {
         if (score >= scoreMilestone)
         {
             UpgradePlayer();
+            scoreMilestone += scoreMilestoneIncreaser;
+            scoreMilestoneIncreaser += 1;
         }
     }
 
-    private void UpgradePlayer()
+    protected virtual void UpgradePlayer()
     {
         playerVisualize.localScale += new Vector3(bodyScalerIncreaser, bodyScalerIncreaser, bodyScalerIncreaser);
         circle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER);
         if (visualizeCircle != null)
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
-
-        scoreMilestone += scoreMilestoneIncreaser;
-        scoreMilestoneIncreaser += 1;
+        attacker.UpgradeWeapon();
         onPlayerUpgraded?.Invoke();
     }
 
-    private float updateTempo = 0;
-    private bool isHaveUlti = false;
+    protected float updateTempo = 0;
+    protected bool isHaveUlti = false;
 
     public void SetHaveUlti()
     {
         if (!isHaveUlti)
         {
-            isHaveUlti = true; 
-            TempoUpdate(); 
-            attacker.onHaveUlti?.Invoke(true); 
+            isHaveUlti = true;
+            TempoUpdate();
+            attacker.onHaveUlti?.Invoke(true);
         }
         else
         {
-            Debug.Log("Ultimate already activated."); 
+            Debug.Log("Ultimate already activated.");
         }
     }
 
-    private void TempoUpdate()
+    protected virtual void TempoUpdate()
     {
         updateTempo = circle.CircleRadius * 0.5f;
         circle.UpdateCircleRadius(updateTempo);
@@ -105,7 +108,7 @@ public class ActorAtributeController : MonoBehaviour
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
     }
 
-    private void RevertUpdate(bool isStillHaveUlti)
+    protected virtual void RevertUpdate(bool isStillHaveUlti)
     {
         if (!isStillHaveUlti)
         {
@@ -113,8 +116,8 @@ public class ActorAtributeController : MonoBehaviour
             if (visualizeCircle != null)
                 visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
 
-            updateTempo = 0; // Reset the update tempo
-            isHaveUlti = false; // Reset the ultimate state
+            updateTempo = 0;
+            isHaveUlti = false;
         }
     }
 }
