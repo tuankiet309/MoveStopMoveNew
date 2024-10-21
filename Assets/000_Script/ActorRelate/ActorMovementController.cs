@@ -7,7 +7,6 @@ public class ActorMovementController : MonoBehaviour
     [SerializeField] protected Stick moveStick;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected ActorAttacker attacker;
-    [SerializeField] protected 
     protected float rotateSpeed;
     protected float moveSpeed;
 

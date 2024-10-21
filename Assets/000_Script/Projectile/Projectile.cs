@@ -25,19 +25,14 @@ public class Projectile : MonoBehaviour, IProjectile
         tempoScale = transform.localScale * 3f;
     }
 
-    public virtual void InitForProjectileToThrow(ActorAttacker Initiator,Enum.WeaponType weapon, float distanceBuff)
+    public virtual void InitForProjectileToThrow(ActorAttacker Initiator,Enum.WeaponType weapon, float buff)
     { 
         actorAttacker = Initiator;
         damageComponent.InitIAttacker(Initiator);
+        distanceTilDie += buff;
         this.weaponType = weapon;
-        distanceTilDie = distanceBuff;
     }
-    public virtual void InitForProjectileToHold(float distanceTilDie, Enum.AttributeBuffs attributeBuffs, Enum.WeaponType weaponType)
-    {
-        if(attributeBuffs == Enum.AttributeBuffs.Range)
-            this.distanceTilDie += distanceTilDie;
-        this.weaponType = weaponType;
-    }    
+   
     public virtual void FlyToPos(Vector3 Enemy, bool isSpeacial)
     {
         if(actorAttacker.gameObject.CompareTag("Player"))
@@ -101,8 +96,5 @@ public class Projectile : MonoBehaviour, IProjectile
     {
         Destroy(gameObject);
     }
-    public void UpdateDistance()
-    {
-        distanceTilDie += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
-    }
+
 }

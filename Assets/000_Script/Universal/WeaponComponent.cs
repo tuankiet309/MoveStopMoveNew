@@ -12,14 +12,16 @@ public class WeaponComponent : MonoBehaviour
     private Projectile weaponOffHand;
 
     public UnityEvent<bool> onHavingWeapon;
+    public UnityEvent<Weapon,Weapon> onAssignNewWeapon;
 
     private void Start()
     {
-        InitWeapon();
+        AssignWeapon(weapon);
     }
 
     public void AssignWeapon(Weapon newWeapon)
-    {
+    {  
+        onAssignNewWeapon?.Invoke(weapon,newWeapon);
         weapon = newWeapon;
         InitWeapon();
     }
@@ -27,12 +29,9 @@ public class WeaponComponent : MonoBehaviour
     private void InitWeapon()
     {
         if (weapon == null) return;
-
         ClearOldWeapon();
         CreateWeaponOnHand();
         SetupWeaponOffHand();
-
-        attacker.InitWeapon(weaponOffHand);
         attacker.onActorAttack.AddListener(OnThrowAwayWeapon);
         onHavingWeapon?.Invoke(true);
     }
@@ -53,7 +52,6 @@ public class WeaponComponent : MonoBehaviour
     private void SetupWeaponOffHand()
     {
         weaponOffHand = Instantiate(weapon.WeaponThrowAway, transform);
-        weaponOffHand.InitForProjectileToHold(weapon.BuffMultiplyer, weapon.Buff, weapon.WeaponType);
         weaponOffHand.transform.rotation = Quaternion.Euler(Vector3.zero);
         weaponOffHand.gameObject.SetActive(false);
         GameObject weaponVisualize = Instantiate(weapon.WeaponOnHand, weaponOffHand.transform);

@@ -34,7 +34,7 @@ public class SkinComponent : MonoBehaviour
     private Material originalPantMaterial;
     private Material originalSkinMaterial;
 
-    public UnityEvent<List<Skin>> onWearNewSkin;
+    public UnityEvent<List<Skin>,List<Skin>> onWearNewSkin;
 
 
 
@@ -48,6 +48,7 @@ public class SkinComponent : MonoBehaviour
 
     public void AssignNewSkin(Skin[] newSkin, bool isASet)
     {
+        onWearNewSkin?.Invoke(previousSkins,skinToChange);
         skinToChange = newSkin.ToList();
         if (this.isASet || isASet)
         {
@@ -67,7 +68,7 @@ public class SkinComponent : MonoBehaviour
             }
         this.isASet = isASet;
         WearSkin(skinToChange);
-        onWearNewSkin?.Invoke(skinToChange);
+        
     }
     
 

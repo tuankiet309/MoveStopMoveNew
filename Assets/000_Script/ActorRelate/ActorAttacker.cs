@@ -7,15 +7,18 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     [SerializeField] protected DetectionCircle attackCircle;
     [SerializeField] protected Transform throwLocation;
     [SerializeField] protected GameObject targetCircleInstance;
-    [SerializeField] protected SkinComponent skinComponent;
+    [SerializeField] protected WeaponComponent weaponComponent;
+    [SerializeField] protected ActorAtributeController actorAtributeController;
 
     protected HashSet<GameObject> enemyAttackers = new HashSet<GameObject>();
     protected GameObject targetToAttack = null;
     protected Vector3 targetToAttackPos = Vector3.zero;
+    protected Weapon weapon;
     protected Projectile weaponToThrow;
     private bool isUlti = false;
-    private float buffFromSkin = 0;
 
+    
+    
     public UnityEvent<Vector2> onActorAttack;
     public UnityEvent<GameObject> onHaveTarget;
     public UnityEvent<bool> onHaveUlti;
@@ -27,39 +30,29 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         {
             attackCircle.onTriggerContact.AddListener(UpdateEnemyList);
         }
-        if (skinComponent != null)
-            skinComponent.onWearNewSkin.AddListener(ApplySkinBuff);
+        if (weaponComponent != null) 
+        {
+            weaponComponent.onAssignNewWeapon.AddListener(InitWeapon);
+        }
         ResetState();
         onHaveUlti.AddListener(SetUlti);
         
     }
-
     protected virtual void OnDisable()
     {
         if (attackCircle != null)
         {
             attackCircle.onTriggerContact.RemoveListener(UpdateEnemyList);
         }
-        if (skinComponent != null)
-            skinComponent.onWearNewSkin.RemoveListener(ApplySkinBuff);
+        if (weaponComponent != null)
+        {
+            weaponComponent.onAssignNewWeapon.RemoveListener(InitWeapon);
+        }
         ResetState();
     }
-
     protected virtual void Update()
     {
         CheckAndUpdateTargetCircle();
-    }
-
-    private void ApplySkinBuff(List<Skin> skin)
-    {
-        buffFromSkin = 0;
-        foreach (Skin skin2 in skin) 
-        {
-            if(skin2.AttributeBuffs == Enum.AttributeBuffs.Range)
-            {
-                buffFromSkin += skin2.BuffMultiplyer;
-            }
-        }
     }
     protected virtual void UpdateEnemyList(GameObject target, bool isInCircle)
     {
@@ -78,12 +71,10 @@ public class ActorAttacker : MonoBehaviour, IAttacker
                 onHaveTarget?.Invoke(null);
         }
     }
-
     protected virtual void CleanUpDestroyedObjects()
     {
         enemyAttackers.RemoveWhere(item => item == null || !item.activeInHierarchy || !IsTargetAlive(item));
     }
-
     protected virtual GameObject GetFirstValidTarget()
     {
         foreach (var target in enemyAttackers)
@@ -95,7 +86,6 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         }
         return null;
     }
-
     protected virtual void CheckAndUpdateTargetCircle()
     {
         CleanUpDestroyedObjects();
@@ -132,7 +122,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Quaternion throwRotation = Quaternion.LookRotation(throwDirection);
         Projectile newProjectile = Instantiate(weaponToThrow, throwLocation.position, throwRotation);
         newProjectile.gameObject.SetActive(true);
-        newProjectile.InitForProjectileToThrow(this,weaponToThrow.WeaponType,weaponToThrow.DistanceTilDie + buffFromSkin);
+        newProjectile.InitForProjectileToThrow(this, weapon.WeaponType, actorAtributeController.BuffValues.ContainsKey(Enum.AttributeBuffs.Range)  ? actorAtributeController.BuffValues[Enum.AttributeBuffs.Range] : 0);
         newProjectile.FlyToPos(enemyLoc, isUlti);
         if (isUlti)
         {
@@ -150,12 +140,15 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Attack(targetToAttackPos);
         targetToAttackPos = Vector3.zero;
     }
-    public void InitWeapon(Projectile weaponToThrow)
+    private void InitWeapon(Weapon oldWeapon,Weapon newWeapon)
     {
-        this.weaponToThrow = weaponToThrow;
+        this.weapon = newWeapon;
+        this.weaponToThrow = Instantiate(weapon.WeaponThrowAway, transform);
+        GameObject visualize = Instantiate(weapon.WeaponOnHand, this.weaponToThrow.transform);
+        this.weaponToThrow.gameObject.SetActive(false);
+
         
     }
-
     private void ResetState()
     {
         enemyAttackers.Clear();
@@ -167,9 +160,5 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
         isUlti = isHaveUlti;
     }
-    public void UpgradeWeapon()
-    {
-        weaponToThrow.UpdateDistance();
-    }
-    
+  
 }

@@ -6,7 +6,6 @@ public interface IAttacker
 {
     void PrepareToAttack();
     void EventIfKillSomeone();
-    void InitWeapon(Projectile weaponToThrow);
 
 }
  
