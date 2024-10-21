@@ -3,11 +3,19 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static Enum;
 
 public class SkinComponent : MonoBehaviour
 {
+    [Header("For buff")]
+    [SerializeField] private ActorAttacker attacker;
+    [SerializeField] private ActorMovementController ActorMovementController;
+    [SerializeField] private EnemyMovementController enemyMovementController;
+
+
+    [Header("Essential")]
     [SerializeField] Transform hatHolder;
     [SerializeField] Transform LHandHolder;
     [SerializeField] Transform wingHolder;
@@ -23,10 +31,12 @@ public class SkinComponent : MonoBehaviour
     private bool isASet = false;
     private List<Skin> skinToChange = new List<Skin>();
     private List<Skin> previousSkins = new List<Skin>();
-
-
     private Material originalPantMaterial;
     private Material originalSkinMaterial;
+
+    public UnityEvent<List<Skin>> onWearNewSkin;
+
+
 
     private void Start()
     {
@@ -57,7 +67,12 @@ public class SkinComponent : MonoBehaviour
             }
         this.isASet = isASet;
         WearSkin(skinToChange);
+        onWearNewSkin?.Invoke(skinToChange);
     }
+    
+
+
+
     public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
     {
         if (this.isASet || isASet)

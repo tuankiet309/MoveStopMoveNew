@@ -13,9 +13,7 @@ public class ActorAtributeController : MonoBehaviour
     [SerializeField] protected Transform playerVisualize;
     [SerializeField] protected RectTransform visualizeCircle;
 
-    [SerializeField] protected SkinComponent skinComponent;
     
-
     public UnityEvent onScoreChanged;
 
     public UnityEvent onPlayerUpgraded;
@@ -42,14 +40,12 @@ public class ActorAtributeController : MonoBehaviour
         }
     }
 
-    // Changed to protected virtual
     protected virtual void Start()
     {
         if (visualizeCircle != null)
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
     }
 
-    // Changed to  virtual
     protected virtual void OnDisable()
     {
         if (attacker != null)

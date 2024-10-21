@@ -7,13 +7,14 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     [SerializeField] protected DetectionCircle attackCircle;
     [SerializeField] protected Transform throwLocation;
     [SerializeField] protected GameObject targetCircleInstance;
+    [SerializeField] protected SkinComponent skinComponent;
 
     protected HashSet<GameObject> enemyAttackers = new HashSet<GameObject>();
     protected GameObject targetToAttack = null;
     protected Vector3 targetToAttackPos = Vector3.zero;
     protected Projectile weaponToThrow;
     private bool isUlti = false;
-
+    private float buffFromSkin = 0;
 
     public UnityEvent<Vector2> onActorAttack;
     public UnityEvent<GameObject> onHaveTarget;
@@ -26,9 +27,11 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         {
             attackCircle.onTriggerContact.AddListener(UpdateEnemyList);
         }
-
+        if (skinComponent != null)
+            skinComponent.onWearNewSkin.AddListener(ApplySkinBuff);
         ResetState();
         onHaveUlti.AddListener(SetUlti);
+        
     }
 
     protected virtual void OnDisable()
@@ -37,6 +40,8 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         {
             attackCircle.onTriggerContact.RemoveListener(UpdateEnemyList);
         }
+        if (skinComponent != null)
+            skinComponent.onWearNewSkin.RemoveListener(ApplySkinBuff);
         ResetState();
     }
 
@@ -45,6 +50,17 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         CheckAndUpdateTargetCircle();
     }
 
+    private void ApplySkinBuff(List<Skin> skin)
+    {
+        buffFromSkin = 0;
+        foreach (Skin skin2 in skin) 
+        {
+            if(skin2.AttributeBuffs == Enum.AttributeBuffs.Range)
+            {
+                buffFromSkin += skin2.BuffMultiplyer;
+            }
+        }
+    }
     protected virtual void UpdateEnemyList(GameObject target, bool isInCircle)
     {
         if (isInCircle && IsTargetAlive(target))
@@ -116,7 +132,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Quaternion throwRotation = Quaternion.LookRotation(throwDirection);
         Projectile newProjectile = Instantiate(weaponToThrow, throwLocation.position, throwRotation);
         newProjectile.gameObject.SetActive(true);
-        newProjectile.InitForProjectileToThrow(this,weaponToThrow.WeaponType,weaponToThrow.DistanceTilDie);
+        newProjectile.InitForProjectileToThrow(this,weaponToThrow.WeaponType,weaponToThrow.DistanceTilDie + buffFromSkin);
         newProjectile.FlyToPos(enemyLoc, isUlti);
         if (isUlti)
         {
@@ -155,4 +171,5 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
         weaponToThrow.UpdateDistance();
     }
+    
 }

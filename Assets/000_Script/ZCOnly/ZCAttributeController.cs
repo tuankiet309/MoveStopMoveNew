@@ -29,6 +29,6 @@ public class ZCAttributeController : ActorAtributeController
         onPlayerUpgraded?.Invoke();
         scoreMilestone = 10000;
     }
-
+    
 
 }
