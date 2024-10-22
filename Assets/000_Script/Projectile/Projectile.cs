@@ -32,20 +32,54 @@ public class Projectile : MonoBehaviour, IProjectile
         distanceTilDie += buff;
         this.weaponType = weapon;
     }
-   
+    //Bay theo huong
     public virtual void FlyToPos(Vector3 Enemy, bool isSpeacial)
     {
-        if(actorAttacker.gameObject.CompareTag("Player"))
+        if (actorAttacker.gameObject.CompareTag("Player"))
         {
             Debug.Log(distanceTilDie);
         }
         Vector3 flyDirection = Enemy - transform.position;
-        flyDirection = new Vector3(flyDirection.x,transform.position.y,flyDirection.z).normalized;
+        flyDirection = new Vector3(flyDirection.x, transform.position.y, flyDirection.z).normalized;
         if (isSpeacial)
             StartCoroutine(SpeacialFly(transform.position, flyDirection.normalized));
         else
-            StartCoroutine(Fly(transform.position,flyDirection.normalized));
+            StartCoroutine(Fly(transform.position, flyDirection.normalized));
     }
+    //Overload bay theo doi tuong
+    public virtual void FlyToPos(GameObject target)
+    {
+        if (target != null)
+        {
+            StartCoroutine(ChaseTarget(transform.position, target));
+        }
+    }
+    //Duoi theo doi tuong
+    private IEnumerator ChaseTarget(Vector3 initPos, GameObject target)
+    {
+        Vector3 direction = target.transform.position - transform.position;
+        while (distanceTilDie > Vector3.Distance(transform.position, initPos))
+        {
+            direction = target!=null ? target.transform.position - transform.position : direction;
+            direction.y = 0; 
+            direction.Normalize();
+            transform.position += direction * CONSTANT_VALUE.PROJECTILE_FLY_SPEED * Time.deltaTime;
+            if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
+            {
+                float rotationSpeed = CONSTANT_VALUE.PROJECTILE_ROTATE_SPEED;
+                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed, 0f);
+                rb.MoveRotation(rb.rotation * rotation);
+            }
+            if(weaponType == WeaponType.Straight)
+            {
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
+            yield return null; 
+        }
+
+        SelfDestroy();
+    }
+    //Bay theo huong 
     IEnumerator Fly(Vector3 initDistance,Vector3 flyDir)
     {
         while(distanceTilDie  > Vector3.Distance(transform.position, initDistance))
@@ -77,6 +111,7 @@ public class Projectile : MonoBehaviour, IProjectile
         }
         SelfDestroy();
     }
+    //Bay ultimate
     IEnumerator SpeacialFly(Vector3 initDistance, Vector3 flyDir)
     {
         while (distanceTilDie*2.5f > Vector3.Distance(transform.position, initDistance))

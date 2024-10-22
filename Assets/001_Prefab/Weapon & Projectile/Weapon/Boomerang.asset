@@ -31,6 +31,6 @@ MonoBehaviour:
   weaponOffsetRot: {x: -0.062365588, y: 0.14999989, z: -0.88789016, w: -0.43042025}
   weaponOffsetOnThrowPos: {x: -0.35, y: 0, z: 0}
   weaponType: 2
-  buff: 1
-  buffMultiplyer: 0.25
-  currentIndexOfTheSkin: 1
+  buff: 0
+  buffMultiplyer: 2
+  currentIndexOfTheSkin: 4

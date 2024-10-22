@@ -1138,7 +1138,7 @@ MonoBehaviour:
   - Keo lac
   transformHolder: {fileID: 1472131190}
   numberOfMaxEnemies: 100
-  numberOfMaxEnemiesAtATime: 11
+  numberOfMaxEnemiesAtATime: 10
   availableBodySkins: []
   OnNumberOfEnemiesDecrease:
     m_PersistentCalls:
@@ -2481,7 +2481,7 @@ PrefabInstance:
     - target: {fileID: 6433880891684553929, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.996002
+      value: -4.9959717
       objectReference: {fileID: 0}
     - target: {fileID: 7239503812060486401, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}

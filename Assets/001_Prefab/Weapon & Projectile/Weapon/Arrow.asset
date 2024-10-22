@@ -25,10 +25,10 @@ MonoBehaviour:
     isLocked: 1
   - skin: {fileID: 7167713677699941835, guid: 0c87643dc4625a44b86118d3eb48fbdb, type: 3}
     isLocked: 1
-  weaponOffsetPos: {x: -0.016, y: 0.299, z: -0.037}
+  weaponOffsetPos: {x: -0.115, y: 0.037, z: -0.007}
   weaponOffsetRot: {x: 0.00000015273685, y: -0.000000014901156, z: -0.7089426, w: 0.7052663}
   weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
   weaponType: 0
-  buff: 2
-  buffMultiplyer: 0.25
-  currentIndexOfTheSkin: 3
+  buff: 0
+  buffMultiplyer: 2
+  currentIndexOfTheSkin: 1

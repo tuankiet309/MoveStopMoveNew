@@ -1,10 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ZCAttributeController : ActorAtributeController
 {
-    
+    [SerializeField] ZCPower ZCPower;
+    [SerializeField] List<ZCStatPlayer> stats;
+
+    public List<ZCStatPlayer> Stats { get => stats; set => stats = value; }
+    public ZCPower ZCPower1 { get => ZCPower; set => ZCPower = value; }
+    protected override void Start()
+    {
+        base.Start();
+
+    }
     protected override void UpdateScore()
     {
         score++;
@@ -21,13 +31,21 @@ public class ZCAttributeController : ActorAtributeController
     }
     protected override void UpgradePlayer()
     {
-        playerVisualize.localScale += new Vector3(bodyScalerIncreaser, bodyScalerIncreaser, bodyScalerIncreaser);
-        circle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER);
-        if (visualizeCircle != null)
-            visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
         onPlayerUpgraded?.Invoke();
         scoreMilestone = 10000;
     }
     
-
+    public void UpgradeStat(ZCStatPlayer newStat)
+    {
+        foreach (var stat in stats)
+        {
+            if(stat.Type == newStat.Type)
+            {
+                stats.Remove(stat);
+                stats.Add(newStat);
+            }
+        }
+    }
 }
+
+

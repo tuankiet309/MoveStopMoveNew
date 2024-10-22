@@ -20,7 +20,7 @@ public class CONSTANT_VALUE : MonoBehaviour
 
 
     /////////////WEAPON_ATTR/////////////////
-    public const float FIRST_DELAYED_ATTACK = 1.25f;
+    public const float FIRST_DELAYED_ATTACK = 0.75f;
     public const float PROJECTILE_FLY_SPEED = 12f;
     public const float PROJECTILE_ROTATE_SPEED = 8f;
     public const float DISTANCE_TIL_COMBACK = 0.5f;

@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public Enum.InGameState CurrentInGameState { get => currentInGameState; set => currentInGameState = value; }
 
 
+
+
     private void Awake()
     {
         if(instance == null)
@@ -24,8 +26,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
-        SetGameStates(Enum.GameState.Hall, Enum.InGameState.PVE);
-        DontDestroyOnLoad(gameObject);
+        SetGameStates(Enum.GameState.Ingame, Enum.InGameState.Zombie);
         
     }
     private void Start()

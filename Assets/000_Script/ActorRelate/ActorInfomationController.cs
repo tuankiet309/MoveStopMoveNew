@@ -43,7 +43,7 @@ public class ActorInformationController : MonoBehaviour
 
     internal string GetName()
     {
-        return nameText.text;
+        return "Hahah";
     }
     internal int GetScore()
     {

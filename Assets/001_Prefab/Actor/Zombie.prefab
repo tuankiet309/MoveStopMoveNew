@@ -13,9 +13,15 @@ GameObject:
   - component: {fileID: 2963460255190871293}
   - component: {fileID: 4076313182266477817}
   - component: {fileID: 2471719595243253135}
+  - component: {fileID: 6150003662687594971}
+  - component: {fileID: 5776636927531825440}
+  - component: {fileID: 4000273548199038840}
+  - component: {fileID: 5616467980838844060}
+  - component: {fileID: 2555567760090318863}
+  - component: {fileID: 4301188230654904276}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,6 +120,125 @@ MonoBehaviour:
   lifeComponent: {fileID: 0}
   weaponComponent: {fileID: 0}
   zombieController: {fileID: 6133666149468591406}
+--- !u!114 &6150003662687594971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33680b2cdd6d2eb4891b21006c35e584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLifeEnds:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5776636927531825440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8902efce878d23746937e24cbc5afbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4000273548199038840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c572a1824143614c90fbc06fd7eb0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &5616467980838844060
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &2555567760090318863
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.1180563
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.97374034, z: 0}
+--- !u!114 &4301188230654904276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2469fccd98181f4a8b6b3bcd8d90707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCircle: {fileID: 0}
+  throwLocation: {fileID: 0}
+  targetCircleInstance: {fileID: 0}
+  weaponComponent: {fileID: 0}
+  actorAtributeController: {fileID: 0}
+  WeaponHolder: {fileID: 0}
+  onActorAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  onHaveTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  onHaveUlti:
+    m_PersistentCalls:
+      m_Calls: []
+  onKillSomeone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1877904368134486914
 PrefabInstance:
   m_ObjectHideFlags: 0

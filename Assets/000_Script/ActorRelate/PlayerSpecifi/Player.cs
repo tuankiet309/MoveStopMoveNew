@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.onStateChange.AddListener(PrepareGamestate);
-        PrepareGamestate(Enum.GameState.Hall, Enum.InGameState.PVE);
     }
     private void PrepareGamestate(Enum.GameState gameState, Enum.InGameState inGameState)
     {

@@ -130,6 +130,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         LifeComponent deadController = target.GetComponent<LifeComponent>();
         return deadController != null && !deadController.IsDead;
     }
+    //////////////////Attack theo dir//////////////////
     protected virtual void Attack(Vector3 enemyLoc)
     {
         Vector3 throwDirection = enemyLoc - throwLocation.position;
@@ -144,12 +145,16 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             onHaveUlti?.Invoke(false);
         }
     }
+    protected virtual void Attack(Vector3 enemyLoc, bool isMainAttack)
+    {
+        //Overload for child class use cases.
+    }
     public void EventIfKillSomeone()
     {
         onKillSomeone?.Invoke();
     }
 
-    public void PrepareToAttack()
+    public virtual void PrepareToAttack()
     {
         Vector3 attackDir = targetToAttackPos - transform.position;
         onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
@@ -197,7 +202,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
         isUlti = isHaveUlti;
     }
-    protected void OnUpgrade()
+    protected virtual void OnUpgrade()
     {
         distanceBuff += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
     }

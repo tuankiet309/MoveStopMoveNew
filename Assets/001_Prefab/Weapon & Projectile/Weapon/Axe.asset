@@ -29,12 +29,10 @@ MonoBehaviour:
     isLocked: 1
   - skin: {fileID: 2121252925101514808, guid: 90b085846a128d7478bc4bb894d87502, type: 3}
     isLocked: 1
-  - skin: {fileID: 2121252925101514808, guid: 90b085846a128d7478bc4bb894d87502, type: 3}
-    isLocked: 1
-  weaponOffsetPos: {x: -0.205, y: 0.023, z: -0.002}
-  weaponOffsetRot: {x: 0.51708114, y: -0.05637493, z: -0.8392214, w: 0.15860784}
+  weaponOffsetPos: {x: -0.167, y: 0.286, z: 0}
+  weaponOffsetRot: {x: 0.21915197, y: 0.16363549, z: -0.90493685, w: 0.32601392}
   weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
   weaponType: 1
   buff: 0
   buffMultiplyer: 2
-  currentIndexOfTheSkin: 6
+  currentIndexOfTheSkin: 3

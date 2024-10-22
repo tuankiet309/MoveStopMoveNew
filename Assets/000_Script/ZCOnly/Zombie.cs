@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private LifeComponent lifeComponent;
     void Start()
     {
-        
+        lifeComponent.onLifeEnds.AddListener(SelfDestroy);
     }
 
     // Update is called once per frame
@@ -15,4 +15,11 @@ public class Zombie : MonoBehaviour
     {
         
     }
+    private void SelfDestroy(string tempo)
+    {
+
+        gameObject.SetActive(false);
+    }
+    
+    
 }

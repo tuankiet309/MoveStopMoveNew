@@ -24,6 +24,8 @@ public class ActorAtributeController : MonoBehaviour
 
     public UnityEvent onPlayerUpgraded;
 
+    public UnityEvent onBuffChange;
+
     public int Score
     {
         get => score;
@@ -37,8 +39,6 @@ public class ActorAtributeController : MonoBehaviour
         scoreMilestone = CONSTANT_VALUE.FIRST_SCORE_MILESTONE;
         scoreMilestoneIncreaser = CONSTANT_VALUE.SCORE_MILESTONE_INCREASER;
         bodyScalerIncreaser = CONSTANT_VALUE.BODY_SCALER_INCREASER;
-
-        
     }
 
     protected virtual void OnEnable()
@@ -81,6 +81,7 @@ public class ActorAtributeController : MonoBehaviour
                 buffValues[newWeapon.Buff] = newWeapon.BuffMultiplyer;
             }
         }
+        onBuffChange?.Invoke();
     }
     private void ApplyBuffBySkin(List<Skin> oldSkin, List<Skin> newSkin)
     {
@@ -106,6 +107,8 @@ public class ActorAtributeController : MonoBehaviour
                 buffValues[skin.AttributeBuffs] = skin.BuffMultiplyer;
             }
         }
+        onBuffChange?.Invoke();
+
     }
 
     protected virtual void Start()

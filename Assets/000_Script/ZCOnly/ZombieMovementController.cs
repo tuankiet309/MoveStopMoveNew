@@ -11,24 +11,22 @@ public class ZombieMovementController : MonoBehaviour
     [SerializeField]private NavMeshAgent agent;
 
     public UnityEvent<Vector3> onEnemyMoving;
+
     private void Start()
     {
         player = Player.Instance;
         GameManager.Instance.onStateChange.AddListener(OnMoving);
+        OnMoving(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
     private void Update()
     {
         agent.SetDestination(player.transform.position);
-        agent.isStopped = true;
     }
     private void OnMoving(Enum.GameState gameState, Enum.InGameState ingameState)
     {
-        if (ingameState == InGameState.PVE)
-            return;
         if (gameState == Enum.GameState.Ingame)
         {
             agent.isStopped = true;
-            agent.velocity = gameState == Enum.GameState.Ingame ? Vector3.zero : agent.velocity;
             onEnemyMoving?.Invoke(Vector3.zero);
         }
         if(gameState == Enum.GameState.Begin)
