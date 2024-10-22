@@ -25,7 +25,7 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const float PROJECTILE_ROTATE_SPEED = 8f;
     public const float DISTANCE_TIL_COMBACK = 0.5f;
     public const float COMEBACK_FLY_DISTANCE = 15f;
-    public const float OFFSET_DISTANCE = 1f;
+    public const float OFFSET_DISTANCE = 0.5f;
     /////////////DECOR//////////////////////
     public const float DECORATION_TRANPARENT_VALUE = 0.2F;
 

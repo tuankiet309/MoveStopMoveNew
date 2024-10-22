@@ -9,12 +9,18 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     [SerializeField] protected GameObject targetCircleInstance;
     [SerializeField] protected WeaponComponent weaponComponent;
     [SerializeField] protected ActorAtributeController actorAtributeController;
+    [SerializeField] protected Transform WeaponHolder;
 
     protected HashSet<GameObject> enemyAttackers = new HashSet<GameObject>();
     protected GameObject targetToAttack = null;
     protected Vector3 targetToAttackPos = Vector3.zero;
+
+    protected float distanceBuff = 0;
+
     protected Weapon weapon;
     protected Projectile weaponToThrow;
+    protected GameObject weaponOnHand;
+
     private bool isUlti = false;
 
     
@@ -34,6 +40,10 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         {
             weaponComponent.onAssignNewWeapon.AddListener(InitWeapon);
         }
+        if(actorAtributeController != null)
+        {
+            actorAtributeController.onPlayerUpgraded.AddListener(OnUpgrade);
+        }
         ResetState();
         onHaveUlti.AddListener(SetUlti);
         
@@ -47,6 +57,11 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         if (weaponComponent != null)
         {
             weaponComponent.onAssignNewWeapon.RemoveListener(InitWeapon);
+        }
+        if (actorAtributeController != null)
+        {
+            actorAtributeController.onPlayerUpgraded.RemoveListener(OnUpgrade);
+
         }
         ResetState();
     }
@@ -120,9 +135,9 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Vector3 throwDirection = enemyLoc - throwLocation.position;
         throwDirection.y = 0;
         Quaternion throwRotation = Quaternion.LookRotation(throwDirection);
-        Projectile newProjectile = Instantiate(weaponToThrow, throwLocation.position, throwRotation);
+        Projectile newProjectile = Instantiate(weaponToThrow, throwLocation.position,throwRotation);
         newProjectile.gameObject.SetActive(true);
-        newProjectile.InitForProjectileToThrow(this, weapon.WeaponType, actorAtributeController.BuffValues.ContainsKey(Enum.AttributeBuffs.Range)  ? actorAtributeController.BuffValues[Enum.AttributeBuffs.Range] : 0);
+        newProjectile.InitForProjectileToThrow(this, weapon.WeaponType, distanceBuff +  (actorAtributeController.BuffValues.ContainsKey(Enum.AttributeBuffs.Range)  ? actorAtributeController.BuffValues[Enum.AttributeBuffs.Range] : 0));
         newProjectile.FlyToPos(enemyLoc, isUlti);
         if (isUlti)
         {
@@ -133,6 +148,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
         onKillSomeone?.Invoke();
     }
+
     public void PrepareToAttack()
     {
         Vector3 attackDir = targetToAttackPos - transform.position;
@@ -140,25 +156,50 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Attack(targetToAttackPos);
         targetToAttackPos = Vector3.zero;
     }
-    private void InitWeapon(Weapon oldWeapon,Weapon newWeapon)
+    protected void InitWeapon(Weapon oldWeapon,Weapon newWeapon)
     {
-        this.weapon = newWeapon;
-        this.weaponToThrow = Instantiate(weapon.WeaponThrowAway, transform);
-        GameObject visualize = Instantiate(weapon.WeaponOnHand, this.weaponToThrow.transform);
-        this.weaponToThrow.gameObject.SetActive(false);
+        ClearOldWeapon();
+        weapon = newWeapon;
 
+        weaponOnHand = Instantiate(weapon.WeaponOnHand, WeaponHolder);
+        weaponComponent.ApplyWeaponSkin(weaponOnHand, weapon.CurrentIndexOfTheSkin);
+        weaponToThrow = Instantiate(weapon.WeaponThrowAway, transform);
+        GameObject visualize = Instantiate(weaponOnHand, this.weaponToThrow.transform);
+
+
+        weaponOnHand.transform.localPosition = weapon.WeaponOffsetPos;
+        weaponOnHand.transform.localRotation = weapon.WeaponOffsetRot;
+        
+        
+
+        weaponToThrow.transform.rotation = Quaternion.Euler(Vector3.zero);
+        weaponToThrow.gameObject.SetActive(false);
+        
+        visualize.transform.localPosition = weapon.WeaponOffsetOnThrow;
         
     }
-    private void ResetState()
+    protected void ClearOldWeapon()
+    {
+        if(weaponOnHand!=null)
+        Destroy(weaponOnHand.gameObject);
+        if(weaponToThrow!=null)
+        Destroy(weaponToThrow.gameObject);
+    }
+
+    protected void ResetState()
     {
         enemyAttackers.Clear();
         onHaveTarget?.Invoke(null);
         targetToAttack = null;
         targetToAttackPos = Vector3.zero;
     }
-    private void SetUlti(bool isHaveUlti)
+    protected void SetUlti(bool isHaveUlti)
     {
         isUlti = isHaveUlti;
+    }
+    protected void OnUpgrade()
+    {
+        distanceBuff += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
     }
   
 }

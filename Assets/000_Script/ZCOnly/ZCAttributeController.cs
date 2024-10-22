@@ -5,7 +5,6 @@ using UnityEngine;
 public class ZCAttributeController : ActorAtributeController
 {
     
-
     protected override void UpdateScore()
     {
         score++;

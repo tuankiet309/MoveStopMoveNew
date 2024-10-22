@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private EnemyPool enemyPool;
 
     [SerializeField] private Skin[] pantToSpawn;
-    [SerializeField] private Skin[] bodyToSpawn;  // All available body skins
+    [SerializeField] private Skin[] bodyToSpawn; 
     [SerializeField] private Skin[] headSetToSpawn;
     [SerializeField] private Skin[] leftHandToSpawn;
 
@@ -25,7 +25,6 @@ public class EnemySpawner : MonoBehaviour
     private bool gameStateChanged = false;
     private Camera mainCamera;
 
-    // List to hold available body skins for assignment
     public  List<Skin> availableBodySkins;
 
     public UnityEvent<int> OnNumberOfEnemiesDecrease;
@@ -63,7 +62,6 @@ public class EnemySpawner : MonoBehaviour
         Enemy.numberOfEnemyHasDie = 0;
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
 
-        // Initialize the list with all available body skins
         availableBodySkins = new List<Skin>(bodyToSpawn);
     }
 

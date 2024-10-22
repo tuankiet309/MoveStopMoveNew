@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ZCPower : ScriptableObject
 {
-    [SerializeField] private string name;
-    [SerializeField] private Image powerImage;    
+    [SerializeField] private string powerName;
+    [SerializeField] private Image powerImage;
+    [SerializeField] private Enum.ZCPowerUp powerType;
+
 }

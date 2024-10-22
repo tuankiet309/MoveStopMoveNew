@@ -47,8 +47,28 @@ public class Enum : MonoBehaviour
         Set
     }
 
-    public enum PowerType 
+    public enum ZCUpgradeType 
     {
-
+        Protect,
+        Speed,
+        CircleRange,
+        MaxWeapon,
+    }
+    public enum ZCPowerUp
+    {
+        Continous,
+        AttackBehind,
+        BulletPlus,
+        PursueBullet,
+        CrossAttack,
+        DiaAttack,
+        DoubleGold,
+        GrowWeapon,
+        MoveFaster,
+        PieceWeapon,
+        Revive,
+        Bigger,
+        Tripple,
+        IgnoreWall
     }
 }

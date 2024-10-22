@@ -92,6 +92,7 @@ public class Projectile : MonoBehaviour, IProjectile
        
         SelfDestroy();
     }
+
     private void SelfDestroy()
     {
         Destroy(gameObject);

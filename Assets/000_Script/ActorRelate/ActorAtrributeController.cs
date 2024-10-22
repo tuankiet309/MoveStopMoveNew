@@ -145,6 +145,7 @@ public class ActorAtributeController : MonoBehaviour
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
         onPlayerUpgraded?.Invoke();
     }
+
     protected float updateTempo = 0;
     protected bool isHaveUlti = false;
 

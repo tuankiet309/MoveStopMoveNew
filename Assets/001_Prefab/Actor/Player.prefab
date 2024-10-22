@@ -5173,6 +5173,7 @@ MonoBehaviour:
   targetCircleInstance: {fileID: 2376270487827787543}
   weaponComponent: {fileID: 1203349884147329772}
   actorAtributeController: {fileID: 407018355103055742}
+  WeaponHolder: {fileID: 3243825365586066742}
   onActorAttack:
     m_PersistentCalls:
       m_Calls: []
@@ -5289,7 +5290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedLocation: {fileID: 3243825365586066742}
-  weapon: {fileID: 11400000, guid: 20cd8421d27fe054d8ea50e6df9102e7, type: 2}
+  weapon: {fileID: 11400000, guid: 07ce47b532b793a4790f2f40f15d8ea2, type: 2}
   attacker: {fileID: 5258841791265605368}
   onHavingWeapon:
     m_PersistentCalls:
