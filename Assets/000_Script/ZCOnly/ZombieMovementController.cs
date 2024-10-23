@@ -8,7 +8,7 @@ using static Enum;
 public class ZombieMovementController : MonoBehaviour
 {
     private Player player;
-    [SerializeField]private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
 
     public UnityEvent<Vector3> onEnemyMoving;
 
@@ -16,24 +16,57 @@ public class ZombieMovementController : MonoBehaviour
     {
         player = Player.Instance;
         GameManager.Instance.onStateChange.AddListener(OnMoving);
-        OnMoving(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
-    }
-    private void Update()
-    {
-        agent.SetDestination(player.transform.position);
-    }
-    private void OnMoving(Enum.GameState gameState, Enum.InGameState ingameState)
-    {
-        if (gameState == Enum.GameState.Ingame)
+        
+        if (agent != null)
         {
             agent.isStopped = true;
-            onEnemyMoving?.Invoke(Vector3.zero);
+            agent.ResetPath();
+            agent.SetDestination(player.transform.position);
         }
-        if(gameState == Enum.GameState.Begin)
+        OnMoving(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
+    }
+
+    private void OnEnable()
+    {
+        player = Player.Instance;
+    }
+
+    private void OnDisable()
+    {
+        if (agent != null)
+        {
+            agent.SetDestination(transform.position); 
+            agent.isStopped = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (agent != null && !agent.isStopped)
+        {
+            agent.SetDestination(player.transform.position);
+        }
+    }
+
+    private void OnMoving(Enum.GameState gameState, Enum.InGameState inGameState)
+    {
+        if (gameObject.activeInHierarchy == false)
+            return; 
+        
+        if (gameState == Enum.GameState.Ingame)
+        {
+            agent.isStopped = false; 
+            onEnemyMoving?.Invoke(Vector3.one); 
+        }
+        else if (gameState == Enum.GameState.Begin)
         {
             agent.isStopped = false;
             onEnemyMoving?.Invoke(Vector3.one);
         }
+        else if (gameState == Enum.GameState.Dead || gameState == Enum.GameState.Revive)
+        {
+            agent.isStopped = true; 
+            onEnemyMoving?.Invoke(Vector3.zero); 
+        }
     }
-    
 }

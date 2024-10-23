@@ -148,7 +148,8 @@ public class CameraController : MonoBehaviour
 
     private void AdjustCameraDistance()
     {
-        
+        if (GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie)
+            return;
         Vector3 newOffset = posForCam * cameraDistanceScaler;
         posForCam = newOffset;
     }

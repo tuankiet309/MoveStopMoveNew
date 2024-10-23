@@ -1,44 +1,45 @@
- using UnityEngine;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class LifeComponent : MonoBehaviour
 {
+    int health = 1;
+
     public UnityEvent<string> onLifeEnds;
-    private bool isDead = false;
-    private string killerName = "";
+    protected bool isDead = false;
+    protected string killerName = "";
 
-    public bool IsDead { get => isDead; private set { isDead = value; } }
-    public string KillerName { get => killerName; private set { killerName = value; } }
+    public bool IsDead { get => isDead; protected set { isDead = value; } }
+    public string KillerName { get => killerName; protected set { killerName = value; } }
 
-    private void Start()
+    protected virtual void Start()
     {
         ResetLifeState();
     }
-    private void OnEnable()
-    {  
-        onLifeEnds.AddListener(UpdateDyingState);        
+
+    protected virtual void OnEnable()
+    {
+        onLifeEnds.AddListener(UpdateDyingState);
         ResetLifeState();
         ToggleImportantComponents(true);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
-        
         onLifeEnds.RemoveAllListeners();
         ResetLifeState();
     }
 
-    private void UpdateDyingState(string killer)
+    protected virtual void UpdateDyingState(string killer)
     {
         IsDead = true;
         KillerName = killer;
         ToggleImportantComponents(false);
     }
 
-    private void ToggleImportantComponents(bool isOn)
+    protected virtual void ToggleImportantComponents(bool isOn)
     {
-        
         ActorMovementController actorMovementController = GetComponent<ActorMovementController>();
         Rigidbody rb = GetComponent<Rigidbody>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
@@ -46,26 +47,37 @@ public class LifeComponent : MonoBehaviour
 
         if (actorMovementController != null)
         {
-            actorMovementController.enabled = isOn; 
+            actorMovementController.enabled = isOn;
         }
-        if(rb != null)
+        if (rb != null)
         {
             rb.velocity = Vector3.zero;
         }
         if (agent != null)
         {
-            agent.speed = isOn? agent.speed : 0; 
+            agent.speed = isOn ? agent.speed : 0;
         }
 
-        if(collider != null)
+        if (collider != null)
         {
             collider.enabled = isOn;
         }
     }
-
-    private void ResetLifeState()
+    public virtual bool DamageHealth(string attackerName)
     {
-        isDead = false; 
-        killerName = ""; 
+        health -= 1;
+        if(health <=0)
+        {
+            onLifeEnds?.Invoke(attackerName);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    protected virtual void ResetLifeState()
+    {
+        isDead = false;
+        killerName = "";
     }
 }

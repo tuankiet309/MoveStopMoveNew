@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.2641008
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.217361
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_LocalRotation.w
@@ -71,5 +71,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 37a28123e5e39f44fbff5daa106af161,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7804847594514683985}
   m_SourcePrefab: {fileID: 100100000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+--- !u!1 &3840038639768289419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 37a28123e5e39f44fbff5daa106af161,
+    type: 3}
+  m_PrefabInstance: {fileID: 3840038639768192555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7804847594514683985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840038639768289419}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.011144503, y: 0.024316883, z: 0.0023885246}
+  m_Center: {x: -0.0005863007, y: -0.0041246577, z: -6.4344295e-18}

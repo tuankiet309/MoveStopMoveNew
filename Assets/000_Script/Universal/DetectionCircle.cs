@@ -18,12 +18,14 @@ public class DetectionCircle : MonoBehaviour
 
     private void Awake()
     {
-        circleRadius = CONSTANT_VALUE.FIRST_CIRCLE_RADIUS;
-        circleRadiusIncreaser = CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
-        colliderToChanged.radius = circleRadius;
+        
     }
 
-    private void Start() { }
+    private void Start() {
+    
+        circleRadius = GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS;
+        circleRadiusIncreaser = CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
+        colliderToChanged.radius = circleRadius;}
 
     private void OnTriggerEnter(Collider other)
     {

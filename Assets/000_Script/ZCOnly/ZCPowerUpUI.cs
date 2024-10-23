@@ -50,7 +50,7 @@ public class ZCPowerUpUI : MonoBehaviour
         imageDisplay.sprite = zCPower.PowerImage;
         nameOfPower.text = zCPower.PowerName;
         Pick.onClick.RemoveAllListeners();
-        Pick.onClick.AddListener(() => { Player.Instance.GetComponent<ZCAttributeController>().ZCPower1 = zCPower; });
+        Pick.onClick.AddListener(() => { Player.Instance.GetComponent<ZCAttributeController>().SetZCPower(zCPower); });
         Pick.onClick.AddListener(CloseThisStuff );
         CurrentZCIndex++;        
     }

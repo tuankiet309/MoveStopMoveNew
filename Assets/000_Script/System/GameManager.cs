@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } private set { } }
-    private Enum.GameState currentGameState = Enum.GameState.Hall;
-    private Enum.InGameState currentInGameState = Enum.InGameState.PVE;
+    [SerializeField]private Enum.GameState currentGameState = Enum.GameState.Hall;
+    [SerializeField]private Enum.InGameState currentInGameState = Enum.InGameState.PVE;
     public UnityEvent<Enum.GameState,Enum.InGameState> onStateChange;
     
 
@@ -25,9 +25,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
-
-        SetGameStates(Enum.GameState.Ingame, Enum.InGameState.Zombie);
-        
+   
     }
     private void Start()
     {

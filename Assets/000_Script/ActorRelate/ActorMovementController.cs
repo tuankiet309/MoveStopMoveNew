@@ -34,7 +34,13 @@ public class ActorMovementController : MonoBehaviour
         if(actorAtributeController != null)
         {
             actorAtributeController.onBuffChange.AddListener(UpdateBuffFromSkin);
+            ZCAttributeController zCAttributeController = actorAtributeController as ZCAttributeController;
+            if(zCAttributeController != null)
+            {
+                zCAttributeController.onChoseZCPower.AddListener(UpdateBuffMovespeedFromZC);
+            }
         }
+        UpdateBuffMovespeedFromZC();
         
     }
 
@@ -69,16 +75,23 @@ public class ActorMovementController : MonoBehaviour
     }
     protected virtual void UpdateBuffMovespeedFromZC()
     {
-        if ((actorAtributeController as ZCAttributeController).Stats != null)
+        if(actorAtributeController is ZCAttributeController)
         {
-            foreach (var stat in (actorAtributeController as ZCAttributeController).Stats)
+            speedBuffFromZC = 0;
+            ZCAttributeController zc = actorAtributeController as ZCAttributeController;
+            foreach( var stat in zc.Stats)
             {
-                if (stat.Type == Enum.ZCUpgradeType.Speed)
+                if(stat.Type == Enum.ZCUpgradeType.Speed )
                 {
-                    speedBuffFromZC = moveSpeed * stat.HowMuchUpgrade/100;
+                    speedBuffFromZC += (stat.HowMuchUpgrade/100) * moveSpeed;
                 }
             }
+            if(zc.ZCPower1.PowerType == Enum.ZCPowerUp.MoveFaster)
+            {
+                speedBuffFromZC += 0.2f * moveSpeed;
+            }
         }
+        
     }
     protected virtual void UpdateBuffFromSkin()
     {

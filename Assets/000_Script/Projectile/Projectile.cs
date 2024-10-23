@@ -6,23 +6,41 @@ using static Enum;
 
 public class Projectile : MonoBehaviour, IProjectile
 {
-    float distanceTilDie = 0f;
+    float distanceTilDie = CONSTANT_VALUE.FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
+
     float distanceComeBackAccept = 1f;
     Enum.WeaponType weaponType;
     private Vector3 flyDirection;
     ActorAttacker actorAttacker;
     private Vector3 tempoScale;
 
+    private bool isGoThroughWall = false;
     [SerializeField] DamageComponent damageComponent;
     [SerializeField] Rigidbody rb;
+
+    private bool stopFlying = false;
 
     public WeaponType WeaponType { get => weaponType; private set { } }
     public float DistanceTilDie { get => distanceTilDie; private set { } }
 
+    public bool IsGoThroughWall { get => isGoThroughWall; set => isGoThroughWall = value; }
+
     private void Awake()
     {
-        distanceTilDie = CONSTANT_VALUE.FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
+        
+    }
+    private void Start()
+    {
+        distanceTilDie = GameManager.Instance.CurrentInGameState == InGameState.PVE? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
         tempoScale = transform.localScale * 3f;
+        if (isGoThroughWall) 
+        {
+             transform.GetChild(0).GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            transform.GetChild(0).GetComponent<Collider>().enabled = false;
+        }
     }
 
     public virtual void InitForProjectileToThrow(ActorAttacker Initiator,Enum.WeaponType weapon, float buff)
@@ -58,7 +76,7 @@ public class Projectile : MonoBehaviour, IProjectile
     private IEnumerator ChaseTarget(Vector3 initPos, GameObject target)
     {
         Vector3 direction = target.transform.position - transform.position;
-        while (distanceTilDie > Vector3.Distance(transform.position, initPos))
+        while (distanceTilDie > Vector3.Distance(transform.position, initPos) && !stopFlying)
         {
             direction = target!=null ? target.transform.position - transform.position : direction;
             direction.y = 0; 
@@ -82,7 +100,7 @@ public class Projectile : MonoBehaviour, IProjectile
     //Bay theo huong 
     IEnumerator Fly(Vector3 initDistance,Vector3 flyDir)
     {
-        while(distanceTilDie  > Vector3.Distance(transform.position, initDistance))
+        while(distanceTilDie  > Vector3.Distance(transform.position, initDistance) && !stopFlying)
         {
             rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED );
             if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
@@ -114,7 +132,7 @@ public class Projectile : MonoBehaviour, IProjectile
     //Bay ultimate
     IEnumerator SpeacialFly(Vector3 initDistance, Vector3 flyDir)
     {
-        while (distanceTilDie*2.5f > Vector3.Distance(transform.position, initDistance))
+        while (distanceTilDie*2.5f > Vector3.Distance(transform.position, initDistance) && !stopFlying)
         {
             rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED);
             transform.localScale = Vector3.Lerp(transform.localScale, tempoScale, 0.03f);
@@ -131,6 +149,20 @@ public class Projectile : MonoBehaviour, IProjectile
     private void SelfDestroy()
     {
         Destroy(gameObject);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject != actorAttacker.gameObject)
+        {
+            stopFlying = true;
+            GetComponent<Collider>().enabled = false;
+            StartCoroutine(DestroyAfterSomeTime());
+        }   
+    }
+    IEnumerator  DestroyAfterSomeTime()
+    {
+        yield return new WaitForSeconds(2f);
+        SelfDestroy();
     }
 
 }

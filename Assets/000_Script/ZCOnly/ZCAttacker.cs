@@ -6,7 +6,16 @@ using UnityEngine;
 public class ZCAttacker : ActorAttacker
 {
     private int moreWeapon = 1;
-    [SerializeField] private ZCAttributeController zCAttributeController;
+    private ZCAttributeController zCAttributeController;
+
+    private bool isGrowing = false;
+
+    protected override void Start()
+    {
+        base.Start();
+        zCAttributeController = actorAtributeController as ZCAttributeController;
+        zCAttributeController.onPlayerUpgraded.AddListener(OnPlayerUpgrade);
+    }
     protected override GameObject GetFirstValidTarget()
     {
         foreach (var target in enemyAttackers)
@@ -68,7 +77,7 @@ public class ZCAttacker : ActorAttacker
                         ? actorAtributeController.BuffValues[Enum.AttributeBuffs.Range] : 0)
                 );
 
-                newProjectile.FlyToPos(spawnPosition + adjustedThrowDirection * 100f, false);
+                newProjectile.FlyToPos(spawnPosition + adjustedThrowDirection * 100f, isGrowing);
             }
         }
         else
@@ -87,7 +96,7 @@ public class ZCAttacker : ActorAttacker
                     ? actorAtributeController.BuffValues[Enum.AttributeBuffs.Range] : 0)
             );
 
-            newProjectile.FlyToPos(spawnPosition + throwDirection * 100f, false);
+            newProjectile.FlyToPos(spawnPosition + throwDirection * 100f, isGrowing);
         }
     }
     //////////////////////////Attack theo gameobjet////////////////////
@@ -112,7 +121,7 @@ public class ZCAttacker : ActorAttacker
 
     public override void PrepareToAttack()
     {
-        ZCPower power = (actorAtributeController as ZCAttributeController).ZCPower1;
+        ZCPower power = zCAttributeController.ZCPower1;
         if (power != null)
         {
             switch (power.PowerType) 
@@ -132,7 +141,24 @@ public class ZCAttacker : ActorAttacker
                 case Enum.ZCPowerUp.Tripple:
                     TrippleAttack(); 
                     break;
-
+                case Enum.ZCPowerUp.IgnoreWall:
+                    SetThroughWall();
+                    break;
+                case Enum.ZCPowerUp.PieceWeapon:
+                    SetPiercingThroughEnemy();
+                    break;
+                case Enum.ZCPowerUp.GrowWeapon:
+                    isGrowing = true;
+                    Attack(targetToAttackPos, true);
+                    break;
+                case Enum.ZCPowerUp.BulletPlus:
+                    moreWeapon++;
+                    Attack(targetToAttackPos, true);
+                    break;
+                case Enum.ZCPowerUp.Continous:
+                    Attack(targetToAttackPos, true);
+                    StartCoroutine(ContinousAttack());
+                    break;
                 default:
                     Attack(targetToAttackPos, true);
                     break;
@@ -145,6 +171,17 @@ public class ZCAttacker : ActorAttacker
         }
     }
 
+    private void SetPiercingThroughEnemy()
+    {
+        weaponToThrow.GetComponent<DamageComponent>().IsDestroyedAfterCollide = false;
+        weaponToThrow.IsGoThroughWall = true;
+        Attack(targetToAttackPos, true);
+    }
+    private void SetThroughWall()
+    {
+        weaponToThrow.IsGoThroughWall = true;
+        Attack(targetToAttackPos, true);
+    }
     private void BehindAttack()
     {
         Vector3 attackDir = targetToAttackPos - throwLocation.position;
@@ -211,24 +248,14 @@ public class ZCAttacker : ActorAttacker
         targetToAttackPos = Vector3.zero;
     }
 
-    private void SetProjectileNotBeingDestroy()
-    {
-
-    }
     IEnumerator ContinousAttack()
     {
         yield return new WaitForSeconds(0.2f);
         Attack(targetToAttackPos, true);
     }
-    protected override void OnUpgrade()
+    protected virtual void OnPlayerUpgrade()
     {
-        foreach (var stat in (actorAtributeController as ZCAttributeController).Stats)
-        {
-            if(stat.Type == Enum.ZCUpgradeType.MaxWeapon)
-            {
-                moreWeapon = stat.HowMuchUpgrade;
-            }
-        }
+        moreWeapon++;
     }
 
 

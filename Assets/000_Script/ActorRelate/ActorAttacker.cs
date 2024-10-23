@@ -65,6 +65,10 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         }
         ResetState();
     }
+    protected virtual void Start()
+    {
+
+    }
     protected virtual void Update()
     {
         CheckAndUpdateTargetCircle();
@@ -161,7 +165,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Attack(targetToAttackPos);
         targetToAttackPos = Vector3.zero;
     }
-    protected void InitWeapon(Weapon oldWeapon,Weapon newWeapon)
+    protected virtual void InitWeapon(Weapon oldWeapon,Weapon newWeapon)
     {
         ClearOldWeapon();
         weapon = newWeapon;

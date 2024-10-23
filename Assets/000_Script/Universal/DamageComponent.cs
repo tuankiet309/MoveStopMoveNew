@@ -4,6 +4,8 @@ using UnityEngine;
 public class DamageComponent : MonoBehaviour
 {
     protected ActorAttacker initiator;
+    private bool isDestroyedAfterCollide = true;
+    public bool IsDestroyedAfterCollide { get => isDestroyedAfterCollide; set => isDestroyedAfterCollide = value; }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -13,17 +15,16 @@ public class DamageComponent : MonoBehaviour
         if (other.CompareTag("AttackCircle") || other.CompareTag(gameObject.tag))
             return;
         LifeComponent lifeComponent = other.GetComponent<LifeComponent>();
-        if (gameObject.CompareTag("Zombie") && lifeComponent !=null)
-        {
-            lifeComponent.onLifeEnds?.Invoke("A zombie");
-            return;
-        }
+
         
         if (lifeComponent != null)
         {
-            lifeComponent.onLifeEnds?.Invoke(initiator.GetComponent<ActorInformationController>().GetName());
-            initiator.EventIfKillSomeone();
-            SelfDestroy();
+            bool check = lifeComponent.DamageHealth(initiator.GetComponent<ActorInformationController>().GetName());
+            if(check)
+                initiator.EventIfKillSomeone();
+            if (gameObject.CompareTag("Zombie"))
+                return;
+            SelfDestroyAfterCollide(isDestroyedAfterCollide);
         }
     }
 
@@ -32,8 +33,10 @@ public class DamageComponent : MonoBehaviour
         initiator = master;
     }
 
-    protected virtual void SelfDestroy()
+    protected virtual void SelfDestroyAfterCollide(bool isCanSelfDesttroy)
     {
-        Destroy(gameObject);
+        if(isCanSelfDesttroy)
+            Destroy(gameObject);
+        return;
     }
 }

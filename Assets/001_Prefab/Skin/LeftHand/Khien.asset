@@ -20,4 +20,7 @@ MonoBehaviour:
   skinPosOffsetOnWear: {x: 0.056, y: 0.098, z: -0.082}
   skinRotOffsetOnWear: {x: 0.39667416, y: -0.2794213, z: 0.11264967, w: -0.8671121}
   attributeBuffs: 0
-  buffMultiplyer: 0
+  buffMultiplyer: 2
+  isUnlock: 0
+  isUnlockedOnce: 0
+  gold: 500

@@ -10,8 +10,9 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const int SCORE_MILESTONE_INCREASER = 3;
     ///////////////DETECT CIRCLE///////////////
     public const float FIRST_CIRCLE_RADIUS = 5;
+    public const float ZC_FIRST_CIRCLE_RADIUS = 7;
     public const float CIRCLE_RADIUS_INCREASER = 0.75f;
-    public const float BODY_SCALER_INCREASER = 0.1F;
+    public const float BODY_SCALER_INCREASER = 0.15F;
     //////////////MOVEMENT_INFO/////////////////
     public const float FIRST_MOVESPEED = 5f;
     public const float FIRST_MOVESPEED_ENEMY = 5f;
