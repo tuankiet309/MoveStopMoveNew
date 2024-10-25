@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Axe_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: 2364ecf6-ac6c-4676-9648-c359366a3865
   weapon: {fileID: 11400000, guid: 01efe6fe52708d5439ab1d7283800d45, type: 2}
   weaponName: Axe
   goldCost: 50
-  isPurchased: 1
+  isPurchased: 0

@@ -42,6 +42,7 @@ public class DeadUIController : MonoBehaviour
             reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(true);
         }
+        DataPersistenceManager.Instance.SaveGame();
         SceneController.Instance.LoadSceneAsyncWay(SceneManager.GetActiveScene());
     }
    

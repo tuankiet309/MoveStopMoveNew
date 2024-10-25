@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Original Body
   m_EditorClassIdentifier: 
+  skinId: 6d15e4a3-9b18-4e40-8855-2f245adb70c6
   skinToWear: {fileID: 2775400160462858182, guid: 1a846439aecab5c4d8c53de45a23685f,
     type: 3}
   skinToShow: {fileID: 2775400160462858182, guid: 1a846439aecab5c4d8c53de45a23685f,

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Boomerang_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: cfa8da82-7d39-4daa-a2a3-ca3eeaa83262
   weapon: {fileID: 11400000, guid: 86b2dec2349f97b45b56db72d440821b, type: 2}
   weaponName: Boomerang
   goldCost: 30
-  isPurchased: 1
+  isPurchased: 0

@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Weapon[] weaponToSpawnWith;
     [SerializeField] private string[] nameToSpawnWith;
     [SerializeField] private Transform transformHolder;
-    [SerializeField] protected int numberOfMaxEnemies = 0;
+    [SerializeField] private int numberOfMaxEnemies = 0;
     [SerializeField][Range(0,12)] protected int numberOfMaxEnemiesAtATime = 0;
 
     private int numberOfEnemiesSpawned = 0;
@@ -34,17 +34,13 @@ public class EnemySpawner : MonoBehaviour
 
     public int NumberOfEnemiesLeft { get => numberOfEnemiesLeft; private set { } }
 
-    private void OnDestroy()
-    {
-        GameManager.Instance.onStateChange.RemoveListener(SelfActive);
-    }
+    public int NumberOfMaxEnemies { get => numberOfMaxEnemies; set => numberOfMaxEnemies = value; }
+    public Transform TransformHolder { get => transformHolder; set => transformHolder = value; }
 
     private void OnEnable()
     {
-        GameManager.Instance.onStateChange.AddListener(SelfActive);
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
     }
-
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -61,8 +57,9 @@ public class EnemySpawner : MonoBehaviour
         previousNumberOfEnemiesLeft = numberOfEnemiesLeft;
         Enemy.numberOfEnemyHasDie = 0;
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
-
         availableBodySkins = new List<Skin>(bodyToSpawn);
+        GameManager.Instance.onStateChange.AddListener(SelfActive);
+        SelfActive(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
 
     private void Update()

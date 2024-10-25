@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Comy
   m_EditorClassIdentifier: 
+  skinId: 38a7dbd1-09d6-4739-ae08-1af54c79da0b
   skinToWear: {fileID: 7265786607980737179, guid: 950a47f06ce678d4790c22b31aa60a5d,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: 950a47f06ce678d4790c22b31aa60a5d,

@@ -7,7 +7,7 @@ using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopItemUI : MonoBehaviour
+public class ShopItemUI : MonoBehaviour,IDataPersistence
 {
     [SerializeField] TextMeshProUGUI weaponName;
     [SerializeField] TextMeshProUGUI attributeBuff;
@@ -257,5 +257,37 @@ public class ShopItemUI : MonoBehaviour
     {
         weaponItem[weaponIndex].IsPurchased = true;
         LoadInfomationOfCurrentWeapon();
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        foreach (ShopItemWeapon shopItemWeapon in weaponItem)
+        {
+            WeaponShopItemData matchingWeaponData = gameData.weaponDatas.Find(weaponData => weaponData.id == shopItemWeapon.IdWeapon);
+
+            if (matchingWeaponData != null)
+            {
+                shopItemWeapon.IsPurchased = matchingWeaponData.isPurchased;
+            }
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        foreach (ShopItemWeapon shopItemWeapon in weaponItem)
+        {
+            WeaponShopItemData matchingWeaponData = gameData.weaponDatas.Find(weaponData => weaponData.id == shopItemWeapon.IdWeapon);
+
+            if (matchingWeaponData != null)
+            {
+                matchingWeaponData.isPurchased = shopItemWeapon.IsPurchased;
+            }
+            else
+            {
+                WeaponShopItemData newWeaponData = new WeaponShopItemData();
+                newWeaponData.InitializeWeaponData(shopItemWeapon.IdWeapon, shopItemWeapon.IsPurchased, new List<int>() { 0,1}); 
+                gameData.weaponDatas.Add(newWeaponData);
+            }
+        }
     }
 }

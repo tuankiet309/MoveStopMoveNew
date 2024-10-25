@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Headphone
   m_EditorClassIdentifier: 
+  skinId: 3d1479fb-8b4b-4abd-9bff-9dad59d75eb2
   skinToWear: {fileID: 1847974860367189984, guid: 194f408b844e6f24a8357fd5e266fc5b,
     type: 3}
   skinToShow: {fileID: 1847974860367189984, guid: e0a3a63658a16aa459f5392cbb452df4,

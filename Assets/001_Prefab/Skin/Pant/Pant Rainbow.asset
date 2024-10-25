@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Rainbow
   m_EditorClassIdentifier: 
+  skinId: 9264ae9c-2d5d-4318-9475-1f5ad943e6cf
   skinToWear: {fileID: 7265786607980737179, guid: 4ad85b7e5fdb9fb43afb6266f4cec73c,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: 4ad85b7e5fdb9fb43afb6266f4cec73c,

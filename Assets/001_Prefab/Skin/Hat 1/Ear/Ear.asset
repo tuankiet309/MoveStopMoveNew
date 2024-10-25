@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Ear
   m_EditorClassIdentifier: 
+  skinId: 794897a5-2fbb-4b3a-966e-79963c5ced90
   skinToWear: {fileID: 8177007967404439660, guid: 0418b43aad18e3143b2bb178ebbffff3,
     type: 3}
   skinToShow: {fileID: 8177007967404439660, guid: 759ec2b4d879b93488a119a26093aaa4,

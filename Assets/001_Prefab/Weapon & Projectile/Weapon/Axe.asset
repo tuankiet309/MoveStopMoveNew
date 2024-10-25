@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
+  idWeapon: b92dc6b9-0f31-43fa-a805-17a94c974c78
   weaponOnHand: {fileID: 4959626780400396840, guid: 93e47526aaf1edf4e9781c8d9a2a1f78,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
@@ -22,7 +23,7 @@ MonoBehaviour:
   - skin: {fileID: 2121252925101514808, guid: e95fa92d8b47e1f4894ed6f96a568f24, type: 3}
     isLocked: 0
   - skin: {fileID: 2121252925101514808, guid: afbb6bc8f41acdc4887da1964ce2294d, type: 3}
-    isLocked: 0
+    isLocked: 1
   - skin: {fileID: 2121252925101514808, guid: c7f3f1a788168084b98f507eee4d51b3, type: 3}
     isLocked: 1
   - skin: {fileID: 2121252925101514808, guid: 5ace93f439aeb064086693d9afd5f9ec, type: 3}
@@ -35,4 +36,4 @@ MonoBehaviour:
   weaponType: 1
   buff: 0
   buffMultiplyer: 2
-  currentIndexOfTheSkin: 3
+  currentIndexOfTheSkin: 5

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Horn
   m_EditorClassIdentifier: 
+  skinId: 6d59a758-37ec-4f17-8285-ef4016d9b739
   skinToWear: {fileID: 1144280361211425699, guid: 3226f543d4df21a46a3518a377683983,
     type: 3}
   skinToShow: {fileID: 1144280361211425699, guid: d07fd265dcfd2664fad837a0d7c0367c,

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Hat
   m_EditorClassIdentifier: 
+  skinId: 675f5fc0-d6cf-4391-955d-0d1e0990e038
   skinToWear: {fileID: 6693166174921233835, guid: eb0316d13be866441b01b8bf716165b5,
     type: 3}
   skinToShow: {fileID: 6693166174921233835, guid: d549d8e8e5173bd4399c900b9d578a3d,

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Chambi
   m_EditorClassIdentifier: 
+  skinId: 533e15e8-dd06-4e22-8c2f-d965cf36359e
   skinToWear: {fileID: 7265786607980737179, guid: eccd68675e4b41245a608cdff3cca1d6,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: eccd68675e4b41245a608cdff3cca1d6,

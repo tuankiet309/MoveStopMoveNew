@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ShopItemWeapon : ScriptableObject
 {
+    [SerializeField] private string idWeapon;
     [SerializeField] private Weapon weapon;
     [SerializeField] private string weaponName;
     [SerializeField] private int goldCost;
@@ -14,4 +15,11 @@ public class ShopItemWeapon : ScriptableObject
     public string WeaponName { get => weaponName; set => weaponName = value; }
     public int GoldCost { get => goldCost; set => goldCost = value; }
     public bool IsPurchased { get => isPurchased; set => isPurchased = value; }
+    public string IdWeapon { get => idWeapon; set => idWeapon = value; }
+
+    [ContextMenu("Generate GUID")]
+    private void GenerateGUID()
+    {
+        idWeapon = System.Guid.NewGuid().ToString();
+    }
 }

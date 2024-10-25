@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Enum;
 
-public class ShopSkinUI : MonoBehaviour
+public class ShopSkinUI : MonoBehaviour,IDataPersistence
 {
     [SerializeField] ShopItemSkin hatItems;
     [SerializeField] ShopItemSkin pantItems;
@@ -279,6 +280,89 @@ public class ShopSkinUI : MonoBehaviour
         skinComp.ClearSkin(Enum.SkinType.Tail);
         skinComp.ClearSkin(Enum.SkinType.Pant);
         skinComp.ClearSkin(Enum.SkinType.Body);
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        foreach(Skin skin in hatItems.SkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SkinId);
+            skin.IsUnlock = skinData.isPurchased;
+        }
+        foreach (Skin skin in leftHandItems.SkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SkinId);
+            skin.IsUnlock = skinData.isPurchased;
+        }
+        foreach (Skin skin in pantItems.SkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SkinId);
+            skin.IsUnlock = skinData.isPurchased;
+        }
+        foreach (SetSkin skin in fullSetItems.SetSkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SetID);
+            skin.IsUnlock = skinData.isPurchased;
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        foreach (Skin skin in hatItems.SkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SkinId);
+            if (skinData != null)
+            {
+                skinData.isPurchased = skin.IsUnlock;
+            }
+            else
+            {
+                skinData.InitializeSkinData(skin.SkinId, false);
+                gameData.skinDatas.Add(skinData);
+            }
+        }
+
+        foreach (Skin skin in leftHandItems.SkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SkinId);
+            if (skinData != null)
+            {
+                skinData.isPurchased = skin.IsUnlock;
+            }
+            else
+            {
+                skinData.InitializeSkinData(skin.SkinId, false);
+                gameData.skinDatas.Add(skinData);
+            }
+        }
+
+        foreach (Skin skin in pantItems.SkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SkinId);
+            if (skinData != null)
+            {
+                skinData.isPurchased = skin.IsUnlock;
+            }
+            else
+            {
+                skinData.InitializeSkinData(skin.SkinId, false);
+                gameData.skinDatas.Add(skinData);
+            }
+        }
+
+        foreach (SetSkin skin in fullSetItems.SetSkinToAttach)
+        {
+            SkinShopItemData skinData = gameData.skinDatas.Find(skinDt => skinDt.idOfSkin == skin.SetID);
+            if (skinData != null)
+            {
+                skinData.isPurchased = skin.IsUnlock;
+            }
+            else
+            {
+                skinData.InitializeSkinData(skin.SetID, false);
+                gameData.skinDatas.Add(skinData);
+            }
+        }
     }
 }
 class ButtonAndType

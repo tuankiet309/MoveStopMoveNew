@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Cowboyt
   m_EditorClassIdentifier: 
+  skinId: f722aeae-ac0c-4710-90a7-d6d8a7d18900
   skinToWear: {fileID: 7529140814959282464, guid: b231528e2b3827d4ebbbc3bcb0df3ace,
     type: 3}
   skinToShow: {fileID: 2033611963214875515, guid: 7df99e6b29ffea14ba4586df65f5578b,

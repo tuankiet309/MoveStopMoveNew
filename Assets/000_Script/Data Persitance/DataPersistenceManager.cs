@@ -1,0 +1,169 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+using UnityEngine.SceneManagement;
+
+public class DataPersistenceManager : MonoBehaviour
+{
+    [SerializeField] private string fileName;
+    [Header("NEW GAME CONFIG")]
+    [SerializeField] private Weapon firstWeaponOfPlayer;
+    [SerializeField] private Skin[] firstSkinOfPlayer;
+    [SerializeField] private ShopItemWeapon[] shopItemWeaponFirst;
+    [SerializeField] private ShopItemSkin[] shopItemSkinFirst;
+
+    private GameData gameData;
+    private List<IDataPersistence> dataPersistenceObject;
+    private FileDataHandler fileDataHandler;
+    private static DataPersistenceManager instance;
+
+    public static DataPersistenceManager Instance { get { return instance; } private set { } }
+
+    public GameData GameData { get => gameData; private set{ } }
+
+    public Dictionary<string, Weapon> WeaponDatabase { get => weaponDatabase; set => weaponDatabase = value; }
+    public Dictionary<string, Skin> SkinDatabase { get => skinDatabase; set => skinDatabase = value; }
+    public Dictionary<string, SetSkin> SetSkinDatabase { get => setSkinDatabase; set => setSkinDatabase = value; }
+
+    private Dictionary<string, Weapon> weaponDatabase = new Dictionary<string, Weapon>();
+    private Dictionary<string, Skin> skinDatabase = new Dictionary<string, Skin>();
+    private Dictionary<string,SetSkin> setSkinDatabase = new Dictionary<string,SetSkin>();
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        LoadWeaponDatabase();
+        LoadSkinDatabase();
+    }
+
+    private void Start()
+    {
+        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.dataPersistenceObject = FindAllDataPersistence();
+        LoadGame();
+    }
+
+    private void LoadWeaponDatabase()
+    {
+        foreach (var shopItem in shopItemWeaponFirst)
+        {
+            if (!weaponDatabase.ContainsKey(shopItem.IdWeapon))
+            {
+                weaponDatabase.Add(shopItem.Weapon.IdWeapon, shopItem.Weapon);
+            }
+        }
+        Debug.Log("Weapon database loaded with " + weaponDatabase.Count + " items.");
+    }
+    private void LoadSkinDatabase()
+    {
+        foreach (var shopItem in shopItemSkinFirst)
+        {
+            foreach (var skin in shopItem.SkinToAttach)
+            {
+                if (!skinDatabase.ContainsKey(skin.SkinId))
+                {
+                    skinDatabase.Add(skin.SkinId, skin);
+                }
+            }
+
+            foreach (var setSkin in shopItem.SetSkinToAttach)
+            {
+                if (!setSkinDatabase.ContainsKey(setSkin.SetID))
+                {
+                    setSkinDatabase.Add(setSkin.SetID, setSkin);
+                }
+            }
+        }
+        foreach(var skin in firstSkinOfPlayer)
+        {
+            skinDatabase.Add(skin.SkinId.ToString(), skin);
+        }
+        Debug.Log("Skin database loaded with " + skinDatabase.Count + " items.");
+    }
+    public void NewGame()
+    {
+        this.gameData = new GameData();
+        string startingWeaponId = firstWeaponOfPlayer.IdWeapon;
+        List<string> startingSkinIds = firstSkinOfPlayer.Select(skin => skin.SkinId).ToList();
+        gameData.playerData.InitializePlayerData(startingWeaponId, startingSkinIds.ToArray(),false);
+        for (int i = 0; i < shopItemWeaponFirst.Length; i++)
+        {
+            WeaponShopItemData weapon = new WeaponShopItemData();
+
+            if (i == 0)
+            {
+                weapon.InitializeWeaponData(shopItemWeaponFirst[i].IdWeapon, true, new List<int> { 0, 1 });
+                shopItemWeaponFirst[i].IsPurchased = true;
+            }
+            else 
+            { 
+                weapon.InitializeWeaponData(shopItemWeaponFirst[i].IdWeapon, false, new List<int> { 0, 1 });
+                shopItemWeaponFirst[i].IsPurchased = false;
+            }
+            gameData.weaponDatas.Add(weapon);
+        }
+        for(int i = 0;i < shopItemSkinFirst.Length;i++)
+        {
+            for(int j = 0; j < shopItemSkinFirst[i].SkinToAttach.Length;j++)
+            {
+                SkinShopItemData  skin = new SkinShopItemData();
+                skin.InitializeSkinData(shopItemSkinFirst[i].SkinToAttach[j].SkinId, false);
+                shopItemSkinFirst[i].SkinToAttach[j].IsUnlock = false;
+                gameData.skinDatas.Add(skin);
+
+            }
+            for (int j = 0; j < shopItemSkinFirst[i].SetSkinToAttach.Length; j++)
+            {
+                SkinShopItemData skin = new SkinShopItemData();
+                skin.InitializeSkinData(shopItemSkinFirst[i].SetSkinToAttach[j].SetID, false);
+                shopItemSkinFirst[i].SetSkinToAttach[j].IsUnlock = false;
+                gameData.skinDatas.Add(skin);
+            }
+        }
+    }
+    public void LoadGame()
+    {
+        //
+        this.gameData = fileDataHandler.Load();
+        if(this.gameData == null)
+        {
+            Debug.Log("No data was found. Init data to defaults");
+            NewGame();
+        }
+        foreach(IDataPersistence dataPersistence in dataPersistenceObject)
+        {
+            dataPersistence.LoadData(gameData);
+        }
+    }
+    public void SaveGame()
+    {
+        foreach(IDataPersistence dataPersistence in dataPersistenceObject)
+        {
+            dataPersistence.SaveData(ref gameData);
+        }
+        fileDataHandler.Save(gameData);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+    private List<IDataPersistence> FindAllDataPersistence()
+    {
+        IEnumerable<IDataPersistence> dataPersistences = FindObjectsOfType<MonoBehaviour>()
+            .OfType<IDataPersistence>();
+        return new List<IDataPersistence> (dataPersistences);
+    }
+    private void OnSceneUnloaded(Scene currentScene)
+    {
+        SaveGame(); 
+    }
+}

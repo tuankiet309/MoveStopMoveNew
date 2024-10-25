@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Knife_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: b14aa401-e274-47cf-b439-6ef318db02ba
   weapon: {fileID: 11400000, guid: 97f5a0f0a5783824786b2437286e594c, type: 2}
   weaponName: Knife
   goldCost: 300
-  isPurchased: 1
+  isPurchased: 0

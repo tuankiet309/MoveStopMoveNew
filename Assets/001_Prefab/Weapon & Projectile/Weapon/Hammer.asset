@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Hammer
   m_EditorClassIdentifier: 
+  idWeapon: 91eea2e2-555f-4a01-a4bc-2690ef7d5bf4
   weaponOnHand: {fileID: 1332546103719427353, guid: c396e2b515bcb2c4a879efd37adaa9a4,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
@@ -20,7 +21,7 @@ MonoBehaviour:
   - skin: {fileID: 1332546103719427353, guid: 2b9918db6e8220341b1e375d3e9b75e9, type: 3}
     isLocked: 0
   - skin: {fileID: 1332546103719427353, guid: ed82f3f34bb2cf44db0859599530d62f, type: 3}
-    isLocked: 0
+    isLocked: 1
   - skin: {fileID: 1332546103719427353, guid: 85f1d70a9135f9340a49b99c1c6cd61a, type: 3}
     isLocked: 1
   - skin: {fileID: 1332546103719427353, guid: 39c5f05f2f05ed84fae6351908fd50dc, type: 3}
@@ -31,4 +32,4 @@ MonoBehaviour:
   weaponType: 1
   buff: 2
   buffMultiplyer: 0.5
-  currentIndexOfTheSkin: 1
+  currentIndexOfTheSkin: 0

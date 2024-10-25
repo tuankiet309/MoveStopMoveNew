@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Crow
   m_EditorClassIdentifier: 
+  skinId: 8a1d59a4-d128-492e-8b16-c9cfc16fb0b9
   skinToWear: {fileID: 8398421295334832299, guid: e6e76f4ec78785c4eabc5a3a97dd16cf,
     type: 3}
   skinToShow: {fileID: 4691073380277090352, guid: 00e2e46f2bb2e654d9c446df56b3fd8e,

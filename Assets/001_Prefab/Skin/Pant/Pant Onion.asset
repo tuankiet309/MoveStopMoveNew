@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Onion
   m_EditorClassIdentifier: 
+  skinId: 6641dc58-a46c-4371-9477-3ae1cd94b2a4
   skinToWear: {fileID: 7265786607980737179, guid: 80c15b83cfc81ce4d98bd42c81a31923,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: 80c15b83cfc81ce4d98bd42c81a31923,

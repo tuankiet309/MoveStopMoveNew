@@ -8,7 +8,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon", menuName = "Weapon", order = 1)]
 public class Weapon : ScriptableObject
 {
-    //Cac thong so can chinh sua trong editor
+
+    [SerializeField] private string idWeapon;
+
     [SerializeField] GameObject weaponOnHand;
     [SerializeField] Projectile weaponThrowAway;
 
@@ -22,11 +24,7 @@ public class Weapon : ScriptableObject
     [SerializeField] private int currentIndexOfTheSkin = 0;
 
 
-    float range = 0f;
-    private void OnEnable()
-    {
 
-    }
     public GameObject WeaponOnHand { get => weaponOnHand; private set { } }
     public Projectile WeaponThrowAway { get => weaponThrowAway; private set { } }
     public Vector3 WeaponOffsetPos { get => weaponOffsetPos; private set { } }
@@ -34,10 +32,16 @@ public class Weapon : ScriptableObject
     public Enum.WeaponType WeaponType { get => weaponType; private set { } }
     public Enum.AttributeBuffs Buff { get => buff; private set { } }
     public float BuffMultiplyer { get => buffMultiplyer; private set { } }
-    public float Range { get => range; private set { } }
     public SkinState[] PossibleSkinForThisWeapon { get => possibleSkinForThisWeapon; private set { } }
     public int CurrentIndexOfTheSkin { get => currentIndexOfTheSkin; set => currentIndexOfTheSkin = value; }
     public Vector3 WeaponOffsetOnThrow { get => weaponOffsetOnThrowPos; set => weaponOffsetOnThrowPos = value; }
+    public string IdWeapon { get => idWeapon; set => idWeapon = value; }
+
+    [ContextMenu("GenrateID")]
+    private void GenerateGUID()
+    {
+        idWeapon = System.Guid.NewGuid().ToString();
+    }
 }
 
 [System.Serializable]
@@ -50,7 +54,7 @@ public class SkinState
 
     public bool IsLocked { get => isLocked; set => isLocked = value; }
 
-    public void UnlokSkin()
+    public void UnlockSkin()
     {
         isLocked = false;
     }

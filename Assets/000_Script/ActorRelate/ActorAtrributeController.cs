@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ActorAtributeController : MonoBehaviour
+public class ActorAtributeController : MonoBehaviour,IDataPersistence
 {
     protected int score;
     protected int scoreMilestone;
@@ -184,6 +184,19 @@ public class ActorAtributeController : MonoBehaviour
 
             updateTempo = 0;
             isHaveUlti = false;
+        }
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        if(score > gameData.maxScore)
+        {
+            gameData.maxScore = score;
         }
     }
 }

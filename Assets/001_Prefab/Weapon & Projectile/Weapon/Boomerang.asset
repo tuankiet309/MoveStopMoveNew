@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Boomerang
   m_EditorClassIdentifier: 
+  idWeapon: 70df479c-36c5-44fd-9297-de821edaa117
   weaponOnHand: {fileID: 5201478806251685430, guid: 613b9297c4703f742b9120314e22fd26,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
@@ -22,7 +23,7 @@ MonoBehaviour:
   - skin: {fileID: 201651562477070323, guid: 74a04babd6fe744429033fceab7fe8ca, type: 3}
     isLocked: 0
   - skin: {fileID: 201651562477070323, guid: 7e03a1056f8dfa14c905bab7806b9925, type: 3}
-    isLocked: 0
+    isLocked: 1
   - skin: {fileID: 201651562477070323, guid: 1e3c2c271ad9f354b9e23f8b6e394ebf, type: 3}
     isLocked: 1
   - skin: {fileID: 201651562477070323, guid: 8d1a88dc34d7428479b01efe864afd44, type: 3}
@@ -33,4 +34,4 @@ MonoBehaviour:
   weaponType: 2
   buff: 0
   buffMultiplyer: 2
-  currentIndexOfTheSkin: 4
+  currentIndexOfTheSkin: 3

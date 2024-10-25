@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Batman
   m_EditorClassIdentifier: 
+  skinId: 9726bcea-c288-44dc-8ba1-593c7f4dbc7a
   skinToWear: {fileID: 7265786607980737179, guid: e93f280efed290941b09f4da373dd265,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: e93f280efed290941b09f4da373dd265,

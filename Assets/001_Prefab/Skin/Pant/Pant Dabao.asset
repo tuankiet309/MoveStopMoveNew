@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Dabao
   m_EditorClassIdentifier: 
+  skinId: 50788821-3700-4501-a267-d1d3961aa810
   skinToWear: {fileID: 7265786607980737179, guid: af939ec89bd8e924a9364b1ca9c4fe8c,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: af939ec89bd8e924a9364b1ca9c4fe8c,

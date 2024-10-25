@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Vantim
   m_EditorClassIdentifier: 
+  skinId: cbd377b9-e61a-43eb-8c23-4972b79fe9be
   skinToWear: {fileID: 7265786607980737179, guid: 447444bae35e0f64ebd52d858e59d9d4,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: 447444bae35e0f64ebd52d858e59d9d4,

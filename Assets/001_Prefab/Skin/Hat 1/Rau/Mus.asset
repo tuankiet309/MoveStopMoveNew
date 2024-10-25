@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Mus
   m_EditorClassIdentifier: 
+  skinId: 757a8ac2-62c2-473c-bb2d-2a30168e1dcc
   skinToWear: {fileID: 4769473882304577100, guid: 5f1e982b25138ef439568e94c10905ec,
     type: 3}
   skinToShow: {fileID: 4769473882304577100, guid: 77ca7a587271c1248823836d2ffa7a90,

@@ -13,20 +13,21 @@ MonoBehaviour:
   m_Name: Range
   m_EditorClassIdentifier: 
   type: 2
-  level: 0
+  stateImage: {fileID: 21300000, guid: 825aca86ff0cc8a4fbe86a1a88194c89, type: 3}
+  level: 4
   stat:
+  - type: 2
+    howMuchUpgrade: 0
+    price: 0
   - type: 2
     howMuchUpgrade: 10
     price: 200
-  - type: 0
+  - type: 2
     howMuchUpgrade: 20
     price: 500
-  - type: 0
+  - type: 2
     howMuchUpgrade: 30
-    price: 1000
-  - type: 0
+    price: 1500
+  - type: 2
     howMuchUpgrade: 40
-    price: 2000
-  - type: 0
-    howMuchUpgrade: 50
-    price: 3500
+    price: 2500

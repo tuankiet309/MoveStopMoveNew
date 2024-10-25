@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: KhienCaptain
   m_EditorClassIdentifier: 
+  skinId: 2cba4c88-0779-45a3-8ded-02c46969f2ff
   skinToWear: {fileID: 9010946152854924377, guid: 0a64e7a26c2c61644922ad8914c8f019,
     type: 3}
   skinToShow: {fileID: 9010946152854924377, guid: 190416bc4a6393b458e630d2689f31cb,

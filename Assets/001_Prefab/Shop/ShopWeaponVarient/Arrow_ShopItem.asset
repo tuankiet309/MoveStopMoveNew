@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Arrow_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: 701062dc-3337-425c-bb59-cca4cb6bc4fd
   weapon: {fileID: 11400000, guid: 9a0535e11a483444d9f2ff361a3c7c1a, type: 2}
   weaponName: Arrow
   goldCost: 500

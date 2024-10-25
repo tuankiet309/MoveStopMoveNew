@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Candy 2
   m_EditorClassIdentifier: 
+  idWeapon: 88816f72-0cd8-49c5-a0e7-5ec7f042e6db
   weaponOnHand: {fileID: 8538240388098383544, guid: 9be25411d5de2bc49b2754ae9074aeda,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
@@ -22,7 +23,7 @@ MonoBehaviour:
   - skin: {fileID: 8538240388098383544, guid: ce3f53260a41b2d499abc9e5fc1ba943, type: 3}
     isLocked: 0
   - skin: {fileID: 8538240388098383544, guid: 1aec62723d7ef2a439cc8233850d9c21, type: 3}
-    isLocked: 0
+    isLocked: 1
   - skin: {fileID: 8538240388098383544, guid: b0292c4f79f4c7f4f8a5704fa1490ce4, type: 3}
     isLocked: 1
   - skin: {fileID: 8538240388098383544, guid: cf5af9abf4015974683ff19ed29620d0, type: 3}
@@ -33,4 +34,4 @@ MonoBehaviour:
   weaponType: 1
   buff: 0
   buffMultiplyer: 4
-  currentIndexOfTheSkin: 3
+  currentIndexOfTheSkin: 2

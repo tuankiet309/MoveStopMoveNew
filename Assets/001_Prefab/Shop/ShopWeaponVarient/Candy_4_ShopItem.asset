@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Candy_4_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: 84383b70-0aed-438f-b9f5-7e5257f4b8b6
   weapon: {fileID: 11400000, guid: c87257503f535b74eaf50c45c6b2b550, type: 2}
   weaponName: Candy 4
   goldCost: 300

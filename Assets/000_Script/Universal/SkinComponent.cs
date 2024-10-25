@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using static Enum;
 
-public class SkinComponent : MonoBehaviour
+public class SkinComponent : MonoBehaviour,IDataPersistence
 {
     [Header("For buff")]
     [SerializeField] private ActorAttacker attacker;
@@ -40,8 +40,6 @@ public class SkinComponent : MonoBehaviour
 
     private void Start()
     {
-        skinToChange.Clear();
-        skinToChange = defaultSkin.ToList();
         SaveOriginalMaterials();
         WearSkin(skinToChange);
     }
@@ -71,9 +69,6 @@ public class SkinComponent : MonoBehaviour
         
     }
     
-
-
-
     public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
     {
         if (this.isASet || isASet)
@@ -245,5 +240,50 @@ public class SkinComponent : MonoBehaviour
         ClearSkin(Enum.SkinType.Tail);
         ClearSkin(Enum.SkinType.Pant);
         ClearSkin(Enum.SkinType.Body);
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        skinToChange.Clear();
+
+        if(gameData.playerData.isASet)
+        {
+            skinToChange = DataPersistenceManager.Instance.SetSkinDatabase[gameData.playerData.playerCurrentWearingSkinID[0]].SkinOfSet.ToList();
+        }
+        else
+        {
+            foreach(string id in gameData.playerData.playerCurrentWearingSkinID)
+            {
+                skinToChange.Add(DataPersistenceManager.Instance.SkinDatabase[id]);
+            }
+        }
+        isASet = gameData.playerData.isASet;
+        WearSkin(skinToChange);
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        List<string> skinIDs = new List<string>();
+        if(isASet)
+        {
+            foreach( SetSkin setSkin in DataPersistenceManager.Instance.SetSkinDatabase.Values)
+            {
+                if (setSkin.SkinOfSet.Contains<Skin>(skinToChange[0]))
+                {
+                    skinIDs.Add(setSkin.SetID);
+                    gameData.playerData.playerCurrentWearingSkinID = skinIDs.ToArray();
+                }
+            }
+            
+        }
+        else
+        {
+            foreach(Skin skin in skinToChange)
+            {
+                skinIDs.Add(skin.SkinId);
+            }
+            gameData.playerData.playerCurrentWearingSkinID = skinIDs.ToArray();
+        }
+        gameData.playerData.isASet = isASet;
     }
 }

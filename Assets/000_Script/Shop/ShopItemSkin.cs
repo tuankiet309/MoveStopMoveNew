@@ -22,15 +22,4 @@ public class ShopItemSkin : ScriptableObject
     public Vector3 PosOffsetOfThisType { get => posOffsetOfThisType; set => posOffsetOfThisType = value; }
 }
 
-[Serializable]
-public class SetSkin
-{
-    [SerializeField] private Skin[] eachSkinOfSet;
-    [SerializeField] Image imageToShow;
-    [SerializeField] private bool isUnlock = false;
-    private bool isEquiped = false;
-    public Skin[] SkinOfSet { get => eachSkinOfSet; set => eachSkinOfSet = value; }
-    public Image ImageToShow { get => imageToShow; set => imageToShow = value; }
-    public bool IsUnlock { get => isUnlock; set => isUnlock = value; }
-    public bool IsEquiped { get => isEquiped; set => isEquiped = value; }
-}
+

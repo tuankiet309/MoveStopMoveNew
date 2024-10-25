@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Hammer_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: eabe4df8-67a4-4672-adca-82886f33dedc
   weapon: {fileID: 11400000, guid: 20cd8421d27fe054d8ea50e6df9102e7, type: 2}
   weaponName: Hammer
   goldCost: 300

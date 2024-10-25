@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
+  idWeapon: e416994d-da15-49b4-b0be-dbf86860dfc4
   weaponOnHand: {fileID: 7167713677699941835, guid: f95168ea71d81fa459a7dae1fbc06118,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,

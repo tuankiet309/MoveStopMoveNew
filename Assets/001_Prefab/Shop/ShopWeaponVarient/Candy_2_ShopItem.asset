@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Candy_2_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: e2eb5d8d-66b0-43b4-b7e0-40e55d292ece
   weapon: {fileID: 11400000, guid: 07ce47b532b793a4790f2f40f15d8ea2, type: 2}
   weaponName: Candy 2
   goldCost: 300
-  isPurchased: 1
+  isPurchased: 0

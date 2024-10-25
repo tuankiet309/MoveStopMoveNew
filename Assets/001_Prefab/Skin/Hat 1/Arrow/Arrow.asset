@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
+  skinId: a2ccedbb-844d-4123-954d-da2abeab5036
   skinToWear: {fileID: 4538369909995655600, guid: 1b808f528fa9be9419c114d166746608,
     type: 3}
   skinToShow: {fileID: 5173878823023518048, guid: 7520e14aab1a26a4899ac4e82aa86d69,

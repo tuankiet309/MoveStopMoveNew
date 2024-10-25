@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Skull
   m_EditorClassIdentifier: 
+  skinId: d55d3d52-a90f-4732-9031-b29c5a13de9b
   skinToWear: {fileID: 7265786607980737179, guid: fd985988c01af5f4a833638aef8aa774,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: fd985988c01af5f4a833638aef8aa774,

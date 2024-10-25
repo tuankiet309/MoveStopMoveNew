@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec54e27b8290844195c8d9f7db2624d, type: 3}
   m_Name: Uzi_ShopItem
   m_EditorClassIdentifier: 
+  idWeapon: 0938829c-f093-4027-9d77-a8fd32b3ebaa
   weapon: {fileID: 11400000, guid: 1f44426a548c62e468d4d97cdebef6d7, type: 2}
   weaponName: Uzi
   goldCost: 300

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Skin", menuName = "Skin", order = 1)]
 public class Skin : ScriptableObject
 {
+    [SerializeField] private string skinId;
     [SerializeField] GameObject skinToWear;
     [SerializeField] GameObject skinToShow;
     [SerializeField] Enum.SkinType skinType;
@@ -28,4 +29,11 @@ public class Skin : ScriptableObject
     public bool IsUnlock { get => isUnlock; set => isUnlock = value; }
     public bool IsUnlockedOnce { get => isUnlockedOnce; set => isUnlockedOnce = value; }
     public bool IsEquiped { get => isEquiped; set => isEquiped = value; }
+    public string SkinId { get => skinId; set => skinId = value; }
+
+    [ContextMenu("GenerateID")]
+    private void GenerateGUID()
+    {
+        skinId = System.Guid.NewGuid().ToString();
+    }
 }

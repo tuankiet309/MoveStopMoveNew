@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: LuffyHat
   m_EditorClassIdentifier: 
+  skinId: d4c514ed-403b-4e3d-8389-1c10c40a7920
   skinToWear: {fileID: 4017362885759046590, guid: 04d8382d36b54d14ea36c0a14ab09905,
     type: 3}
   skinToShow: {fileID: 4017362885759046590, guid: 7ad20120e5d1b644883a64f84b471b82,

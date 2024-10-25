@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Pant Pokemon
   m_EditorClassIdentifier: 
+  skinId: cd6749b0-b87d-4cd6-8b88-726fe34a9110
   skinToWear: {fileID: 7265786607980737179, guid: f776aa63ce46d81419ec2cb188509ac8,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: f776aa63ce46d81419ec2cb188509ac8,

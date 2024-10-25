@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Uzi
   m_EditorClassIdentifier: 
+  idWeapon: 6b2c7c05-d9ed-41e3-a63e-f9e0b9cf7dd9
   weaponOnHand: {fileID: 7311654500149166743, guid: 514c31e2958952c4a8f75e6a153d974d,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,
@@ -31,4 +32,4 @@ MonoBehaviour:
   weaponType: 1
   buff: 0
   buffMultiplyer: 8
-  currentIndexOfTheSkin: 2
+  currentIndexOfTheSkin: 3

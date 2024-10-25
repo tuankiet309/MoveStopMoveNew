@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67879944417d6b04eb3950f55891922d, type: 3}
   m_Name: Candy 3
   m_EditorClassIdentifier: 
+  idWeapon: 56bab8ea-be78-496a-aa56-ba5c044fc27f
   weaponOnHand: {fileID: 5028428941443872769, guid: 716ad9c78fd19ce4094b7db632e61285,
     type: 3}
   weaponThrowAway: {fileID: 312057191205980978, guid: d003e2f5c22815d4ebdc0b6e8756fb22,

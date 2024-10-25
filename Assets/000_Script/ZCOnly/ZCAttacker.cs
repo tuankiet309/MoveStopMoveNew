@@ -54,7 +54,7 @@ public class ZCAttacker : ActorAttacker
             throwDirection.y = 0;
             throwDirection.Normalize();
 
-            float spreadBetweenProjectiles = 10f;
+            float spreadBetweenProjectiles = 20f;
 
             float totalSpreadAngle = spreadBetweenProjectiles * (moreWeapon - 1);
 
