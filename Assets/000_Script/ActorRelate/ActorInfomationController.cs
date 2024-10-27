@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ActorInformationController : MonoBehaviour
+public class ActorInformationController : MonoBehaviour,IDataPersistence
 {
     // Components to manage the UI
     [SerializeField] private ActorAtributeController attributesController; 
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private string name;
+
+    public string Name { get => name; set => name = value; }
+
     private void OnEnable()
     {
         if (attributesController != null)
@@ -50,4 +53,13 @@ public class ActorInformationController : MonoBehaviour
         return int.Parse(scoreText.text);
     }
 
+    public void LoadData(GameData gameData)
+    {
+        UpdateName(gameData.playerData.playerName);
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.playerData.playerName = this.name;
+    }
 }

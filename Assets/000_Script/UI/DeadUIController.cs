@@ -32,22 +32,22 @@ public class DeadUIController : MonoBehaviour
         originalSize = reviveHolder.sizeDelta.x;
         if(score < 5)
         {
-            gold.text = "0";
             reviveHolder.sizeDelta = new Vector2(reviveHolder.sizeDelta.x / 3, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(false);
         }
         else
         {
-            gold.text = score.ToString();
             reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(true);
         }
+        gold.text = PlayerGoldInGameController.Instance.Gold.ToString();
         DataPersistenceManager.Instance.SaveGame();
         SceneController.Instance.LoadSceneAsyncWay(SceneManager.GetActiveScene());
     }
    
     private void OnContinueClick()
     {
+        PlayerGoldInGameController.Instance.OnEndCurrentLevel();
         SceneController.Instance.AddThisEventToActiveScene();
     }
 

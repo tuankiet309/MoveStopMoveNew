@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button MainMenuBTN;
     [SerializeField] Canvas thisCanvas;
     [SerializeField] TMP_InputField inputName;
+
+   
+
     private void Awake()
     {
         PlayBTN.onClick.AddListener(SwitchToGamePlayUI);
@@ -21,6 +24,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         inputName.onEndEdit.AddListener(UpdateNameForPlayer);
+        inputName.text = Player.Instance.GetComponent<ActorInformationController>().Name;
         SwitchToHallUI();
     }
     private void SwitchToGamePlayUI()

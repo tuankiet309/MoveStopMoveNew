@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour, IProjectile
     }
     private void Start()
     {
-        distanceTilDie = GameManager.Instance.CurrentInGameState == InGameState.PVE? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
+        distanceTilDie = GameManager.Instance.CurrentInGameState == InGameState.PVE? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS + CONSTANT_VALUE.OFFSET_DISTANCE;
         tempoScale = transform.localScale * 3f;
         if (isGoThroughWall) 
         {

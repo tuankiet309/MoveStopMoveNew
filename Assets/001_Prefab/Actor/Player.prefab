@@ -203,10 +203,10 @@ GameObject:
   - component: {fileID: 2852530234826930237}
   - component: {fileID: 6004532825347738915}
   - component: {fileID: 1203349884147329772}
+  - component: {fileID: 2363902669474894209}
   - component: {fileID: 8412148909441875655}
   - component: {fileID: 964048004165215520}
   - component: {fileID: 279844767818086413}
-  - component: {fileID: 2363902669474894209}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -390,12 +390,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedLocation: {fileID: 3243825365586066742}
-  weapon: {fileID: 11400000, guid: 9a0535e11a483444d9f2ff361a3c7c1a, type: 2}
+  weapon: {fileID: 11400000, guid: 20cd8421d27fe054d8ea50e6df9102e7, type: 2}
   attacker: {fileID: 5258841791265605368}
   onHavingWeapon:
     m_PersistentCalls:
       m_Calls: []
   onAssignNewWeapon:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2363902669474894209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032790747752298346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc12b6f9ca7abfe4f8bea20799cf48b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacker: {fileID: 0}
+  ActorMovementController: {fileID: 0}
+  enemyMovementController: {fileID: 0}
+  hatHolder: {fileID: 2007208353158999566}
+  LHandHolder: {fileID: 4797466964281076112}
+  wingHolder: {fileID: 3860780650410960945}
+  tailHolder: {fileID: 1537851030768076732}
+  pantToChange: {fileID: 468531629716787949}
+  playerSkinToChange: {fileID: 8746433057760434062}
+  nameToChange: {fileID: 0}
+  imageToChange: {fileID: 0}
+  defaultSkin: []
+  onWearNewSkin:
     m_PersistentCalls:
       m_Calls: []
 --- !u!54 &8412148909441875655
@@ -469,35 +496,6 @@ CapsuleCollider:
   m_Height: 2.438852
   m_Direction: 1
   m_Center: {x: 0, y: 1.2247027, z: 0}
---- !u!114 &2363902669474894209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6032790747752298346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc12b6f9ca7abfe4f8bea20799cf48b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attacker: {fileID: 0}
-  ActorMovementController: {fileID: 0}
-  enemyMovementController: {fileID: 0}
-  hatHolder: {fileID: 2007208353158999566}
-  LHandHolder: {fileID: 4797466964281076112}
-  wingHolder: {fileID: 3860780650410960945}
-  tailHolder: {fileID: 1537851030768076732}
-  pantToChange: {fileID: 468531629716787949}
-  playerSkinToChange: {fileID: 8746433057760434062}
-  nameToChange: {fileID: 0}
-  imageToChange: {fileID: 0}
-  defaultSkin:
-  - {fileID: 11400000, guid: c0f1eeffad553174080c07736b0fb2d8, type: 2}
-  - {fileID: 11400000, guid: babb2b76f0494fb43b1f243781581e52, type: 2}
-  onWearNewSkin:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &2472718866064941996
 PrefabInstance:
   m_ObjectHideFlags: 0

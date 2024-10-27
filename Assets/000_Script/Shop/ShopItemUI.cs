@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.ShaderKeywordFilter;
@@ -38,6 +39,10 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
     private int weaponIndex = 0;
     private int currentIndexOfTheSkin = 0;
 
+    private void Awake()
+    {
+
+    }
     private void Start()
     {
         LoadInfomationOfCurrentWeapon();
@@ -48,10 +53,10 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
         
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
-        LoadInfomationOfCurrentWeapon();
-
+        GameData gameData = DataPersistenceManager.Instance.GameData;
+        SaveData(ref gameData);
     }
     private void MoveRight()
     {
@@ -106,6 +111,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
                 moneyButton.gameObject.SetActive(false);
                 alertText.gameObject.SetActive(true);
                 ButtonToBuyHolder.gameObject.SetActive(true);
+                purchaseBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = weaponItem[weaponIndex].GoldCost.ToString();
                 equipButton.gameObject.SetActive(false);
                 unlockButton.gameObject.SetActive(false);
                 ColorPanel.gameObject.SetActive(false);
@@ -119,6 +125,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
                 displayedWeapon = Instantiate(weaponItem[weaponIndex].Weapon.PossibleSkinForThisWeapon[1].Skin, displayWeaponHolder.transform);
                 Varients.gameObject.SetActive(false);
                 moneyButton.gameObject.SetActive(true);
+                moneyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = weaponItem[weaponIndex].GoldCost.ToString();
                 alertText.gameObject.SetActive(true);
                 ButtonToBuyHolder.gameObject.SetActive(false);
                 equipButton.gameObject.SetActive(false);
@@ -176,6 +183,16 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
         }
     }
 
+    private void BuyThisSkin(int currentIndex,bool IsLock)
+    {
+        if (DataPersistenceManager.Instance.AccessGold(-weaponItem[weaponIndex].Weapon.PossibleSkinForThisWeapon[currentIndex].Gold))
+        {
+            weaponItem[weaponIndex].Weapon.PossibleSkinForThisWeapon[currentIndex].IsLocked = false;
+            LoadInfomationOfCurrentWeapon();
+            ChangeWeaponToThis(currentIndex, false);
+        }
+
+    }
     private void AttachWeapon()
     {
         WeaponComponent weaponComponent = Player.Instance.GetComponent<WeaponComponent>();
@@ -204,6 +221,8 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
         {
             equipButton.gameObject.SetActive(false);
             unlockButton.gameObject.SetActive(true);
+            unlockButton.onClick.RemoveAllListeners();
+            unlockButton.onClick.AddListener(()=>BuyThisSkin(skinIndex,isLock));
         }
         else
         {
@@ -235,7 +254,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
 
         if (displayedWeaponRenderer != null)
         {
-            displayedWeaponRenderer.sharedMaterials = clonedMaterials;
+            displayedWeaponRenderer.sharedMaterials = customVarientRenderer.sharedMaterials;
         }
 
         ColorPanelController colorController = ColorPanel.GetComponent<ColorPanelController>();
@@ -255,12 +274,16 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
     }
     private void UnlockWeapon()
     {
-        weaponItem[weaponIndex].IsPurchased = true;
-        LoadInfomationOfCurrentWeapon();
+        if (DataPersistenceManager.Instance.AccessGold(-weaponItem[weaponIndex].GoldCost))
+        {
+            weaponItem[weaponIndex].IsPurchased = true;
+            LoadInfomationOfCurrentWeapon();
+        }
     }
 
     public void LoadData(GameData gameData)
     {
+        Debug.LogError("ShopIsBeingLoad");
         foreach (ShopItemWeapon shopItemWeapon in weaponItem)
         {
             WeaponShopItemData matchingWeaponData = gameData.weaponDatas.Find(weaponData => weaponData.id == shopItemWeapon.IdWeapon);
@@ -268,6 +291,21 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             if (matchingWeaponData != null)
             {
                 shopItemWeapon.IsPurchased = matchingWeaponData.isPurchased;
+
+                foreach (var skin in shopItemWeapon.Weapon.PossibleSkinForThisWeapon)
+                {
+                    skin.IsLocked = true;
+                }
+
+                foreach (int skinIndex in matchingWeaponData.skinArePurchased)
+                {
+                    if (skinIndex < shopItemWeapon.Weapon.PossibleSkinForThisWeapon.Length)
+                    {
+                        shopItemWeapon.Weapon.PossibleSkinForThisWeapon[skinIndex].IsLocked = false;
+                        Debug.LogError(shopItemWeapon.Weapon.PossibleSkinForThisWeapon[skinIndex].IsLocked);
+
+                    }
+                }
             }
         }
     }
@@ -281,11 +319,28 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             if (matchingWeaponData != null)
             {
                 matchingWeaponData.isPurchased = shopItemWeapon.IsPurchased;
+                matchingWeaponData.skinArePurchased.Clear(); 
+
+                for (int index = 0; index < shopItemWeapon.Weapon.PossibleSkinForThisWeapon.Length; index++)
+                {
+                    if (!shopItemWeapon.Weapon.PossibleSkinForThisWeapon[index].IsLocked)
+                    {
+                        matchingWeaponData.skinArePurchased.Add(index);
+                    }
+                }
             }
             else
             {
                 WeaponShopItemData newWeaponData = new WeaponShopItemData();
-                newWeaponData.InitializeWeaponData(shopItemWeapon.IdWeapon, shopItemWeapon.IsPurchased, new List<int>() { 0,1}); 
+                newWeaponData.InitializeWeaponData(shopItemWeapon.IdWeapon, shopItemWeapon.IsPurchased, new List<int>());
+
+                for (int index = 0; index < shopItemWeapon.Weapon.PossibleSkinForThisWeapon.Length; index++)
+                {
+                    if (!shopItemWeapon.Weapon.PossibleSkinForThisWeapon[index].IsLocked)
+                    {
+                        newWeaponData.skinArePurchased.Add(index);
+                    }
+                }
                 gameData.weaponDatas.Add(newWeaponData);
             }
         }

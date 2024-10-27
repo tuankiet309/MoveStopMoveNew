@@ -5,54 +5,51 @@ using UnityEngine.UI;
 
 public class ColorPanelController : MonoBehaviour
 {
-    private List<Button> buttonMat = new List<Button>(); 
+    private List<Button> buttonMat = new List<Button>();
     [SerializeField] private RectTransform materialHolder;
     [SerializeField] private Button materialPickButtonPref;
     [SerializeField] private GameObject[] ButtonColorHolder;
     private GameObject displayWeapon;
     private GameObject customVarientWeapon;
 
-    private List<Button> buttonColor = new List<Button>(); 
+    private List<Button> buttonColor = new List<Button>();
+    private Dictionary<int, Material[]> weaponMaterialCache = new Dictionary<int, Material[]>();
 
-    private void Start()
+    private void Awake()
     {
-        buttonColor.Clear();
         foreach (GameObject holder in ButtonColorHolder)
         {
             Button[] childButtons = holder.GetComponentsInChildren<Button>();
-            buttonColor.AddRange(childButtons); 
+            buttonColor.AddRange(childButtons);
         }
     }
 
     public void InitializeMaterialPickers(GameObject displayWeapon, GameObject customVarient)
-    {   buttonMat.Clear();
+    {
+        buttonMat.Clear();
         this.displayWeapon = displayWeapon;
         this.customVarientWeapon = customVarient;
         Material[] materials = displayWeapon.GetComponent<MeshRenderer>().sharedMaterials;
 
         foreach (Transform child in materialHolder)
         {
-            Button materialButton = child.GetComponent<Button>();
-            if (materialButton != null)
-            {
-                materialButton.onClick.RemoveAllListeners(); 
-            }
-            Destroy(child.gameObject); 
+            Destroy(child.gameObject);
         }
-
         for (int i = 0; i < materials.Length; i++)
         {
-            int currentIndex = i; 
+            int currentIndex = i;
             Button materialPicker = Instantiate(materialPickButtonPref, materialHolder);
 
             materialPicker.transform.GetChild(0).GetComponent<Image>().color = materials[currentIndex].color;
 
             materialPicker.onClick.AddListener(() => SelectMaterialForColorChange(currentIndex));
-
             materialPicker.onClick.AddListener(() => ChangeColor(materialPicker));
 
             buttonMat.Add(materialPicker);
         }
+            buttonMat[0].onClick.Invoke();
+            SelectMaterialForColorChange(0);
+        
     }
 
     private void SelectMaterialForColorChange(int materialIndex)
@@ -89,7 +86,6 @@ public class ColorPanelController : MonoBehaviour
         {
             materialBtn.GetComponent<Image>().color = Color.gray;
         }
-
         btn.image.color = Color.white;
     }
 }

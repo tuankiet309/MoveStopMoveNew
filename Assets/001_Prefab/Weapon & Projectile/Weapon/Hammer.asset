@@ -21,7 +21,7 @@ MonoBehaviour:
   - skin: {fileID: 1332546103719427353, guid: 2b9918db6e8220341b1e375d3e9b75e9, type: 3}
     isLocked: 0
   - skin: {fileID: 1332546103719427353, guid: ed82f3f34bb2cf44db0859599530d62f, type: 3}
-    isLocked: 1
+    isLocked: 0
   - skin: {fileID: 1332546103719427353, guid: 85f1d70a9135f9340a49b99c1c6cd61a, type: 3}
     isLocked: 1
   - skin: {fileID: 1332546103719427353, guid: 39c5f05f2f05ed84fae6351908fd50dc, type: 3}
@@ -32,4 +32,4 @@ MonoBehaviour:
   weaponType: 1
   buff: 2
   buffMultiplyer: 0.5
-  currentIndexOfTheSkin: 0
+  currentIndexOfTheSkin: 1

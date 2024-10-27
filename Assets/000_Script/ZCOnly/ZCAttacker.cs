@@ -18,11 +18,23 @@ public class ZCAttacker : ActorAttacker
     }
     protected override GameObject GetFirstValidTarget()
     {
+        GameObject closestTarget = null;
+        float closestDistance = float.MaxValue;
+
         foreach (var target in enemyAttackers)
         {
-                return target;   
+            if (target == null) continue; 
+
+            float distance = Vector3.Distance(transform.position, target.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestTarget = target;
+            }
         }
-        return null;
+
+        return closestTarget; // Returns the closest enemy or null if there are no valid targets.
     }
     protected override void CleanUpDestroyedObjects()
     {
@@ -154,20 +166,26 @@ public class ZCAttacker : ActorAttacker
                 case Enum.ZCPowerUp.BulletPlus:
                     moreWeapon++;
                     Attack(targetToAttackPos, true);
+                    onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+
                     break;
                 case Enum.ZCPowerUp.Continous:
                     Attack(targetToAttackPos, true);
                     StartCoroutine(ContinousAttack());
+                    onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+
                     break;
                 default:
                     Attack(targetToAttackPos, true);
+                    onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
                     break;
             }
         }
         else
         {
             Attack(targetToAttackPos, true);
-            
+            onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+
         }
     }
 
@@ -185,13 +203,14 @@ public class ZCAttacker : ActorAttacker
     private void BehindAttack()
     {
         Vector3 attackDir = targetToAttackPos - throwLocation.position;
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
 
         Vector3 oppositeAttackDir = -attackDir;
 
         Vector3 oppositeAttackPos = throwLocation.position + oppositeAttackDir;
         Attack(targetToAttackPos,true);
         Attack(oppositeAttackPos,false);
+        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
+
     }
 
     private void ChaseAttack()
@@ -205,7 +224,6 @@ public class ZCAttacker : ActorAttacker
         attackDir.y = 0;
         attackDir.Normalize();
 
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
 
         Attack(targetToAttackPos,true);
 
@@ -217,8 +235,8 @@ public class ZCAttacker : ActorAttacker
         Vector3 rightAttackPos = throwLocation.position  - (perpendicularDir * sideOffsetDistance); 
 
         Attack(leftAttackPos, false);
-        Attack(rightAttackPos, false); 
-
+        Attack(rightAttackPos, false);
+        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
         targetToAttackPos = Vector3.zero;
     }
     private void TrippleAttack()
@@ -227,7 +245,6 @@ public class ZCAttacker : ActorAttacker
         attackDir.y = 0;
         attackDir.Normalize();
 
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
 
         Attack(targetToAttackPos, true);
 
@@ -244,6 +261,7 @@ public class ZCAttacker : ActorAttacker
 
         Attack(leftAttackPos, false);
         Attack(rightAttackPos, false);
+        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
 
         targetToAttackPos = Vector3.zero;
     }

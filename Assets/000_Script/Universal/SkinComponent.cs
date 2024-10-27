@@ -9,10 +9,6 @@ using static Enum;
 
 public class SkinComponent : MonoBehaviour,IDataPersistence
 {
-    [Header("For buff")]
-    [SerializeField] private ActorAttacker attacker;
-    [SerializeField] private ActorMovementController ActorMovementController;
-    [SerializeField] private EnemyMovementController enemyMovementController;
 
 
     [Header("Essential")]
@@ -42,6 +38,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
     {
         SaveOriginalMaterials();
         WearSkin(skinToChange);
+        previousSkins = skinToChange;
     }
 
     public void AssignNewSkin(Skin[] newSkin, bool isASet)
@@ -82,7 +79,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
         {
             ClearSkin(skinToChange[i].SkinType);
         }
-      
+   
         skinToChange = previousSkins;
         WearSkin(skinToChange);
     }
@@ -136,19 +133,27 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
 
     private void SaveOriginalMaterials()
     {
-        for(int i = 0;i<skinToChange.Count;i++)
+        foreach (Skin skin in skinToChange)
         {
-            if(skinToChange[i].SkinType == Enum.SkinType.Pant)
+            if (skin.SkinType == Enum.SkinType.Pant && originalPantMaterial == null)
             {
-                originalPantMaterial = skinToChange[i].SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
+                originalPantMaterial = pantToChange.sharedMaterial; 
             }
-            if (skinToChange[i].SkinType == Enum.SkinType.Body)
+            if (skin.SkinType == Enum.SkinType.Body && originalSkinMaterial == null)
             {
-                originalSkinMaterial = skinToChange[i].SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
+                originalSkinMaterial = playerSkinToChange.sharedMaterial;
             }
         }
-    }
 
+        if (originalPantMaterial == null)
+        {
+            originalPantMaterial = pantToChange.sharedMaterial; 
+        }
+        if (originalSkinMaterial == null)
+        {
+            originalSkinMaterial = playerSkinToChange.sharedMaterial; 
+        }
+    }
     private void RevertOriginalMaterials()
     {
         if (originalPantMaterial != null && pantToChange != null)
@@ -245,7 +250,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
     public void LoadData(GameData gameData)
     {
         skinToChange.Clear();
-
+        previousSkins.Clear();
         if(gameData.playerData.isASet)
         {
             skinToChange = DataPersistenceManager.Instance.SetSkinDatabase[gameData.playerData.playerCurrentWearingSkinID[0]].SkinOfSet.ToList();
@@ -258,15 +263,16 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
             }
         }
         isASet = gameData.playerData.isASet;
-        WearSkin(skinToChange);
+        previousSkins = skinToChange;
     }
 
     public void SaveData(ref GameData gameData)
     {
+
         List<string> skinIDs = new List<string>();
         if(isASet)
         {
-            foreach( SetSkin setSkin in DataPersistenceManager.Instance.SetSkinDatabase.Values)
+            foreach(SetSkin setSkin in DataPersistenceManager.Instance.SetSkinDatabase.Values)
             {
                 if (setSkin.SkinOfSet.Contains<Skin>(skinToChange[0]))
                 {

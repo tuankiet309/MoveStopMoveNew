@@ -104,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
         } while (IsOnScreen(pos));
 
         enemy.transform.position = pos;
-        enemy.Initialize(availableBodySkins[bodySkinIndex], pantToSpawn[randomPant], headSetToSpawn[randomHeadset], leftHandToSpawn[randomLeftHand], weaponToSpawnWith[randomWeapon], nameToSpawnWith[randomName], enemyPool);
+        enemy.Initialize (availableBodySkins[bodySkinIndex], pantToSpawn[randomPant], headSetToSpawn[randomHeadset], leftHandToSpawn[randomLeftHand], weaponToSpawnWith[randomWeapon], nameToSpawnWith[randomName], enemyPool);
         Skin body = availableBodySkins[bodySkinIndex];
         enemy.onEnemyDie.AddListener(() => ReturnSkinToPool(body));
         availableBodySkins.Remove(availableBodySkins[bodySkinIndex]);

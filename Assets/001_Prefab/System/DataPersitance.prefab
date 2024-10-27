@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5275031237510664655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1959229045234482758}
+  - component: {fileID: 5110289213540200973}
+  m_Layer: 0
+  m_Name: DataPersitance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1959229045234482758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5275031237510664655}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 42.960957, y: 3.6505346, z: 58.69585}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5110289213540200973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5275031237510664655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e837a741b5ae6764ca647fef1803a12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.json
+  firstWeaponOfPlayer: {fileID: 11400000, guid: 20cd8421d27fe054d8ea50e6df9102e7,
+    type: 2}
+  firstSkinOfPlayer:
+  - {fileID: 11400000, guid: c0f1eeffad553174080c07736b0fb2d8, type: 2}
+  - {fileID: 11400000, guid: babb2b76f0494fb43b1f243781581e52, type: 2}
+  shopItemWeaponFirst:
+  - {fileID: 11400000, guid: 16656148af4ea264e852612e2dd78ee0, type: 2}
+  - {fileID: 11400000, guid: aabd0f70c9f3a0f4fbf3008dc62f20e3, type: 2}
+  - {fileID: 11400000, guid: 7e5377dd25a1ee842ba7e6379e227ec0, type: 2}
+  - {fileID: 11400000, guid: 7f5da0065182b054695b1b2e0077f61b, type: 2}
+  - {fileID: 11400000, guid: 925ec551a4fab734b88ba783e27e612d, type: 2}
+  - {fileID: 11400000, guid: 94501843058aaca439748ea60c0960a8, type: 2}
+  - {fileID: 11400000, guid: 18cbdeb52b796c64295bb2f609f17a08, type: 2}
+  - {fileID: 11400000, guid: f02bc95106f02da4f9b4f7242af76ea0, type: 2}
+  - {fileID: 11400000, guid: 0db79f33ddbe0f84298d6a541641789b, type: 2}
+  - {fileID: 11400000, guid: 0154025a52ca64541ac192ff6a3e04eb, type: 2}
+  shopItemSkinFirst:
+  - {fileID: 11400000, guid: c31fc8e2fd8459a47ac8515540ce3968, type: 2}
+  - {fileID: 11400000, guid: 01dc8f06a1a3a7d4eb50a0124788a3ed, type: 2}
+  - {fileID: 11400000, guid: 160e9965488819d4e944b07bc6927fc3, type: 2}
+  - {fileID: 11400000, guid: bf1f5c468dda9e942befb6bdef8ad713, type: 2}
+  OnGoldChange:
+    m_PersistentCalls:
+      m_Calls: []

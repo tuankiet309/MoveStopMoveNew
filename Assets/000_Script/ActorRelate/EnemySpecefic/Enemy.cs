@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour, IPoolable
         EnemyMovementController movementController = GetComponent<EnemyMovementController>();
         ActorInformationController actorInfomationController = GetComponent<ActorInformationController>();
         int randomWeaponSkin = Random.Range(1, weapon.PossibleSkinForThisWeapon.Length);
-        weapon.CurrentIndexOfTheSkin = randomWeaponSkin;
+        weapon.TempoIndex = randomWeaponSkin;
         if (skinController != null)
         {
             skinController.AssignNewSkin( new Skin[] { pant,body,head,leftHand} , false);

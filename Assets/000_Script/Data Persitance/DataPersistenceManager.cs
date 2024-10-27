@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class DataPersistenceManager : MonoBehaviour
     private Dictionary<string, Skin> skinDatabase = new Dictionary<string, Skin>();
     private Dictionary<string,SetSkin> setSkinDatabase = new Dictionary<string,SetSkin>();
 
+
+    public UnityEvent OnGoldChange;
     private void Awake()
     {
         if (instance == null)
@@ -40,17 +43,34 @@ public class DataPersistenceManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
         LoadWeaponDatabase();
         LoadSkinDatabase();
-    }
-
-    private void Start()
-    {
         this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObject = FindAllDataPersistence();
         LoadGame();
     }
-
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnLoaded;
+    }
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("SceneLoaded Called");
+        this.dataPersistenceObject = FindAllDataPersistence();
+        LoadGame();
+    }
+    public void OnSceneUnLoaded(Scene scene)
+    {
+        Debug.Log("SceneLoaded Called");
+        SaveGame();
+    }
     private void LoadWeaponDatabase()
     {
         foreach (var shopItem in shopItemWeaponFirst)
@@ -88,12 +108,26 @@ public class DataPersistenceManager : MonoBehaviour
         }
         Debug.Log("Skin database loaded with " + skinDatabase.Count + " items.");
     }
+    public bool AccessGold(int amount)
+    {
+        if (gameData.gold + amount < 0)
+        {
+            return false;
+        }
+        else
+        {
+            gameData.gold += amount;
+            OnGoldChange?.Invoke();
+            return true;
+        }
+    }
     public void NewGame()
     {
         this.gameData = new GameData();
         string startingWeaponId = firstWeaponOfPlayer.IdWeapon;
         List<string> startingSkinIds = firstSkinOfPlayer.Select(skin => skin.SkinId).ToList();
         gameData.playerData.InitializePlayerData(startingWeaponId, startingSkinIds.ToArray(),false);
+        gameData.levelData = new LevelData();
         for (int i = 0; i < shopItemWeaponFirst.Length; i++)
         {
             WeaponShopItemData weapon = new WeaponShopItemData();
@@ -151,7 +185,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
         fileDataHandler.Save(gameData);
     }
-
+   
     private void OnApplicationQuit()
     {
         SaveGame();
@@ -162,8 +196,5 @@ public class DataPersistenceManager : MonoBehaviour
             .OfType<IDataPersistence>();
         return new List<IDataPersistence> (dataPersistences);
     }
-    private void OnSceneUnloaded(Scene currentScene)
-    {
-        SaveGame(); 
-    }
+
 }

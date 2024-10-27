@@ -11,9 +11,12 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
     public UnityEvent<bool> onHavingWeapon;
     public UnityEvent<Weapon,Weapon> onAssignNewWeapon;
 
+    bool isInZC;
+
     private void Start()
     {
         AssignWeapon(weapon);
+        isInZC = GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie;
     }
 
     public void AssignWeapon(Weapon newWeapon)
@@ -46,7 +49,10 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
     }
     private IEnumerator GetWeaponBack()
     {
-        yield return new WaitForSeconds(CONSTANT_VALUE.FIRST_DELAYED_ATTACK + (weapon.Buff == Enum.AttributeBuffs.AttackSpeed ? weapon.BuffMultiplyer : 0) );
+        if(isInZC)
+            yield return new WaitForSeconds(CONSTANT_VALUE.FIRST_DELAYED_ATTACKZC + (weapon.Buff == Enum.AttributeBuffs.AttackSpeed ? weapon.BuffMultiplyer : 0));
+        else
+            yield return new WaitForSeconds(CONSTANT_VALUE.FIRST_DELAYED_ATTACK + (weapon.Buff == Enum.AttributeBuffs.AttackSpeed ? weapon.BuffMultiplyer : 0) );
         attachedLocation.gameObject.SetActive(true);
         onHavingWeapon?.Invoke(true);
 
@@ -54,6 +60,7 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
 
     public void LoadData(GameData gameData)
     {
+        
         weapon = DataPersistenceManager.Instance.WeaponDatabase[gameData.playerData.playerCurrentWearingWeaponID];
         weapon.CurrentIndexOfTheSkin = gameData.playerData.currentIndexOfTheWeaponSkinPlayerWearing;
         AssignWeapon(weapon);
@@ -63,6 +70,5 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
     {
         gameData.playerData.playerCurrentWearingWeaponID = weapon.IdWeapon;
         gameData.playerData.currentIndexOfTheWeaponSkinPlayerWearing = weapon.CurrentIndexOfTheSkin;
-
     }
 }

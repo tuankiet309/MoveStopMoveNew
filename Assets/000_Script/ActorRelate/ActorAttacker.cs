@@ -117,6 +117,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             {
                 targetCircleInstance.SetActive(true);
                 targetCircleInstance.transform.position = new Vector3(targetToAttackPos.x, targetCircleInstance.transform.position.y, targetToAttackPos.z);
+                targetCircleInstance.transform.rotation = Quaternion.Euler(90,0,0);
             }
         }
         else
@@ -171,7 +172,17 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         weapon = newWeapon;
 
         weaponOnHand = Instantiate(weapon.WeaponOnHand, WeaponHolder);
-        weaponComponent.ApplyWeaponSkin(weaponOnHand, weapon.CurrentIndexOfTheSkin);
+        if (gameObject.CompareTag("Player"))
+        {
+
+            weaponComponent.ApplyWeaponSkin(weaponOnHand, weapon.CurrentIndexOfTheSkin);
+        }
+
+        else
+        {
+            weaponComponent.ApplyWeaponSkin(weaponOnHand, weapon.TempoIndex);
+        }
+
         weaponToThrow = Instantiate(weapon.WeaponThrowAway, transform);
         GameObject visualize = Instantiate(weaponOnHand, this.weaponToThrow.transform);
 

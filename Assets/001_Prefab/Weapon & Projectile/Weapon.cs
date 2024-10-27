@@ -22,6 +22,7 @@ public class Weapon : ScriptableObject
     [SerializeField] Enum.AttributeBuffs buff;
     [SerializeField] float buffMultiplyer;
     [SerializeField] private int currentIndexOfTheSkin = 0;
+    private int tempoIndex = 0;
 
 
 
@@ -36,6 +37,7 @@ public class Weapon : ScriptableObject
     public int CurrentIndexOfTheSkin { get => currentIndexOfTheSkin; set => currentIndexOfTheSkin = value; }
     public Vector3 WeaponOffsetOnThrow { get => weaponOffsetOnThrowPos; set => weaponOffsetOnThrowPos = value; }
     public string IdWeapon { get => idWeapon; set => idWeapon = value; }
+    public int TempoIndex { get => tempoIndex; set => tempoIndex = value; }
 
     [ContextMenu("GenrateID")]
     private void GenerateGUID()
@@ -48,11 +50,13 @@ public class Weapon : ScriptableObject
 public class SkinState
 {
     [SerializeField] private GameObject skin;
+    [SerializeField] private int gold = 200;
     [SerializeField] private bool isLocked = true;
 
     public GameObject Skin { get => skin; private set { } }
 
     public bool IsLocked { get => isLocked; set => isLocked = value; }
+    public int Gold { get => gold; set => gold = value; }
 
     public void UnlockSkin()
     {

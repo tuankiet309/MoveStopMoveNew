@@ -10,7 +10,7 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const int SCORE_MILESTONE_INCREASER = 3;
     ///////////////DETECT CIRCLE///////////////
     public const float FIRST_CIRCLE_RADIUS = 5;
-    public const float ZC_FIRST_CIRCLE_RADIUS = 7;
+    public const float ZC_FIRST_CIRCLE_RADIUS = 6;
     public const float CIRCLE_RADIUS_INCREASER = 0.75f;
     public const float BODY_SCALER_INCREASER = 0.15F;
     //////////////MOVEMENT_INFO/////////////////
@@ -22,11 +22,13 @@ public class CONSTANT_VALUE : MonoBehaviour
 
     /////////////WEAPON_ATTR/////////////////
     public const float FIRST_DELAYED_ATTACK = 0.75f;
-    public const float PROJECTILE_FLY_SPEED = 12f;
+    public const float FIRST_DELAYED_ATTACKZC = 0.25f;
+
+    public const float PROJECTILE_FLY_SPEED = 15f;
     public const float PROJECTILE_ROTATE_SPEED = 8f;
     public const float DISTANCE_TIL_COMBACK = 0.5f;
     public const float COMEBACK_FLY_DISTANCE = 15f;
-    public const float OFFSET_DISTANCE = 0.5f;
+    public const float OFFSET_DISTANCE = 2.0f;
     /////////////DECOR//////////////////////
     public const float DECORATION_TRANPARENT_VALUE = 0.2F;
 

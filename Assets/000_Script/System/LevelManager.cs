@@ -11,9 +11,28 @@ public class LevelManager : MonoBehaviour, IDataPersistence
     [SerializeField] List<PVELevel> PVELevels = new List<PVELevel>();
     [SerializeField] List<ZCLevel> ZCLevels = new List<ZCLevel>();
 
+    private static LevelManager instance;
+    public static LevelManager Instance { get { return instance; } }
+
+    public int CurrentPVELevel { get => currentPVELevel; set => currentPVELevel = value; }
+    public int CurrentZCLevel { get => currentZCLevel; set => currentZCLevel = value; }
+    public List<PVELevel> PVELevels1 { get => PVELevels; set => PVELevels = value; }
+    public List<ZCLevel> ZCLevels1 { get => ZCLevels; set => ZCLevels = value; }
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
-        
+        LoadLevel(); 
     }
     private void LoadLevel()
     {
@@ -25,26 +44,21 @@ public class LevelManager : MonoBehaviour, IDataPersistence
         }
         if(GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie)
         {
-
+            ZombieSpawner.Instance.NumberOfMaxEnemies = ZCLevels[currentZCLevel].HowManyZombie;
+            ZombieSpawner.Instance.BossZombie = ZCLevels[currentZCLevel].BigBoss; 
         }
     }
 
-
-
-
-
-
-
-
-
     public void LoadData(GameData gameData)
     {
-       
+        currentPVELevel = gameData.levelData.currentPVELevel;
+        currentZCLevel = gameData.levelData.currentZCLevel;
     }
 
     public void SaveData(ref GameData gameData)
     {
-        throw new NotImplementedException();
+        gameData.levelData.currentPVELevel = currentPVELevel;
+        gameData.levelData.currentZCLevel = currentZCLevel;
     }
 
 
@@ -52,12 +66,10 @@ public class LevelManager : MonoBehaviour, IDataPersistence
 [Serializable]
 public class PVELevel
 {
-    [SerializeField] private int id;
     [SerializeField] private int numberOfEnemyToSpawn;
     [SerializeField] private Transform spawnPosHolder;
     [SerializeField] private GameObject mapToUse;
 
-    public int Id { get => id; set => id = value; }
     public int NumberOfEnemyToSpawn { get => numberOfEnemyToSpawn; set => numberOfEnemyToSpawn = value; }
     public GameObject MapToUse { get => mapToUse; set => mapToUse = value; }
     public Transform SpawnPosHolder { get => spawnPosHolder; set => spawnPosHolder = value; }
@@ -65,13 +77,12 @@ public class PVELevel
 [Serializable]
 public class ZCLevel
 {
-    [SerializeField] private int id;
     [SerializeField] private int howManyZombie;
     [SerializeField] private GameObject[] TypeOfEnemies;
     [SerializeField] private Vector3 respawnPosition;
-
-    public int Id { get => id; set => id = value; }
+    [SerializeField] private Zombie bigBoss;
     public int HowManyZombie { get => howManyZombie; set => howManyZombie = value; }
     public GameObject[] TypeOfEnemies1 { get => TypeOfEnemies; set => TypeOfEnemies = value; }
     public Vector3 RespawnPosition { get => respawnPosition; set => respawnPosition = value; }
+    public Zombie BigBoss { get => bigBoss; set => bigBoss = value; }
 }

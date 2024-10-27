@@ -16,9 +16,6 @@ public class GameManager : MonoBehaviour
     public Enum.GameState CurrentGameState { get => currentGameState; private set { } }
     public Enum.InGameState CurrentInGameState { get => currentInGameState; set => currentInGameState = value; }
 
-
-
-
     private void Awake()
     {
         if(instance == null)

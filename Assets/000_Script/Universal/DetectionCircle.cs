@@ -5,8 +5,7 @@ using UnityEngine.Events;
 
 public class DetectionCircle : MonoBehaviour
 {
-    private float circleRadius;
-    private float circleRadiusIncreaser;
+    private float circleRadius = 0;
 
     [SerializeField] private Transform centerOfCircle;
     [SerializeField] private SphereCollider colliderToChanged;
@@ -16,16 +15,6 @@ public class DetectionCircle : MonoBehaviour
     public UnityEvent<GameObject,bool> onTriggerContact;
 
 
-    private void Awake()
-    {
-        
-    }
-
-    private void Start() {
-    
-        circleRadius = GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS;
-        circleRadiusIncreaser = CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
-        colliderToChanged.radius = circleRadius;}
 
     private void OnTriggerEnter(Collider other)
     {

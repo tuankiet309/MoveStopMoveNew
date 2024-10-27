@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class MenuHallUIController : MonoBehaviour
     [SerializeField] Button turnOffSkinShopBtn;
     [SerializeField] Button skinShop;
 
+    [SerializeField] TextMeshProUGUI goldText;
     private void Start()
     {
         weaponShop.onClick.AddListener(SwitchToShopUI);
@@ -23,6 +25,12 @@ public class MenuHallUIController : MonoBehaviour
         turnOffSkinShopBtn.onClick.AddListener(SwitchToMainHall);
         AdsButton.onClick.AddListener(SwitchToRealShop);
         SwitchToMainHall();
+        DataPersistenceManager.Instance.OnGoldChange.AddListener(UpdateGoldChange);
+        UpdateGoldChange();
+    }
+    private void OnEnable()
+    {
+        
     }
     private void SwitchToMainHall()
     {
@@ -59,5 +67,10 @@ public class MenuHallUIController : MonoBehaviour
     public void Clic()
     {
         Debug.Log("I am clicked");
+    }
+
+    private void UpdateGoldChange()
+    {
+        goldText.text = DataPersistenceManager.Instance.GameData.gold.ToString();
     }
 }

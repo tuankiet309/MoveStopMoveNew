@@ -22,7 +22,7 @@ public class UIInGame : MonoBehaviour
 
     private void UpdateAlive(int number)
     {
-        aliveText.text = "Alive: " + number.ToString();
+        aliveText.text ="Alive: "  +number.ToString();
     }
 
     IEnumerator DoFPS()

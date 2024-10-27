@@ -24,4 +24,4 @@ MonoBehaviour:
   buffMultiplyer: 1
   isUnlock: 0
   isUnlockedOnce: 0
-  gold: 500
+  gold: 200

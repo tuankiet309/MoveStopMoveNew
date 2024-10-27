@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,11 +41,16 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
 
     private Dictionary<Enum.SkinType, Skin> currentlyEquippedSkins = new Dictionary<Enum.SkinType, Skin>();
 
-    private void Awake()
+    private void OnDisable()
     {
-        CreateButton();
+        if (skinComp != null)
+        {
+            skinComp.RevertSkin(true);
+        }
+        GameData gameData = DataPersistenceManager.Instance.GameData;
+        SaveData(ref gameData);
     }
-
+    private bool buttonsInitialized = false; 
     private void Start()
     {
         skinComp = Player.Instance.GetComponent<SkinComponent>();
@@ -53,7 +59,26 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         leftHandButton.onClick.AddListener(() => ShowHolder(leftHandHolder, leftHandButton));
         fullSetButton.onClick.AddListener(() => ShowHolder(fullSetHolder, fullSetButton));
         CloseButton.onClick.AddListener(() => skinComp.RevertSkin(true));
+
+        if (!buttonsInitialized)
+        {
+            CreateButton();
+            buttonsInitialized = true;
+        }
+
         ShowHolder(hatHolder, hatButton);
+    }
+
+    void CreateButton()
+    {
+        if (buttonsInitialized) return; 
+
+        AssignButton(0, hatItems, hatHolder);
+        AssignButton(0, leftHandItems, leftHandHolder);
+        AssignButton(0, pantItems, pantHolder);
+        AssignSetButton(0);
+
+        buttonsInitialized = true; 
     }
 
     void ShowHolder(RectTransform holderToShow, Button button)
@@ -67,8 +92,8 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         leftHandHolder.gameObject.SetActive(false);
         fullSetHolder.gameObject.SetActive(false);
         holderToShow.gameObject.SetActive(true);
+        holderToShow.GetChild(0).GetComponent<Button>().onClick.Invoke();
         scrollRect.content = holderToShow;
-
         SelectVisualize(button);
     }
 
@@ -82,19 +107,11 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         pantButton.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.15f);
         leftHandButton.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.15f);
         fullSetButton.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.15f);
-
         button.image.color = new Color(1, 1, 1, 0f);
         button.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1f);
     }
 
-    void CreateButton()
-    {
-        AssignButton(0, hatItems, hatHolder);
-        AssignButton(0, leftHandItems, leftHandHolder);
-        AssignButton(0, pantItems, pantHolder);
-        AssignSetButton(0);
 
-    }
     void AssignButton(int index, ShopItemSkin shopItemSkin, RectTransform holder)
     {
         foreach(var item in shopItemSkin.SkinToAttach)
@@ -110,6 +127,11 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             button1.onClick.AddListener(() => EventForChoseSkinButton(capturedIndex, shopItemSkin.SkinType, item.IsUnlock, button1));
             buttonList.Add(new ButtonAndType(button1,shopItemSkin.SkinType));
             index++;
+
+            if(skinComp.IsSkinCurrentlyEquipped(item.SkinType,item))
+            {
+                button1.transform.GetChild(2).gameObject.SetActive(true);
+            }
         }
     }
     void AssignSetButton(int index)
@@ -126,6 +148,10 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             button1.onClick.AddListener(() => EventForChosenSetButton(capturedIndex, item.IsUnlock, button1)); 
             buttonList.Add(new ButtonAndType(button1, Enum.SkinType.Set));
             index++;
+            if (skinComp.IsSetCurrentlyEquipped( item.SkinOfSet))
+            {
+                button1.transform.GetChild(2).gameObject.SetActive(true);
+            }
         }
     }
 
@@ -193,6 +219,8 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 equipButton.gameObject.SetActive(false);
                 unequipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
+                buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = selectedSkin.Gold.ToString();
+
             }
             UnloadRing(thisButton);
         }
@@ -234,6 +262,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 equipButton.gameObject.SetActive(false);
                 unequipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
+                buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = fullSetItems.SetSkinToAttach[index].Gold.ToString();
             }
             UnloadRing(thisButton);
 

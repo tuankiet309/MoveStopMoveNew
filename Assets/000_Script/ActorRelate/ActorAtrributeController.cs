@@ -57,6 +57,7 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         {
             skinComponent.onWearNewSkin.AddListener(ApplyBuffBySkin);
         }
+       
     }
 
 
@@ -113,6 +114,10 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
 
     protected virtual void Start()
     {
+        if (circle != null )
+        {
+            circle.UpdateCircleRadius(GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE ? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS);
+        }
         if (visualizeCircle != null)
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
     }
