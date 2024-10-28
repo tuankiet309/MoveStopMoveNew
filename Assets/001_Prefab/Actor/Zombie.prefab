@@ -257,7 +257,7 @@ MonoBehaviour:
   attributesController: {fileID: 0}
   nameText: {fileID: 0}
   scoreText: {fileID: 0}
-  name: 
+  actorName: 
 --- !u!1001 &1877904368134486914
 PrefabInstance:
   m_ObjectHideFlags: 0

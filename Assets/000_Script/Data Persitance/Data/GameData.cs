@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class GameData
     public List<SkinShopItemData> skinDatas = new List<SkinShopItemData>();
     public List<WeaponShopItemData> weaponDatas = new List<WeaponShopItemData>();
     public List<StatData> statDatas = new List<StatData>();
+    public List<StatItemData> statItemDatas = new List<StatItemData>();
     public LevelData levelData;
     public GameData()
     {
@@ -74,14 +76,26 @@ public class SkinShopItemData
 public class StatData
 {
     public Enum.ZCUpgradeType type;
-    public int level;
+    public int statNumber;
 
-    public void InitStatData(int level, Enum.ZCUpgradeType type)
+    public void InitStatData(int statNumber, Enum.ZCUpgradeType type)
+    {
+        this.type = type;
+        this.statNumber = statNumber;
+    }
+}
+[System.Serializable]
+public class StatItemData
+{
+    public Enum.ZCUpgradeType type;
+    public int level;
+    public void InitStatItemData(int level, Enum.ZCUpgradeType type)
     {
         this.type = type;
         this.level = level;
     }
 }
+
 [System.Serializable]
 public class LevelData
 {

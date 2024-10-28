@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class LifeComponent : MonoBehaviour
 {
-    int health = 1;
+    protected int health = 1;
 
     public UnityEvent<string> onLifeEnds;
     protected bool isDead = false;

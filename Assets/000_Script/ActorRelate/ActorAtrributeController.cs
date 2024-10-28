@@ -192,12 +192,12 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         }
     }
 
-    public void LoadData(GameData gameData)
+    public virtual void LoadData(GameData gameData)
     {
         
     }
 
-    public void SaveData(ref GameData gameData)
+    public virtual void SaveData(ref GameData gameData)
     {
         if(score > gameData.maxScore)
         {

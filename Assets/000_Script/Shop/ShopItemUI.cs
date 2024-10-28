@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -190,6 +185,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             weaponItem[weaponIndex].Weapon.PossibleSkinForThisWeapon[currentIndex].IsLocked = false;
             LoadInfomationOfCurrentWeapon();
             ChangeWeaponToThis(currentIndex, false);
+            equipButton.onClick.Invoke();
         }
 
     }
@@ -198,6 +194,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
         WeaponComponent weaponComponent = Player.Instance.GetComponent<WeaponComponent>();
         if (weaponComponent != null)
         {
+            weaponComponent.AssignWeapon(weaponToChange);
             weaponComponent.AssignWeapon(weaponToChange);
         }
     }

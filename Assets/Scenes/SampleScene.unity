@@ -678,7 +678,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -711,7 +711,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -817,6 +817,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 769970328912947693}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &831893375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5164928841783263677, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8599005994712097531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &885235472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,6 +2570,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5110289213540200973, guid: 4f856e7c2e9f6b44792efafcb55138ca,
+        type: 3}
+      propertyPath: zCStatItemFirst.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110289213540200973, guid: 4f856e7c2e9f6b44792efafcb55138ca,
+        type: 3}
+      propertyPath: zCStatItemFirst.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 28faca0e53ed91c43a4ee1f3e2d62be6,
+        type: 2}
+    - target: {fileID: 5110289213540200973, guid: 4f856e7c2e9f6b44792efafcb55138ca,
+        type: 3}
+      propertyPath: zCStatItemFirst.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0978b770c0b72fc4792d7f7a8f850f88,
+        type: 2}
+    - target: {fileID: 5110289213540200973, guid: 4f856e7c2e9f6b44792efafcb55138ca,
+        type: 3}
+      propertyPath: zCStatItemFirst.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f9f972e33ee2d54f9b92b8665700233,
+        type: 2}
+    - target: {fileID: 5110289213540200973, guid: 4f856e7c2e9f6b44792efafcb55138ca,
+        type: 3}
+      propertyPath: zCStatItemFirst.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8167f481911fe0743bf57ed70c74bf6b,
+        type: 2}
     - target: {fileID: 5275031237510664655, guid: 4f856e7c2e9f6b44792efafcb55138ca,
         type: 3}
       propertyPath: m_Name
@@ -2967,7 +3008,7 @@ PrefabInstance:
     - target: {fileID: 1125894486620470693, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1197337796871208612, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
@@ -3927,7 +3968,7 @@ PrefabInstance:
     - target: {fileID: 5812502041066991756, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5892677273197568040, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
@@ -4043,6 +4084,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433880891684553929, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.9959106
       objectReference: {fileID: 0}
     - target: {fileID: 6707700086074400827, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
@@ -4374,6 +4420,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8261504629016215516, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
+        type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 831893375}
+    - target: {fileID: 8261504629016215516, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
+        type: 3}
+      propertyPath: skinButtonPrefab
+      value: 
+      objectReference: {fileID: 6315157656183020180, guid: 1e7de0ea926cb934d8003aea32d23e5e,
+        type: 3}
     - target: {fileID: 8482524247298564811, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
         type: 3}
       propertyPath: m_Camera

@@ -57,14 +57,12 @@ public class ZCEndGameUI : MonoBehaviour
         starHolder.gameObject.SetActive(true);
         numberStarHolder.gameObject.SetActive(true);
         int index = LevelManager.Instance.CurrentZCLevel % 5 +1;
-        for (int i = 0; i < index; i++)
+        for (int i = 0; i < 5; i++)
         {
-            daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
-            daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index  ).ToString();
-            if (i == index)
-            {
-                daysHolder.GetChild(i).GetChild(1).gameObject.SetActive(true);
-            }
+            if(i<index)
+                daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
+            daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index + 2 + i  ).ToString();
+            
         }
         LevelManager.Instance.CurrentZCLevel++;
     }
@@ -73,15 +71,16 @@ public class ZCEndGameUI : MonoBehaviour
         title.text = "You lose";
         starHolder.gameObject.SetActive(false);
         numberStarHolder.gameObject.SetActive(false);
-        int index = LevelManager.Instance.CurrentZCLevel % 5;
-        for (int i = 0; i < index; i++)
+        int index = LevelManager.Instance.CurrentZCLevel % 5+1;
+        for (int i = 0; i < 5; i++)
         {
-            daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
-            daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index).ToString();
-            if (i == index)
+            if (i < index)
+                daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
+            daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index + 2 + i).ToString();
+            if (i == index-1)
             {
                 daysHolder.GetChild(i).GetChild(1).gameObject.SetActive(true);
-                daysHolder.GetChild(i).GetChild(1).GetComponent<Image>().color = new Color(1, 0, 0, 1);
+                daysHolder.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.red;
             }
         }
     }

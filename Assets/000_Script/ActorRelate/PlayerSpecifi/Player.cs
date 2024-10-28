@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public static Player Instance { get { return instance; } private set { } }
 
     [SerializeField] private Canvas[] CanvasNeedToTurnOnOff;
+    [SerializeField] private Transform[] transformHolder;
     private void Awake()
     {
         if (instance == null)
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
         }
         else
             Destroy(gameObject);
+        
 
     }
     private void Start()
@@ -36,7 +38,8 @@ public class Player : MonoBehaviour
         }
         if ((gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.PVE)|| (gameState == Enum.GameState.Begin && inGameState == Enum.InGameState.Zombie))
         {
-            transform.position = new Vector3(0, transform.position.y, 0);
+            if(inGameState == Enum.InGameState.PVE)
+                transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(0, 0, 0);
             TurnWorldCanvas(true);
         }
@@ -48,6 +51,11 @@ public class Player : MonoBehaviour
         {
             TurnWorldCanvas(false);
         }
+        //if(gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.Zombie)
+        //{
+        //    Vector3 random = transformHolder[ Random.Range(0, transformHolder.Length)].position;
+        //    transform.position = new Vector3(random.x, transform.position.y, random.y);
+        //}
     }
 
     private void TurnWorldCanvas(bool check)

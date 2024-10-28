@@ -11,6 +11,8 @@ public class LevelManager : MonoBehaviour, IDataPersistence
     [SerializeField] List<PVELevel> PVELevels = new List<PVELevel>();
     [SerializeField] List<ZCLevel> ZCLevels = new List<ZCLevel>();
 
+
+
     private static LevelManager instance;
     public static LevelManager Instance { get { return instance; } }
 
@@ -45,7 +47,9 @@ public class LevelManager : MonoBehaviour, IDataPersistence
         if(GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie)
         {
             ZombieSpawner.Instance.NumberOfMaxEnemies = ZCLevels[currentZCLevel].HowManyZombie;
-            ZombieSpawner.Instance.BossZombie = ZCLevels[currentZCLevel].BigBoss; 
+            ZombieSpawner.Instance.BossZombie = ZCLevels[currentZCLevel].BigBoss;
+            ZombieSpawner.Instance.WhenToSpawnBoss = ZCLevels[currentZCLevel].WhenToSpawnBoss;
+            ZombieSpawner.Instance.GetComponent<ZombiePool>().DogRandom = ZCLevels[currentZCLevel].DogChances;
         }
     }
 
@@ -78,11 +82,15 @@ public class PVELevel
 public class ZCLevel
 {
     [SerializeField] private int howManyZombie;
-    [SerializeField] private GameObject[] TypeOfEnemies;
+    [SerializeField] private int whenToSpawnBoss;
     [SerializeField] private Vector3 respawnPosition;
     [SerializeField] private Zombie bigBoss;
+    [SerializeField] private int dogChances;
+
+
     public int HowManyZombie { get => howManyZombie; set => howManyZombie = value; }
-    public GameObject[] TypeOfEnemies1 { get => TypeOfEnemies; set => TypeOfEnemies = value; }
     public Vector3 RespawnPosition { get => respawnPosition; set => respawnPosition = value; }
     public Zombie BigBoss { get => bigBoss; set => bigBoss = value; }
+    public int WhenToSpawnBoss { get => whenToSpawnBoss; set => whenToSpawnBoss = value; }
+    public int DogChances { get => dogChances; set => dogChances = value; }
 }

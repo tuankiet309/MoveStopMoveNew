@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ZCStatUpgradeUI : MonoBehaviour
+public class ZCStatUpgradeUI : MonoBehaviour,IDataPersistence
 {
     [SerializeField] ZCStatItem item;
     [SerializeField] Image image;
@@ -16,7 +16,21 @@ public class ZCStatUpgradeUI : MonoBehaviour
     {
         UpdateItemInfo();
     }
+    private void OnEnable()
+    {
+        LoadData(DataPersistenceManager.Instance.GameData);
 
+    }
+    private void OnDisable()
+    {
+        GameData game = DataPersistenceManager.Instance.GameData;
+        SaveData(ref game);
+    }
+    private void OnApplicationQuit()
+    {
+        GameData game = DataPersistenceManager.Instance.GameData;
+        SaveData(ref game);
+    }
     private void UpdateItemInfo()
     {
         if (item.Level == item.Stat.Length)
@@ -50,13 +64,13 @@ public class ZCStatUpgradeUI : MonoBehaviour
                     buffDes.text = item.Stat[item.Level].HowMuchUpgrade.ToString() + " times";
                     break;
                 case Enum.ZCUpgradeType.Speed:
-                    buffDes.text = "+" + (item.Stat[item.Level].HowMuchUpgrade / 100).ToString() + "% Speed";
+                    buffDes.text = "+" + (item.Stat[item.Level].HowMuchUpgrade).ToString() + "% Speed";
                     break;
                 case Enum.ZCUpgradeType.MaxWeapon:
                     buffDes.text = "Max: " + item.Stat[item.Level].HowMuchUpgrade.ToString();
                     break;
                 case Enum.ZCUpgradeType.CircleRange:
-                    buffDes.text = "+" + (item.Stat[item.Level].HowMuchUpgrade / 100).ToString() + "% Range";
+                    buffDes.text = "+" + (item.Stat[item.Level].HowMuchUpgrade).ToString() + "% Range";
                     break;
             }
 
@@ -68,10 +82,45 @@ public class ZCStatUpgradeUI : MonoBehaviour
     {
         if (item.Level == item.Stat.Length)
             return;
-        Player.Instance.GetComponent<ZCAttributeController>().UpgradeStat(item.Stat[item.Level]);
-        item.Level++;
-        UpdateItemInfo();
+        if (DataPersistenceManager.Instance.AccessGold(-item.Stat[item.Level].Price))
+        {
+            Player.Instance.GetComponent<ZCAttributeController>().UpgradeStat(item.Stat[item.Level]);
+            item.Level++;
+            UpdateItemInfo();
+        }
     }
 
+    public void LoadData(GameData gameData)
+    {
+        
+        StatItemData itemData = gameData.statItemDatas.Find(stat => stat.type == item.Type);
+        if(itemData != null)
+        {
+            item.Level = itemData.level;
+        }
+        else
+        {
+            item.Level = 0;
+            StatItemData newItem = new StatItemData();
+            newItem.type = item.Type;
+            newItem.level = item.Level;
+            gameData.statItemDatas.Add(newItem);
+        }
+    }
 
+    public void SaveData(ref GameData gameData)
+    {
+        StatItemData itemData = gameData.statItemDatas.Find(stat => stat.type == item.Type);
+        if (itemData != null)
+        {
+            itemData.level = item.Level;
+        }
+        else
+        {
+            StatItemData newItem = new StatItemData();
+            newItem.type = item.Type;
+            newItem.level = item.Level;
+            gameData.statItemDatas.Add(newItem);
+        }
+    }
 }

@@ -19,6 +19,7 @@ public class ZombieSpawner : Spawner<Zombie>
 
     private int numberOfEnemiesSpawned = 0;
     private int numberOfEnemiesLeft;
+    private int whenToSpawnBoss;
     private int previousNumberOfEnemiesLeft;
     private bool gameStateChanged = false;
     private Camera mainCamera;
@@ -34,6 +35,7 @@ public class ZombieSpawner : Spawner<Zombie>
     public int NumberOfMaxEnemies { get => numberOfMaxEnemies; set => numberOfMaxEnemies = value; }
     public int NumberOfMaxEnemiesAtATime { get => numberOfMaxEnemiesAtATime; set => numberOfMaxEnemiesAtATime = value; }
     public Zombie BossZombie { get => bossZombie; set => bossZombie = value; }
+    public int WhenToSpawnBoss { get => whenToSpawnBoss; set => whenToSpawnBoss = value; }
 
     private void OnDestroy()
     {
@@ -97,10 +99,11 @@ public class ZombieSpawner : Spawner<Zombie>
         numberOfEnemiesSpawned++;
         numberOfEnemiesLeft = numberOfMaxEnemies - Zombie.numberOfEnemyHasDie;
         OnNumberOfEnemiesDecrease?.Invoke(numberOfEnemiesLeft);
-        if(numberOfEnemiesLeft < numberOfMaxEnemies * 0.3 && checkBossNotOut && bossZombie !=null)
+        if(numberOfEnemiesLeft < whenToSpawnBoss  && checkBossNotOut && bossZombie !=null)
         {
             Instantiate(bossZombie, FindNearestOffscreenSpawnPosition().position, Quaternion.identity);
-            checkBossNotOut=false;
+            numberOfMaxEnemies++;
+            checkBossNotOut =false;
         }
     }
 

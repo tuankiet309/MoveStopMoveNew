@@ -13,6 +13,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private Skin[] firstSkinOfPlayer;
     [SerializeField] private ShopItemWeapon[] shopItemWeaponFirst;
     [SerializeField] private ShopItemSkin[] shopItemSkinFirst;
+    [SerializeField] private ZCStatItem[] zCStatItemFirst;
 
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
@@ -161,6 +162,19 @@ public class DataPersistenceManager : MonoBehaviour
                 shopItemSkinFirst[i].SetSkinToAttach[j].IsUnlock = false;
                 gameData.skinDatas.Add(skin);
             }
+        }
+        foreach (var item in zCStatItemFirst)
+        {
+            item.Level = 0;
+            StatItemData itemData = new StatItemData();
+            StatData itemData2 = new StatData();
+            itemData.type = item.Type;
+            itemData.level = item.Level + 1;
+            itemData2.type = item.Type;
+            itemData2.statNumber =  item.Stat[item.Level].HowMuchUpgrade;
+            gameData.statItemDatas.Add(itemData);
+            gameData.statDatas.Add(itemData2);
+
         }
     }
     public void LoadGame()

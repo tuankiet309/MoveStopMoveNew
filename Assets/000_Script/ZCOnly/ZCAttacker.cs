@@ -166,18 +166,17 @@ public class ZCAttacker : ActorAttacker
                 case Enum.ZCPowerUp.BulletPlus:
                     moreWeapon++;
                     Attack(targetToAttackPos, true);
-                    onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+                    onActorAttack?.Invoke(targetToAttackPos);
 
                     break;
                 case Enum.ZCPowerUp.Continous:
                     Attack(targetToAttackPos, true);
                     StartCoroutine(ContinousAttack());
-                    onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
-
+                    onActorAttack?.Invoke(targetToAttackPos);
                     break;
                 default:
                     Attack(targetToAttackPos, true);
-                    onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+                    onActorAttack?.Invoke(targetToAttackPos);
                     break;
             }
         }
@@ -209,7 +208,7 @@ public class ZCAttacker : ActorAttacker
         Vector3 oppositeAttackPos = throwLocation.position + oppositeAttackDir;
         Attack(targetToAttackPos,true);
         Attack(oppositeAttackPos,false);
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
+        onActorAttack?.Invoke(targetToAttackPos);
 
     }
 
@@ -236,7 +235,7 @@ public class ZCAttacker : ActorAttacker
 
         Attack(leftAttackPos, false);
         Attack(rightAttackPos, false);
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
+        onActorAttack?.Invoke(targetToAttackPos);
         targetToAttackPos = Vector3.zero;
     }
     private void TrippleAttack()
@@ -261,7 +260,7 @@ public class ZCAttacker : ActorAttacker
 
         Attack(leftAttackPos, false);
         Attack(rightAttackPos, false);
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
+        onActorAttack?.Invoke(targetToAttackPos);
 
         targetToAttackPos = Vector3.zero;
     }

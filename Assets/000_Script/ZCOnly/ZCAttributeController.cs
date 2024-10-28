@@ -58,14 +58,7 @@ public class ZCAttributeController : ActorAtributeController
 
     public void UpgradeStat(ZCStatPlayer newStat)
     {
-        for (int i = 0; i < stats.Count; i++)
-        {
-            if (stats[i].Type == newStat.Type)
-            {
-                stats.RemoveAt(i);  
-                break; 
-            }
-        }
+        stats.Remove(stats.Find(stat => stat.Type == newStat.Type));
         stats.Add(newStat);
         onUpgradeStat?.Invoke();
     }
@@ -80,8 +73,46 @@ public class ZCAttributeController : ActorAtributeController
         }
 
     }
-    
-    
+
+    public override void LoadData(GameData gameData)
+    {
+        base.LoadData(gameData);
+        foreach (var stat in stats) 
+        {
+           StatData data = gameData.statDatas.Find(statt => statt.type == stat.Type);
+            if(data != null)
+            {
+                stat.HowMuchUpgrade = data.statNumber;
+            }
+            else
+            {
+                ZCStatPlayer statPlayer = new ZCStatPlayer();
+                statPlayer.HowMuchUpgrade = data.statNumber;
+                statPlayer.Type = data.type;
+                statPlayer.Price = 0;
+                stats.Add(statPlayer);
+            }
+        }
+    }
+
+    public override void SaveData(ref GameData gameData)
+    {
+        base.SaveData(ref gameData);
+        List<StatData> data = new List<StatData>();
+        foreach (var stat in stats) 
+        {
+            StatData statData = new StatData();
+            statData.type = stat.Type;
+            statData.statNumber = stat.HowMuchUpgrade;
+            data.Add(statData);
+        }
+        if(data != null)
+        {
+            gameData.statDatas = data;
+        }
+    }
+
+
 }
 
 

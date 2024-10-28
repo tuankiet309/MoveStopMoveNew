@@ -26,11 +26,11 @@ MonoBehaviour:
     howMuchUpgrade: 20
     price: 1000
   - type: 1
-    howMuchUpgrade: 30
+    howMuchUpgrade: 40
     price: 1500
   - type: 1
-    howMuchUpgrade: 40
+    howMuchUpgrade: 60
     price: 2000
   - type: 1
-    howMuchUpgrade: 200
+    howMuchUpgrade: 80
     price: 2500

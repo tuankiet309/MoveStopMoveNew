@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class CONSTANT_VALUE : MonoBehaviour
 {

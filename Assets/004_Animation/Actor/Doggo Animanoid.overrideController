@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Doggo Animanoid
+  m_Controller: {fileID: 9100000, guid: f15a851449de15d4481709118cddce96, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -2250548791150738156, guid: 38f9296dc39c27647a0119314baf12a2,
+      type: 3}
+    m_OverrideClip: {fileID: -2475402815861637991, guid: df83c44cb28e18447868b9807d21039e,
+      type: 3}
+  - m_OriginalClip: {fileID: 9095686598229849690, guid: 38f9296dc39c27647a0119314baf12a2,
+      type: 3}
+    m_OverrideClip: {fileID: -1518937013585228144, guid: df83c44cb28e18447868b9807d21039e,
+      type: 3}
+  - m_OriginalClip: {fileID: 4821609917503249430, guid: 38f9296dc39c27647a0119314baf12a2,
+      type: 3}
+    m_OverrideClip: {fileID: -4442656436891882226, guid: df83c44cb28e18447868b9807d21039e,
+      type: 3}
