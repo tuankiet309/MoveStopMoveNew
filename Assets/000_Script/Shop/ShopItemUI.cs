@@ -283,7 +283,6 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
 
     public void LoadData(GameData gameData)
     {
-        Debug.LogError("ShopIsBeingLoad");
         foreach (ShopItemWeapon shopItemWeapon in weaponItem)
         {
             WeaponShopItemData matchingWeaponData = gameData.weaponDatas.Find(weaponData => weaponData.id == shopItemWeapon.IdWeapon);
@@ -302,7 +301,6 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
                     if (skinIndex < shopItemWeapon.Weapon.PossibleSkinForThisWeapon.Length)
                     {
                         shopItemWeapon.Weapon.PossibleSkinForThisWeapon[skinIndex].IsLocked = false;
-                        Debug.LogError(shopItemWeapon.Weapon.PossibleSkinForThisWeapon[skinIndex].IsLocked);
 
                     }
                 }

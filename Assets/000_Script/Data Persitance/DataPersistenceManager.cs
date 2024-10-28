@@ -188,6 +188,9 @@ public class DataPersistenceManager : MonoBehaviour
    
     private void OnApplicationQuit()
     {
+        Debug.Log("Save");
+        Debug.Log(dataPersistenceObject.Count);
+
         SaveGame();
     }
     private List<IDataPersistence> FindAllDataPersistence()

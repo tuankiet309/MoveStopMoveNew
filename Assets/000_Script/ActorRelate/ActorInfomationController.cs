@@ -9,9 +9,9 @@ public class ActorInformationController : MonoBehaviour,IDataPersistence
     [SerializeField] private ActorAtributeController attributesController; 
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private string name;
+    [SerializeField] private string actorName;
 
-    public string Name { get => name; set => name = value; }
+    public string Name { get => actorName; set => actorName = value; }
 
     private void OnEnable()
     {
@@ -40,8 +40,8 @@ public class ActorInformationController : MonoBehaviour,IDataPersistence
 
     public void UpdateName(string name)
     {
-        this.name = name;
-        nameText.text = this.name; 
+        this.actorName = name;
+        nameText.text = this.actorName; 
     }
 
     internal string GetName()
@@ -60,6 +60,6 @@ public class ActorInformationController : MonoBehaviour,IDataPersistence
 
     public void SaveData(ref GameData gameData)
     {
-        gameData.playerData.playerName = this.name;
+        gameData.playerData.playerName = this.actorName;
     }
 }

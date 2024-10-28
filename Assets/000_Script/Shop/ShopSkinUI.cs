@@ -66,6 +66,15 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             buttonsInitialized = true;
         }
 
+    }
+    bool firstEnable = true;
+    private void OnEnable()
+    {
+        if (firstEnable)
+        {
+            firstEnable = false;
+            return;
+        }
         ShowHolder(hatHolder, hatButton);
     }
 
@@ -77,7 +86,6 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         AssignButton(0, leftHandItems, leftHandHolder);
         AssignButton(0, pantItems, pantHolder);
         AssignSetButton(0);
-
         buttonsInitialized = true; 
     }
 
@@ -155,15 +163,17 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         }
     }
 
-    void UpdateEquipButtonTextAndState(Enum.SkinType skinType, Button equippedButton)
+    private void UpdateEquipButtonTextAndState(Enum.SkinType skinType, Button equippedButton)
     {
         foreach (var button in buttonList)
         {
-            if (button.skinType == skinType || skinType == SkinType.Set || button.skinType == SkinType.Set) 
+            if (button.skinType == skinType || skinType == SkinType.Set || button.skinType == SkinType.Set)
             {
-                button.button.transform.GetChild(2).gameObject.SetActive(false);
+                button.button.transform.GetChild(2).gameObject.SetActive(false); 
             }
         }
+        IfNotBuyYet.gameObject.SetActive(false);
+        equipButton.gameObject.SetActive(true);
     }
 
     void EventForChoseSkinButton(int index, Enum.SkinType skinType, bool isUnlock, Button thisButton)
@@ -220,12 +230,14 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 unequipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
                 buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = selectedSkin.Gold.ToString();
+                buyButton.onClick.AddListener(() => BuyThisSkin(selectedSkin));
 
             }
             UnloadRing(thisButton);
         }
     }
 
+    
     void EventForChosenSetButton(int index, bool isUnlock, Button thisButton)
     {
         Skin[] selectedSkinSet = fullSetItems.SetSkinToAttach[index].SkinOfSet;
@@ -263,12 +275,48 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 unequipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
                 buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = fullSetItems.SetSkinToAttach[index].Gold.ToString();
+                buyButton.onClick.AddListener(()=>BuyThisSet(fullSetItems.SetSkinToAttach[index]));
             }
             UnloadRing(thisButton);
 
         }
     }
 
+    private void BuyThisSkin(Skin selectedSkin)
+    {
+        if (DataPersistenceManager.Instance.AccessGold(selectedSkin.Gold))
+        {
+            selectedSkin.IsUnlock = true;
+
+            Button purchasedButton = buttonList.FirstOrDefault(b => b.skinType == selectedSkin.SkinType)?.button;
+            if (purchasedButton != null)
+            {
+                purchasedButton.transform.GetChild(1).gameObject.SetActive(false); 
+                purchasedButton.transform.GetChild(2).gameObject.SetActive(true); 
+            }
+            buyButton.interactable = false;
+            equipButton.gameObject.SetActive(true);
+            unequipButton.gameObject.SetActive(false);
+        }
+    }
+    private void BuyThisSet(SetSkin setSkin)
+    {
+        if (DataPersistenceManager.Instance.AccessGold(setSkin.Gold))
+        {
+            setSkin.IsUnlock = true;
+
+            Button purchasedButton = buttonList.FirstOrDefault(b => b.skinType == SkinType.Set)?.button;
+            if (purchasedButton != null)
+            {
+                purchasedButton.transform.GetChild(1).gameObject.SetActive(false); 
+                purchasedButton.transform.GetChild(2).gameObject.SetActive(true); 
+            }
+
+            buyButton.interactable = false;
+            equipButton.gameObject.SetActive(true);
+            unequipButton.gameObject.SetActive(false);
+        }
+    }
     void UnloadRing(Button thisButton)
     {
         foreach(ButtonAndType bt in buttonList)
@@ -283,12 +331,15 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         if (currentTempSkin != null && skinComp != null)
         {
             currentlyEquippedSkins[skinType] = currentTempSkin[0];
-            skinComp.AssignNewSkin(currentTempSkin,skinType == Enum.SkinType.Set);
+            skinComp.AssignNewSkin(currentTempSkin, skinType == Enum.SkinType.Set);
             UpdateEquipButtonTextAndState(skinType, thisButton);
+
             currentTempSkin = null;
             thisButton.transform.GetChild(2).gameObject.SetActive(true);
             equipButton.gameObject.SetActive(false);
             unequipButton.gameObject.SetActive(true);
+
+            unequipButton.onClick.RemoveAllListeners();
             unequipButton.onClick.AddListener(() => UnequipSkin(skinType, thisButton));
         }
     }

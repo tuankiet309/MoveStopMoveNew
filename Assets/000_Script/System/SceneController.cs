@@ -24,7 +24,6 @@ public class SceneController : MonoBehaviour
     public void LoadSceneRightAway(Scene scene)
     {
         Debug.Log(scene.buildIndex);
-        DataPersistenceManager.Instance.SaveGame();
         SceneManager.LoadScene(-scene.buildIndex);
     }
     public void LoadSceneAsyncWay(Scene scene)
