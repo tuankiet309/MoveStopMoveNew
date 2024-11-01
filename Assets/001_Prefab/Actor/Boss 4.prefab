@@ -45,20 +45,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2963460255190871293, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3260288879722439696, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3260288879722439696, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3260288879722439696, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3260288879722439696, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
@@ -115,8 +120,19 @@ PrefabInstance:
       propertyPath: lifeComponent
       value: 
       objectReference: {fileID: 2898797540632880070}
+    - target: {fileID: 6133666149468591406, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: doubleSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133666149468591406, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: normalSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6150003662687594971, guid: e1dbb5c585123644d8bc782f68b17049, type: 3}
+    - {fileID: 3989433716781196321, guid: e1dbb5c585123644d8bc782f68b17049, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3707066881163589231, guid: e1dbb5c585123644d8bc782f68b17049,
@@ -129,6 +145,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2898797540632880070}
   m_SourcePrefab: {fileID: 100100000, guid: e1dbb5c585123644d8bc782f68b17049, type: 3}
+--- !u!137 &2830958697989830038 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4287178894957042459, guid: e1dbb5c585123644d8bc782f68b17049,
+    type: 3}
+  m_PrefabInstance: {fileID: 2032965742546857613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3406038680850520290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3707066881163589231, guid: e1dbb5c585123644d8bc782f68b17049,
@@ -153,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfe1b6b7fa25fa47b62e9ef4d569ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actorMeshRenderer: {fileID: 2830958697989830038}
   onLifeEnds:
     m_PersistentCalls:
       m_Calls: []

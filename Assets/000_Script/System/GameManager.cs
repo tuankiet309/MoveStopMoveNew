@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         onStateChange?.Invoke(currentGameState, currentInGameState);
+        Application.targetFrameRate = 60;
+
     }
     public void SetGameStates(Enum.GameState gameState, Enum.InGameState inGameState)
     {

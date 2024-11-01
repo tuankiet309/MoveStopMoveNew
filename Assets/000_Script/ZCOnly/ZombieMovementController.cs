@@ -12,11 +12,15 @@ public class ZombieMovementController : MonoBehaviour
 
     public UnityEvent<Vector3> onEnemyMoving;
 
+    [SerializeField] private float normalSpeed = 4.2f; 
+    [SerializeField] private float doubleSpeed = 7.0f; 
+    [SerializeField] private float detectionRange = 40f; 
+
     private void Start()
     {
         player = Player.Instance;
         GameManager.Instance.onStateChange.AddListener(OnMoving);
-        
+
         if (agent != null)
         {
             agent.isStopped = true;
@@ -35,7 +39,7 @@ public class ZombieMovementController : MonoBehaviour
     {
         if (agent != null)
         {
-            agent.SetDestination(transform.position); 
+            agent.SetDestination(transform.position);
             agent.isStopped = true;
         }
     }
@@ -45,18 +49,33 @@ public class ZombieMovementController : MonoBehaviour
         if (agent != null && !agent.isStopped)
         {
             agent.SetDestination(player.transform.position);
+            AdjustSpeedBasedOnDistance();
+        }
+    }
+
+    private void AdjustSpeedBasedOnDistance()
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distanceToPlayer > detectionRange)
+        {
+            agent.speed = doubleSpeed; 
+        }
+        else
+        {
+            agent.speed = normalSpeed; 
         }
     }
 
     private void OnMoving(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameObject.activeInHierarchy == false)
-            return; 
-        
+            return;
+
         if (gameState == Enum.GameState.Ingame)
         {
-            agent.isStopped = false; 
-            onEnemyMoving?.Invoke(Vector3.one); 
+            agent.isStopped = false;
+            onEnemyMoving?.Invoke(Vector3.one);
         }
         else if (gameState == Enum.GameState.Begin)
         {
@@ -65,8 +84,8 @@ public class ZombieMovementController : MonoBehaviour
         }
         else if (gameState == Enum.GameState.Dead || gameState == Enum.GameState.Revive)
         {
-            agent.isStopped = true; 
-            onEnemyMoving?.Invoke(Vector3.zero); 
+            agent.isStopped = true;
+            onEnemyMoving?.Invoke(Vector3.zero);
         }
     }
 }

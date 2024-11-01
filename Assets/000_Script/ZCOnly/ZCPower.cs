@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class ZCPower : ScriptableObject
 {
     [SerializeField] private string powerName;
+    [SerializeField] private string powerDes;
     [SerializeField] private Sprite powerImage;
     [SerializeField] private Enum.ZCPowerUp powerType;
 
     public string PowerName { get => powerName; set => powerName = value; }
     public Sprite PowerImage { get => powerImage; set => powerImage = value; }
     public Enum.ZCPowerUp PowerType { get => powerType; set => powerType = value; }
+    public string PowerDes { get => powerDes; set => powerDes = value; }
 }

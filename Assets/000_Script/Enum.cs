@@ -13,6 +13,7 @@ public class Enum : MonoBehaviour
     public enum GameState
     {
         Ingame,
+        Setting,
         Hall,
         SkinShop,
         Dead,
@@ -71,4 +72,22 @@ public class Enum : MonoBehaviour
         Tripple,
         IgnoreWall
     }
+
+    public enum SoundType
+    {
+        UIButton,
+        UISlider,
+        DoneGame,
+        WeaponSound,
+        Dead,
+        SizeUp,
+        CountDown
+    }
+
+    public enum SceneName
+    {
+        LoadingScene,
+        PVEScene,
+        ZCScene
+    }    
 }

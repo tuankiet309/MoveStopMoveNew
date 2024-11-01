@@ -38,6 +38,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dog
       objectReference: {fileID: 0}
+    - target: {fileID: 2865066402843585147, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: actorMeshRenderer
+      value: 
+      objectReference: {fileID: 2671729962891423079}
     - target: {fileID: 2963460255190871293, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
       propertyPath: m_Speed
@@ -93,6 +98,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3989433716781196321, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: actorMeshRenderer
+      value: 
+      objectReference: {fileID: 2671729962891423079}
     - target: {fileID: 4000273548199038840, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
       propertyPath: skinnedMeshRenderer
@@ -109,6 +119,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 09df03e0cdd3499439369fd6229f9903,
         type: 2}
+    - target: {fileID: 6133666149468591406, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: doubleSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133666149468591406, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: normalSpeed
+      value: 5.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7579071109325136523, guid: e1dbb5c585123644d8bc782f68b17049, type: 3}

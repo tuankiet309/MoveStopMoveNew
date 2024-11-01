@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinToAttach: []
   setSkinToAttach:
-  - {fileID: 11400000, guid: e7f8c3ee16ed78a4185c5fd109f717c0, type: 2}
-  - {fileID: 11400000, guid: 4804957060f875e4bb1a0a1d5f74813e, type: 2}
-  - {fileID: 11400000, guid: 75615b1b4995ead47a4d2e7b1568495b, type: 2}
-  - {fileID: 11400000, guid: 44cccb200f8d883499093ea0eb200ff7, type: 2}
+  - {fileID: 11400000, guid: 1223b09bdb16ecf4592c028677cd4d7e, type: 2}
   - {fileID: 11400000, guid: 3e03b74d6ce40304ea8daa61f4d75bbe, type: 2}
+  - {fileID: 11400000, guid: 59b40b99611436e4ab16878ca135171f, type: 2}
+  - {fileID: 11400000, guid: 44cccb200f8d883499093ea0eb200ff7, type: 2}
+  - {fileID: 11400000, guid: 75615b1b4995ead47a4d2e7b1568495b, type: 2}
   skinType: 6
   posOffsetOfThisType: {x: 0, y: 0, z: 0}

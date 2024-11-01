@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Devil
-  m_EditorClassIdentifier: Assembly-CSharp::SetSkin
-  setID: setdevil
+  m_Script: {fileID: 11500000, guid: 47741e282a118694fadc18d026b97db0, type: 3}
+  m_Name: Devil Set
+  m_EditorClassIdentifier: 
+  setID: d3190109-7d0e-4f3f-943f-5df2975d7a05
   eachSkinOfSet:
   - {fileID: 11400000, guid: 00616ea30c2fba945810533ad78fc6fd, type: 2}
+  - {fileID: 11400000, guid: 987a65547d1755443908bef8978bc601, type: 2}
+  - {fileID: 11400000, guid: 29daa659f98550e4793708aa94a87401, type: 2}
   - {fileID: 11400000, guid: 4194016960c1b3b45821c22b083889ce, type: 2}
   - {fileID: 11400000, guid: 00d2fc6c17f95bc429a76f69d3dc6116, type: 2}
-  - {fileID: 11400000, guid: 29daa659f98550e4793708aa94a87401, type: 2}
-  - {fileID: 11400000, guid: 987a65547d1755443908bef8978bc601, type: 2}
   imageToShow: {fileID: 7705661206538623317, guid: a95386fe01933224ea219d33ecc89ca1,
     type: 3}
   isUnlock: 0
-  gold: 100
+  gold: 2500

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class DamageComponent : MonoBehaviour
@@ -20,6 +21,7 @@ public class DamageComponent : MonoBehaviour
         if (lifeComponent != null)
         {
             bool check = lifeComponent.DamageHealth(initiator.GetComponent<ActorInformationController>().GetName());
+            PlayHitSound();
             if(check)
                 initiator.EventIfKillSomeone();
             if (gameObject.CompareTag("Zombie"))
@@ -38,5 +40,11 @@ public class DamageComponent : MonoBehaviour
         if(isCanSelfDesttroy)
             Destroy(gameObject);
         return;
+    }
+    protected virtual void PlayHitSound()
+    {
+        SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.WeaponSound);
+        AudioClip audioClip = soundList.Sounds[0];
+        SoundManager.Instance.PlayThisOnWorld(audioClip, 0.25f, transform.position);
     }
 }

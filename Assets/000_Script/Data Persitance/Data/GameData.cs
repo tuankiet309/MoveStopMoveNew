@@ -9,6 +9,8 @@ public class GameData
     ///Game essentials
     public int gold;
     public int maxScore;
+    public int level;
+    public int currentExp;
     ///Player information
     public PlayerData playerData;
     public List<SkinShopItemData> skinDatas = new List<SkinShopItemData>();
@@ -16,11 +18,15 @@ public class GameData
     public List<StatData> statDatas = new List<StatData>();
     public List<StatItemData> statItemDatas = new List<StatItemData>();
     public LevelData levelData;
+    public SettingData settingData;
     public GameData()
     {
         this.gold = 0;
         this.maxScore = 0;
+        level = 0;
+        currentExp = 0;
         this.playerData = new PlayerData();
+        settingData = new SettingData();
     }
 }
 
@@ -110,5 +116,11 @@ public class LevelData
 [System.Serializable]
 public class SettingData
 {
-
+    public bool isMute;
+    public bool isUnvibrate;
+    public SettingData() 
+    {
+        isMute = false;
+        isUnvibrate = false;
+    }
 }

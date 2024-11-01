@@ -150,6 +150,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
                 customVarient.transform.localPosition = Vector3.zero;
                 CustomVarient.onClick.AddListener(OpenColorPanel);
                 CustomVarient.onClick.AddListener(() => ChangeWeaponToThis(0, false));
+                CustomVarient.onClick.AddListener(SoundManager.Instance.PlayClickSound);
                 
             }
             else
@@ -167,6 +168,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
 
                     int currentIndex = index;
                     variantInstance.onClick.AddListener(() => ChangeWeaponToThis(currentIndex, IsLock));
+                    variantInstance.onClick.AddListener(SoundManager.Instance.PlayClickSound);
                 }
                 else
                 {

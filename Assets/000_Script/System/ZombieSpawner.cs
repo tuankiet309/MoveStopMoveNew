@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class ZombieSpawner : Spawner<Zombie>
 {
     [SerializeField] private Zombie enemyPreb;
     [SerializeField] private ZombiePool enemyPool;
-    [SerializeField] Material[] skinOfZombie;
-
+    [SerializeField] private Material[] skinOfZombie;
     [SerializeField] private int numberOfMaxEnemies = 0;
     [SerializeField][Range(0, 50)] private int numberOfMaxEnemiesAtATime = 0;
     [SerializeField] private Transform spawnPosHolder;
@@ -19,10 +17,11 @@ public class ZombieSpawner : Spawner<Zombie>
 
     private int numberOfEnemiesSpawned = 0;
     private int numberOfEnemiesLeft;
-    private int whenToSpawnBoss;
     private int previousNumberOfEnemiesLeft;
+    private int whenToSpawnBoss;
     private bool gameStateChanged = false;
-    private Camera mainCamera;
+    private bool checkBossNotOut = true;
+    private Transform player;
 
     public UnityEvent<int> OnNumberOfEnemiesDecrease;
 
@@ -30,37 +29,20 @@ public class ZombieSpawner : Spawner<Zombie>
     public static ZombieSpawner Instance { get { return instance; } }
 
     public int NumberOfEnemiesLeft { get => numberOfEnemiesLeft; private set { } }
-
-
     public int NumberOfMaxEnemies { get => numberOfMaxEnemies; set => numberOfMaxEnemies = value; }
     public int NumberOfMaxEnemiesAtATime { get => numberOfMaxEnemiesAtATime; set => numberOfMaxEnemiesAtATime = value; }
     public Zombie BossZombie { get => bossZombie; set => bossZombie = value; }
     public int WhenToSpawnBoss { get => whenToSpawnBoss; set => whenToSpawnBoss = value; }
 
-    private void OnDestroy()
-    {
-        GameManager.Instance.onStateChange.RemoveListener(SelfActive);
-    }
-
-    private void OnEnable()
-    {
-        OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
-        StartCoroutine(SpawnZombieSlowly());
-
-    }
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
     private void Awake()
     {
-        mainCamera = Camera.main;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
     }
-    
+
     private void Start()
     {
         numberOfEnemiesSpawned = 0;
@@ -68,8 +50,12 @@ public class ZombieSpawner : Spawner<Zombie>
         previousNumberOfEnemiesLeft = numberOfEnemiesLeft;
         Zombie.numberOfEnemyHasDie = 0;
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
+
+        // Add listener to detect game state changes
         GameManager.Instance.onStateChange.AddListener(SelfActive);
-        SelfActive(Enum.GameState.Ingame, Enum.InGameState.Zombie);
+
+        // Activate spawner if game state is already Begin
+        SelfActive(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
 
     private void Update()
@@ -77,21 +63,31 @@ public class ZombieSpawner : Spawner<Zombie>
         UpdateEnemyCount();
     }
 
-    protected override bool CanSpawn()
+    private void OnEnable()
     {
-        return numberOfEnemiesSpawned < numberOfMaxEnemies && Zombie.numberOfEnemyRightNow < numberOfMaxEnemiesAtATime;
+        OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
     }
 
-    IEnumerator SpawnZombieSlowly()
+    private void OnDisable()
     {
-        while (true)
+        StopAllCoroutines();
+    }
+
+    protected override bool CanSpawn()
+    {
+        return numberOfEnemiesSpawned < numberOfMaxEnemies && Zombie.numberOfEnemyRightNow < numberOfMaxEnemiesAtATime && numberOfEnemiesLeft > 0;
+    }
+
+    IEnumerator SpawnZombieContinuously()
+    {
+        while (numberOfEnemiesLeft > 0)
         {
-            yield return new WaitForSeconds(0.2f);
-            if(CanSpawn())
+            if (CanSpawn())
                 SpawnEntity();
+            yield return new WaitForSeconds(0.2f);  // Adjust spawn rate as needed
         }
     }
-    bool checkBossNotOut = true;
+
     protected override void SpawnEntity()
     {
         Zombie newEnemy = enemyPool.Get();
@@ -99,11 +95,12 @@ public class ZombieSpawner : Spawner<Zombie>
         numberOfEnemiesSpawned++;
         numberOfEnemiesLeft = numberOfMaxEnemies - Zombie.numberOfEnemyHasDie;
         OnNumberOfEnemiesDecrease?.Invoke(numberOfEnemiesLeft);
-        if(numberOfEnemiesLeft < whenToSpawnBoss  && checkBossNotOut && bossZombie !=null)
+
+        if (numberOfEnemiesLeft < whenToSpawnBoss && checkBossNotOut && bossZombie != null)
         {
-            Instantiate(bossZombie, FindNearestOffscreenSpawnPosition().position, Quaternion.identity);
+            Instantiate(bossZombie, FindClosestSpawnPosition().position, Quaternion.identity);
             numberOfMaxEnemies++;
-            checkBossNotOut =false;
+            checkBossNotOut = false;
         }
     }
 
@@ -112,68 +109,53 @@ public class ZombieSpawner : Spawner<Zombie>
         int random = Random.Range(0, skinOfZombie.Length);
         enemy.Init(skinOfZombie[random]);
 
-        Transform nearestOffscreenSpawn = FindNearestOffscreenSpawnPosition();
+        Transform spawnPoint = FindClosestSpawnPosition();
 
-        if (nearestOffscreenSpawn != null)
+        if (spawnPoint != null)
         {
-            Vector3 randomOffset = GetRandomOffset(3f); 
-            enemy.transform.position = nearestOffscreenSpawn.position + randomOffset;
+            Vector3 randomOffset = GetRandomOffset(3f);
+            enemy.transform.position = spawnPoint.position + randomOffset;
         }
         else
         {
-            Debug.LogWarning("No valid offscreen spawn position found!");
+            Debug.LogWarning("No valid spawn position found!");
         }
     }
 
-    private Transform FindNearestOffscreenSpawnPosition()
+    private Transform FindClosestSpawnPosition()
     {
-        List<Transform> closestSpawnPoints = new List<Transform>();
-        float minimumDistance = 10f;
+        List<Transform> validSpawnPoints = new List<Transform>();
 
         foreach (Transform spawnPoint in spawnPosHolder)
         {
-            if (!IsOnScreen(spawnPoint.position))
-            {
-                float distanceToCamera = Vector3.Distance(mainCamera.transform.position, spawnPoint.position);
+            float distanceToPlayer = Vector3.Distance(player.position, spawnPoint.position);
 
-                if (distanceToCamera > minimumDistance)
-                {
-                    if (closestSpawnPoints.Count < 3)
-                    {
-                        closestSpawnPoints.Add(spawnPoint);
-                        closestSpawnPoints = closestSpawnPoints.OrderBy(sp => Vector3.Distance(mainCamera.transform.position, sp.position)).ToList();
-                    }
-                    else if (distanceToCamera < Vector3.Distance(mainCamera.transform.position, closestSpawnPoints[2].position))
-                    {
-                        closestSpawnPoints[2] = spawnPoint;
-                        closestSpawnPoints = closestSpawnPoints.OrderBy(sp => Vector3.Distance(mainCamera.transform.position, sp.position)).ToList();
-                    }
-                }
-            }
+            // Add spawn points that are at least 20 units away from the player
+            if (distanceToPlayer >= 20f)
+                validSpawnPoints.Add(spawnPoint);
         }
 
+        // Sort spawn points by distance and select the closest 5
+        var closestSpawnPoints = validSpawnPoints
+            .OrderBy(spawnPoint => Vector3.Distance(player.position, spawnPoint.position))
+            .Take(5)
+            .ToList();
+
+        // Randomly select one of the 5 closest spawn points
         if (closestSpawnPoints.Count > 0)
         {
             int randomIndex = Random.Range(0, closestSpawnPoints.Count);
             return closestSpawnPoints[randomIndex];
         }
 
-        return null; 
+        return null;  // No valid spawn point found
     }
 
     private Vector3 GetRandomOffset(float range)
     {
         float randomX = Random.Range(-range, range);
         float randomZ = Random.Range(-range, range);
-        return new Vector3(randomX, 0, randomZ); 
-    }
-
-
-
-    private bool IsOnScreen(Vector3 position)
-    {
-        Vector3 screenPoint = mainCamera.WorldToViewportPoint(position);
-        return screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1;
+        return new Vector3(randomX, 0, randomZ);
     }
 
     private void UpdateEnemyCount()
@@ -195,9 +177,15 @@ public class ZombieSpawner : Spawner<Zombie>
     private void SelfActive(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameState == Enum.GameState.Win || gameState == Enum.GameState.Ingame)
+        {
+            StopAllCoroutines();
             gameObject.SetActive(false);
-        if (gameState == Enum.GameState.Begin)
+        }
+        else if (gameState == Enum.GameState.Begin)
+        {
             gameObject.SetActive(true);
+            StartCoroutine(SpawnZombieContinuously());
+        }
     }
 
     protected override Zombie GetFromPool()

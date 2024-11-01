@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -41,14 +42,19 @@ public class DeadUIController : MonoBehaviour
             reviveButton.gameObject.SetActive(true);
         }
         gold.text = PlayerGoldInGameController.Instance.Gold.ToString();
+        PlayLosingSound();
         DataPersistenceManager.Instance.SaveGame();
-        SceneController.Instance.LoadSceneAsyncWay(SceneManager.GetActiveScene());
     }
    
     private void OnContinueClick()
     {
         PlayerGoldInGameController.Instance.OnEndCurrentLevel();
-        SceneController.Instance.AddThisEventToActiveScene();
+        SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.PVEScene.ToString());
     }
-
+    private void PlayLosingSound()
+    {
+        SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.DoneGame);
+        AudioClip audioClip = soundList.Sounds[1];
+        SoundManager.Instance.PlayThisOnScreen(audioClip, 0.5f);
+    }
 }

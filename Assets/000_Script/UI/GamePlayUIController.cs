@@ -71,7 +71,7 @@ public class GamePlayUIController : MonoBehaviour
     private void SwitchToHallUI()
     {
         TurnOffOtherUI();
-        SceneController.Instance.LoadSceneRightAway(SceneManager.GetActiveScene());
+        SceneController.Instance.LoadSceneRightAway(Enum.SceneName.PVEScene.ToString());
     }
    
 }

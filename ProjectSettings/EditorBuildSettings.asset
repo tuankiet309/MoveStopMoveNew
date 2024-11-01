@@ -6,12 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 4f2bc308377231b4b906aa5b2b2a6c6a
+  - enabled: 1
+    path: Assets/Scenes/PVEScene.unity
     guid: c850ee8c3b14cc8459e7e186857cf567
   - enabled: 1
-    path: Assets/Scenes/Zombie City.unity
+    path: Assets/Scenes/ZCScene.unity
     guid: 84ca8100111a6eb4eaf4d470c12c62d4
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
+      guid: cde042680fc8ba543b8d552beba019d6, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 97b2cfbcdae62da43a5769b35f3bdc44,
       type: 2}
     com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,

@@ -8,7 +8,7 @@ public class ZCBossLifeComponent : LifeComponent
     protected override void Start()
     {
         base.Start();
-        health = 10;    
+        health = 15;    
     }
 
     public override bool DamageHealth(string attackerName)
@@ -17,6 +17,7 @@ public class ZCBossLifeComponent : LifeComponent
         transform.localScale -= Vector3.one * 0.1f;
         if (health <= 0)
         {
+            ParticleSpawner.Instance.PlayParticle(transform.position,actorMeshRenderer.sharedMaterial);
             onLifeEnds?.Invoke(attackerName);
             return true;
         }

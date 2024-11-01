@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,38 +11,68 @@ public class SceneController : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
+        {
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-    }
-    public void LoadSceneRightAway(Scene scene)
-    {
-        Debug.Log(scene.buildIndex);
-        SceneManager.LoadScene(-scene.buildIndex);
-    }
-    public void LoadSceneAsyncWay(Scene scene)
-    {
-        StartCoroutine(LoadSceneAsync(scene));
+        }
     }
 
-    public void AddThisEventToActiveScene()
+    private void Start()
     {
-        DataPersistenceManager.Instance.SaveGame();
-        asyncOperation.allowSceneActivation = true;
+        StartCoroutine(LoadLoadingSceneAndAsyncFirstTime());
     }
-    private IEnumerator LoadSceneAsync( Scene scene)
+    private IEnumerator LoadLoadingSceneAndAsyncFirstTime()
     {
-        asyncOperation = SceneManager.LoadSceneAsync(scene.buildIndex);
+
+        asyncOperation = SceneManager.LoadSceneAsync(Enum.SceneName.PVEScene.ToString());
         asyncOperation.allowSceneActivation = false;
+        yield return new WaitForSeconds(1.5f);
+
         while (asyncOperation.progress < 0.9f)
         {
             yield return null;
         }
-        
+
+        asyncOperation.allowSceneActivation = true;
     }
+    public void LoadSceneRightAway(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadSceneAsyncWay(string sceneName)
+    {
+        StartCoroutine(LoadLoadingSceneAndAsync(sceneName));
+    }
+
+    private IEnumerator LoadLoadingSceneAndAsync(string sceneName)
+    {
+        AsyncOperation loadingSceneLoad = SceneManager.LoadSceneAsync(Enum.SceneName.LoadingScene.ToString());
+
+        while (!loadingSceneLoad.isDone)
+        {
+            yield return null;
+        }
+        LoadingScreenUI loadingScreenUI = FindObjectOfType<LoadingScreenUI>();
+        if (loadingScreenUI != null)
+        {
+            loadingScreenUI.ShowRandomPanel();
+        }
+        asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+        asyncOperation.allowSceneActivation = false;
+
+        yield return new WaitForSeconds(1.5f);
+        while (asyncOperation.progress < 0.9f)
+        {
+            yield return null;
+        }
+
+        asyncOperation.allowSceneActivation = true;
+    }
+
 }

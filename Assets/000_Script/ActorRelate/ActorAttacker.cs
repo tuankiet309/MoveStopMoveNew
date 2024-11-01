@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
+using System.Linq;
 
 public class ActorAttacker : MonoBehaviour, IAttacker
 {
@@ -69,7 +70,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
 
     }
-    protected virtual void Update()
+    protected virtual void LateUpdate()
     {
         CheckAndUpdateTargetCircle();
     }
@@ -150,7 +151,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             onHaveUlti?.Invoke(false);
         }
     }
-    protected virtual void Attack(Vector3 enemyLoc, bool isMainAttack)
+    protected virtual void Attack(Vector3 enemyLoc, Vector3 throwLocationTemp, bool isMainAttack)
     {
         //Overload for child class use cases.
     }
@@ -219,7 +220,14 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     }
     protected virtual void OnUpgrade()
     {
-        distanceBuff += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER;
+        distanceBuff += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER + 0.5f;
+    }
+    public virtual void PlayAttackSound()
+    {
+        SoundList sound = SoundManager.Instance.SoundLists.FirstOrDefault(soundList => soundList.SoundListName == Enum.SoundType.WeaponSound);
+        Debug.Log(sound.SoundListName);
+        AudioClip audioToPlay = sound.Sounds[1];
+        SoundManager.Instance.PlayThisOnWorld(audioToPlay, 0.4f, throwLocation.position);
     }
   
 }

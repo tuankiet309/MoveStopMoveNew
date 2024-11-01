@@ -251,6 +251,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 9fd7ac725ea313046b07b1a82dc22b1a,
         type: 2}
+    - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: defaultSkin.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: defaultSkin.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 722b084cf4c1c2c468b760c649a85959,
+        type: 2}
     - target: {fileID: 6032790747752298346, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: m_Name

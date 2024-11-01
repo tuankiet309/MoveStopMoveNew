@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,8 @@ public class ActorMovementController : MonoBehaviour
     [SerializeField] protected ActorAtributeController actorAtributeController;
     protected float rotateSpeed;
     protected float moveSpeed;
-    protected float speedBuffFromZC = 0;
+    protected float speedBuffFromZCPower = 0;
+    protected float speedBuffFromZCStat = 0;
     protected float speedBuffFromSkin = 0;
 
     protected Vector3 moveVelocity = Vector3.zero;
@@ -19,6 +21,7 @@ public class ActorMovementController : MonoBehaviour
 
     public UnityEvent<Vector3> onActorMoving;
 
+    protected ZCAttributeController ZCAttributeController;
     protected virtual void Awake()
     {
         rotateSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
@@ -34,14 +37,16 @@ public class ActorMovementController : MonoBehaviour
         if(actorAtributeController != null)
         {
             actorAtributeController.onBuffChange.AddListener(UpdateBuffFromSkin);
-            ZCAttributeController zCAttributeController = actorAtributeController as ZCAttributeController;
-            if(zCAttributeController != null)
+            ZCAttributeController = actorAtributeController as ZCAttributeController;
+            if(ZCAttributeController != null)
             {
-                zCAttributeController.onChoseZCPower.AddListener(UpdateBuffMovespeedFromZC);
+                ZCAttributeController.onChoseZCPower.AddListener(UpdateBuffMovespeedFromZC);
+                ZCAttributeController.onUpgradeStat.AddListener(OnUpgradeMoveSpeed);
+                UpdateBuffMovespeedFromZC();
+                OnUpgradeMoveSpeed(ZCAttributeController.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.Speed));
             }
         }
-        UpdateBuffMovespeedFromZC();
-        
+ 
     }
 
     protected virtual void OnDisable()
@@ -60,38 +65,35 @@ public class ActorMovementController : MonoBehaviour
     {
         rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, moveVelocity.z);
         if (rotateDir != Vector3.zero)
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateDir), rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.LookRotation(rotateDir);
     }
-
+    
     protected virtual void moveStickInputHandler(Vector2 inputValue)
     {
         float x = inputValue.x;
         float z = inputValue.y;
         
-        moveVelocity = new Vector3(x, 0, z).normalized * (moveSpeed + speedBuffFromZC + speedBuffFromSkin);
+        moveVelocity = new Vector3(x, 0, z).normalized * (moveSpeed + speedBuffFromZCPower + speedBuffFromSkin + speedBuffFromZCStat);
         rotateDir = inputValue == Vector2.zero ? rotateDir : new Vector3(x, 0, z);
         
         onActorMoving?.Invoke(moveVelocity);
     }
     protected virtual void UpdateBuffMovespeedFromZC()
     {
-        if(actorAtributeController is ZCAttributeController)
+        if(ZCAttributeController !=null)
         {
-            speedBuffFromZC = 0;
-            ZCAttributeController zc = actorAtributeController as ZCAttributeController;
-            foreach( var stat in zc.Stats)
+            speedBuffFromZCPower = 0;
+            if(ZCAttributeController.ZCPower1.PowerType == Enum.ZCPowerUp.MoveFaster)
             {
-                if(stat.Type == Enum.ZCUpgradeType.Speed )
-                {
-                    speedBuffFromZC += (stat.HowMuchUpgrade/100) * moveSpeed;
-                }
-            }
-            if(zc.ZCPower1.PowerType == Enum.ZCPowerUp.MoveFaster)
-            {
-                speedBuffFromZC += 0.2f * moveSpeed;
+                speedBuffFromZCPower = 0.2f * moveSpeed;
             }
         }
         
+    }
+    protected virtual void OnUpgradeMoveSpeed(ZCStatPlayer zC)
+    {
+        speedBuffFromZCStat = 0;
+        speedBuffFromZCStat = zC.HowMuchUpgrade * moveSpeed / 100;
     }
     protected virtual void UpdateBuffFromSkin()
     {

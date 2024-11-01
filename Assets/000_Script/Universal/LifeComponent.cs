@@ -1,9 +1,11 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class LifeComponent : MonoBehaviour
 {
+    [SerializeField] protected SkinnedMeshRenderer actorMeshRenderer;
     protected int health = 1;
 
     public UnityEvent<string> onLifeEnds;
@@ -68,6 +70,9 @@ public class LifeComponent : MonoBehaviour
         health -= 1;
         if(health <=0)
         {
+            if(!gameObject.CompareTag("Zombie"))
+                PlayDyingSound();
+            ParticleSpawner.Instance.PlayParticle(transform.position + Vector3.up,actorMeshRenderer.sharedMaterial);
             onLifeEnds?.Invoke(attackerName);
             return true;
         }
@@ -79,5 +84,12 @@ public class LifeComponent : MonoBehaviour
     {
         isDead = false;
         killerName = "";
+    }
+    protected virtual void PlayDyingSound()
+    {
+        SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.Dead);
+        int random = Random.Range(0, soundList.Sounds.Length);
+        AudioClip clip = soundList.Sounds[random];
+        SoundManager.Instance.PlayThisOnWorld(clip, 0.25f, transform.position);
     }
 }

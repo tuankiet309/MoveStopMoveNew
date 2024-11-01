@@ -22,7 +22,7 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const float FIRST_DELAYED_ATTACK = 0.75f;
     public const float FIRST_DELAYED_ATTACKZC = 0.25f;
 
-    public const float PROJECTILE_FLY_SPEED = 15f;
+    public const float PROJECTILE_FLY_SPEED = 12f;
     public const float PROJECTILE_ROTATE_SPEED = 8f;
     public const float DISTANCE_TIL_COMBACK = 0.5f;
     public const float COMEBACK_FLY_DISTANCE = 15f;
@@ -40,14 +40,17 @@ public class CONSTANT_VALUE : MonoBehaviour
     ///////////CAMERA///////////////////////////
     public const float CAMERA_OFFSET_INCREASER = 0.1f;
     public static readonly OFFSETFORCAMERA OFFSETWHENINPVP = new OFFSETFORCAMERA(
-        new Vector3(0, 14.9799995f, -11.1f),
-        new Vector3(50, 0, 0)
+        new Vector3(0, 16.5f, -11.1f),
+        new Vector3(55, 0, 0)
+    );
+    public static readonly OFFSETFORCAMERA OFFSETWHENINZC = new OFFSETFORCAMERA(
+        new Vector3(0, 20f, -11f),
+        new Vector3(60, 0, 0)
     );
     public static readonly OFFSETFORCAMERA OFFSETWHENINSKINSHOP = new OFFSETFORCAMERA(
         new Vector3(0, 1.51999998f, -8.35000038f),
         new Vector3(16.4269943f, 0, 0)
     );
-
     public static readonly OFFSETFORCAMERA OFFSETWHENHALL = new OFFSETFORCAMERA(
         new Vector3(0, 3.9000001f, -8.02999973f),
 

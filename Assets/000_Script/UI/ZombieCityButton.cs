@@ -12,8 +12,7 @@ public class ZombieCityButton : MonoBehaviour
 
     private void Start()
     {
-        button.onClick.AddListener(() => GameManager.Instance.SetGameStates(Enum.GameState.Ingame, Enum.InGameState.Zombie));
-        button.onClick.AddListener(() => SceneController.Instance.LoadSceneRightAway(SceneManager.GetSceneByBuildIndex(1)));
+        button.onClick.AddListener(() => SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.ZCScene.ToString()));
     }
-    
+
 }

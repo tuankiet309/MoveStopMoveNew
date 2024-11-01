@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,15 +14,21 @@ public class WinUIController : MonoBehaviour
     private void Start()
     {
         PlayZone2.onClick.AddListener(GoToNextZone);
-        SceneController.Instance.LoadSceneAsyncWay(SceneManager.GetActiveScene());
         goldText.text = PlayerGoldInGameController.Instance.Gold.ToString();
-
+        PlayWinningSound();
     }
 
     private void GoToNextZone()
     {
         PlayerGoldInGameController.Instance.OnEndCurrentLevel();
         LevelManager.Instance.CurrentPVELevel++;
-        SceneController.Instance.AddThisEventToActiveScene();
+        SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.PVEScene.ToString());
+    }
+
+    private void PlayWinningSound()
+    {
+        SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.DoneGame);
+        AudioClip audioClip = soundList.Sounds[0];
+        SoundManager.Instance.PlayThisOnScreen(audioClip, 0.25f);
     }
 }

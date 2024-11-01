@@ -1,38 +1,39 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ParticleBurst : MonoBehaviour
 {
-    [SerializeField] ParticleSystem particleSystems;
-    [SerializeField] SkinnedMeshRenderer skinnedMeshRenderer;
-    [SerializeField] LifeComponent lifeComponents;
+    [SerializeField] ParticleSystem particleSystems; 
+    private ParticlePool particlePool; 
+    private bool isBurstComplete = false; 
 
     private void Start()
     {
-        lifeComponents.onLifeEnds.AddListener(BurstParticle);
-        
     }
 
-    private void OnEnable()
+    public void InitParticle(ParticlePool pool, Vector3 position, Material mat)
     {
-        lifeComponents.onLifeEnds.AddListener(BurstParticle);
-        
+        particleSystems.GetComponent<ParticleSystemRenderer>().material = mat;
+        particlePool = pool;
+        transform.position = position; 
+        EmitParticles(); 
     }
 
-    private void BurstParticle(string tempo)
+    private void EmitParticles()
     {
-        StartCoroutine(BurstCoroutine());
+        particleSystems.Clear();
+        while(particleSystems.particleCount ==0)
+            particleSystems.Emit(particleSystems.emission.GetBurst(0).maxCount); 
+        StartCoroutine(ReleaseToPoolAfterDelay(1f)); 
     }
 
-    private IEnumerator BurstCoroutine()
+    private IEnumerator ReleaseToPoolAfterDelay(float delay)
     {
-        ParticleSystemRenderer particleSystemRenderer = particleSystems.GetComponent<ParticleSystemRenderer>();
-        particleSystemRenderer.material = skinnedMeshRenderer.material;
-        do
+        while (particleSystems.particleCount > 0) 
         {
-            particleSystems.Emit(particleSystems.emission.GetBurst(0).maxCount);
-            yield return null; 
+            yield return null;
         }
-        while (particleSystems.particleCount == 0);
+        particlePool.Release(this);
     }
 }

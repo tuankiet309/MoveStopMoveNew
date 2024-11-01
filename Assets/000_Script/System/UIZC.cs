@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIZC : MonoBehaviour
 {
@@ -8,13 +10,24 @@ public class UIZC : MonoBehaviour
     [SerializeField] private Canvas PowerUpCanvas;
     [SerializeField] private Canvas IngameCanvas;
     [SerializeField] private Canvas OnEndGame;
+    [SerializeField] private Canvas Setting;
+        
     [SerializeField] private RectTransform gold;
-    [SerializeField] private RectTransform setting;
+    [SerializeField] private Button setting;
+    [SerializeField] private Button restart;
+    [SerializeField] private Button continues;
 
+    private void Awake()
+    {
+        setting.onClick.AddListener(OpenSetting);
+        restart.onClick.AddListener(Restart);
+        continues.onClick.AddListener(ContinueGame);
+    }
     private void Start()
     {
         GameManager.Instance.onStateChange.AddListener(UpdateCanvas);
         UpdateCanvas(GameManager.Instance.CurrentGameState,GameManager.Instance.CurrentInGameState);
+        
     }
 
     private void UpdateCanvas(Enum.GameState state, Enum.InGameState inGameState)
@@ -52,5 +65,20 @@ public class UIZC : MonoBehaviour
         OnEndGame.gameObject.SetActive(true);  
     }
 
+    private void OpenSetting()
+    {
+        Setting.gameObject.SetActive(true);  
+        Time.timeScale = 0;  
+    }
+    private void ContinueGame()
+    {
+        Time.timeScale = 1;
+        Setting.gameObject.SetActive(false);
+    }
+    private void Restart()
+    {
+        Time.timeScale = 1;
+        SceneController.Instance.LoadSceneRightAway(Enum.SceneName.ZCScene.ToString());
+    }
 
 }

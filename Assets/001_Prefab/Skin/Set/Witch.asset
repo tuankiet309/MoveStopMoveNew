@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 47741e282a118694fadc18d026b97db0, type: 3}
   m_Name: Witch
-  m_EditorClassIdentifier: Assembly-CSharp::SetSkin
-  setID: setwitch
+  m_EditorClassIdentifier: 
+  setID: bbcce389-61ad-47eb-8a4a-e12f1dab94b8
   eachSkinOfSet:
   - {fileID: 11400000, guid: 1524769037ea4dd48a6f401cebc0ee16, type: 2}
   - {fileID: 11400000, guid: 837e1cd3c80527841ac8da197bb98006, type: 2}
@@ -21,4 +21,4 @@ MonoBehaviour:
   imageToShow: {fileID: 7705661206538623317, guid: 75dbff463e9341340981cbb08009627d,
     type: 3}
   isUnlock: 0
-  gold: 100
+  gold: 2500

@@ -54,30 +54,28 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
     private bool buttonsInitialized = false; 
     private void Start()
     {
-        skinComp = Player.Instance.GetComponent<SkinComponent>();
         hatButton.onClick.AddListener(() => ShowHolder(hatHolder, hatButton));
         pantButton.onClick.AddListener(() => ShowHolder(pantHolder, pantButton));
         leftHandButton.onClick.AddListener(() => ShowHolder(leftHandHolder, leftHandButton));
         fullSetButton.onClick.AddListener(() => ShowHolder(fullSetHolder, fullSetButton));
         CloseButton.onClick.AddListener(() => skinComp.RevertSkin(true));
+    }
+    bool firstEnable = true;
+    private void OnEnable()
+    {
+        if (firstEnable)
+        {
+            firstEnable = false;
+            return;
+        }
+        skinComp = Player.Instance.GetComponent<SkinComponent>();
 
         if (!buttonsInitialized)
         {
             CreateButton();
             buttonsInitialized = true;
         }
-        if (firstEnable)
-        {
-            firstEnable = false;
-            return;
-        }
         ShowHolder(hatHolder, hatButton);
-
-    }
-    bool firstEnable = true;
-    private void OnEnable()
-    {
-        
     }
 
     void CreateButton()
@@ -135,6 +133,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             int capturedIndex = index;
             button1.onClick.AddListener(() => skinComp.RevertSkin(true));
             button1.onClick.AddListener(() => EventForChoseSkinButton(capturedIndex, shopItemSkin.SkinType, item.IsUnlock, button1));
+            button1.onClick.AddListener(SoundManager.Instance.PlayClickSound);
             buttonList.Add(new ButtonAndType(button1,shopItemSkin.SkinType));
             index++;
 
@@ -155,7 +154,8 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             Image image = Instantiate(item.ImageToShow, button1.transform);
             int capturedIndex = index;
             button1.onClick.AddListener(() => skinComp.RevertSkin(true));
-            button1.onClick.AddListener(() => EventForChosenSetButton(capturedIndex, item.IsUnlock, button1)); 
+            button1.onClick.AddListener(() => EventForChosenSetButton(capturedIndex, item.IsUnlock, button1));
+            button1.onClick.AddListener(SoundManager.Instance.PlayClickSound);
             buttonList.Add(new ButtonAndType(button1, Enum.SkinType.Set));
             index++;
             if (skinComp.IsSetCurrentlyEquipped( item.SkinOfSet))
@@ -212,6 +212,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
 
                     unequipButton.onClick.RemoveAllListeners();
                     unequipButton.onClick.AddListener(() => UnequipSkin(skinType, thisButton));
+                    unequipButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
                 }
                 else
                 {
@@ -220,6 +221,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
 
                     equipButton.onClick.RemoveAllListeners();
                     equipButton.onClick.AddListener(() => EquipThisStuff(skinType, index, thisButton));
+                    equipButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
                 }
                 IfNotBuyYet.gameObject.SetActive(false);
             }
@@ -234,6 +236,8 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 buyButton.onClick.RemoveAllListeners();
                 buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = selectedSkin.Gold.ToString();
                 buyButton.onClick.AddListener(() => BuyThisSkin(selectedSkin,thisButton,index));
+                buyButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
+
 
             }
             UnloadRing(thisButton);
@@ -257,6 +261,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                     equipButton.gameObject.SetActive(false);
                     unequipButton.onClick.RemoveAllListeners();
                     unequipButton.onClick.AddListener(() => UnequipSkin(Enum.SkinType.Set, thisButton));
+                    unequipButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
                 }
                 else
                 {
@@ -264,6 +269,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                     unequipButton.gameObject.SetActive(false);
                     equipButton.onClick.RemoveAllListeners();
                     equipButton.onClick.AddListener(() => EquipThisStuff(Enum.SkinType.Set, index, thisButton));
+                    equipButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
                 }
                 thisButton.transform.GetChild(3).gameObject.SetActive(true);
                 IfNotBuyYet.gameObject.SetActive(false);
@@ -278,6 +284,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 buyButton.onClick.RemoveAllListeners();
                 buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = fullSetItems.SetSkinToAttach[index].Gold.ToString();
                 buyButton.onClick.AddListener(()=>BuyThisSet(fullSetItems.SetSkinToAttach[index],thisButton,index));
+                buyButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
             }
             UnloadRing(thisButton);
 
@@ -348,6 +355,8 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             unequipButton.gameObject.SetActive(true);
             unequipButton.onClick.RemoveAllListeners();
             unequipButton.onClick.AddListener(() => UnequipSkin(skinType, thisButton));
+            unequipButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
+
         }
     }
     public void UnequipSkin(Enum.SkinType skinType, Button thisButton)

@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6172177893890511443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7246203469961284823}
+  - component: {fileID: 2246150680752749016}
+  - component: {fileID: 2859780672316556040}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7246203469961284823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172177893890511443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.006472, y: -14.018799, z: 7.627251}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2246150680752749016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172177893890511443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee822b4fe7251c4780b0de326209c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPreb: {fileID: 2911640475364801168, guid: a710fbaecf3d66743903c52170b16e3c,
+    type: 3}
+  enemyPool: {fileID: 2859780672316556040}
+  pantToSpawn:
+  - {fileID: 11400000, guid: b5ce5d8e1f2af0a48823bc0dc93a8f58, type: 2}
+  - {fileID: 11400000, guid: b393527da39b0ae4c9c63b1bf0068dcc, type: 2}
+  - {fileID: 11400000, guid: 3ba083ba664bc2049aef529173c2a577, type: 2}
+  - {fileID: 11400000, guid: e7edb7872ed21594c90c915c6d3c4ee9, type: 2}
+  - {fileID: 11400000, guid: 4070e5b908c325d4b84e48151afc039a, type: 2}
+  - {fileID: 11400000, guid: c5456410d58e9b94dac74587f2bbcb94, type: 2}
+  - {fileID: 11400000, guid: 2a3eefdeddc85394399385c9aff0aa1d, type: 2}
+  - {fileID: 11400000, guid: c00b14d3e1c057246880b8d1d6c18414, type: 2}
+  - {fileID: 11400000, guid: c00b14d3e1c057246880b8d1d6c18414, type: 2}
+  - {fileID: 11400000, guid: c00b14d3e1c057246880b8d1d6c18414, type: 2}
+  bodyToSpawn:
+  - {fileID: 11400000, guid: 53502c48f1a66f344a86f79ca8e3dd62, type: 2}
+  - {fileID: 11400000, guid: 8df9bb9adbcea874e97fce0f377d5eec, type: 2}
+  - {fileID: 11400000, guid: 9af0d6c8d9651864bb1d97e365c5a7b2, type: 2}
+  - {fileID: 11400000, guid: 8c6248433c1e1814ba5828f1e432f678, type: 2}
+  - {fileID: 11400000, guid: cb95d19ed5bb43a48b6b4cd3a5860e97, type: 2}
+  - {fileID: 11400000, guid: 9ddc2ff73ce30764e9785e4753d29bd7, type: 2}
+  - {fileID: 11400000, guid: 92d9bf0de566b9b47a9f89e0261a5cc8, type: 2}
+  - {fileID: 11400000, guid: 1ea1a90717e73e44d9c7f5d3fb9811df, type: 2}
+  - {fileID: 11400000, guid: 3b9f76b2df8745e4f888ad6491ed39fd, type: 2}
+  - {fileID: 11400000, guid: 207b13af55905dd4c8be88fd87f11860, type: 2}
+  - {fileID: 11400000, guid: 36f4311ab39233c488ca95809e099bd7, type: 2}
+  - {fileID: 11400000, guid: 99b8ff89cdb55e84e89535625f4d4790, type: 2}
+  headSetToSpawn:
+  - {fileID: 11400000, guid: 3be7327713ad9ad45b54cd618f11b406, type: 2}
+  - {fileID: 11400000, guid: e08d8276b0bff0e40aa672fd19bfe1e4, type: 2}
+  - {fileID: 11400000, guid: cb787b531ca0f224ca4c62fbd19ea2d5, type: 2}
+  - {fileID: 11400000, guid: d4d320f47a52184489ce0eb90548308e, type: 2}
+  - {fileID: 11400000, guid: 4322add3b353fb947b649dd639a647d4, type: 2}
+  - {fileID: 11400000, guid: 4322add3b353fb947b649dd639a647d4, type: 2}
+  - {fileID: 11400000, guid: 4322add3b353fb947b649dd639a647d4, type: 2}
+  leftHandToSpawn:
+  - {fileID: 11400000, guid: 9f1966d3a3517ba4fb77876767d766ec, type: 2}
+  - {fileID: 11400000, guid: d59c3eb2c3d4f024784b7d37fa5b4a58, type: 2}
+  - {fileID: 11400000, guid: 2a459d1bdb0c2414f9176a1be813c5d1, type: 2}
+  - {fileID: 11400000, guid: 2a459d1bdb0c2414f9176a1be813c5d1, type: 2}
+  - {fileID: 11400000, guid: 2a459d1bdb0c2414f9176a1be813c5d1, type: 2}
+  weaponToSpawnWith:
+  - {fileID: 11400000, guid: 01efe6fe52708d5439ab1d7283800d45, type: 2}
+  - {fileID: 11400000, guid: 86b2dec2349f97b45b56db72d440821b, type: 2}
+  - {fileID: 11400000, guid: 9a0535e11a483444d9f2ff361a3c7c1a, type: 2}
+  - {fileID: 11400000, guid: f2c0e68359d0fef4296f0aeb2cb72c68, type: 2}
+  - {fileID: 11400000, guid: 969b77b4ace018c4abfc0bf4c939045e, type: 2}
+  - {fileID: 11400000, guid: 07ce47b532b793a4790f2f40f15d8ea2, type: 2}
+  - {fileID: 11400000, guid: c87257503f535b74eaf50c45c6b2b550, type: 2}
+  - {fileID: 11400000, guid: 20cd8421d27fe054d8ea50e6df9102e7, type: 2}
+  - {fileID: 11400000, guid: 97f5a0f0a5783824786b2437286e594c, type: 2}
+  - {fileID: 11400000, guid: 1f44426a548c62e468d4d97cdebef6d7, type: 2}
+  nameToSpawnWith:
+  - Pho
+  - Banh Mi
+  - Keo dua
+  - Nem chua
+  - Xuc xich
+  - Bun cha
+  - Keo lac
+  transformHolder: {fileID: 0}
+  numberOfMaxEnemies: 100
+  numberOfMaxEnemiesAtATime: 10
+  availableBodySkins: []
+  OnNumberOfEnemiesDecrease:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2859780672316556040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172177893890511443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28967d2892da4bf459eec4901d81413e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyToPool: {fileID: 2911640475364801168, guid: a710fbaecf3d66743903c52170b16e3c,
+    type: 3}

@@ -5,32 +5,44 @@ using UnityEngine;
 
 public class UpgradeText : MonoBehaviour
 {
-    [SerializeField]private TextMeshProUGUI text;
-    [SerializeField] private float TimeAlive = 2f;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private float timeAlive = 2f;
+    [SerializeField] private float floatSpeed = 20f; // Controls how fast the text moves up
     private float timer = 0f;
-    private bool isOpenNow = false;
+    private bool isShowing = false;
+    private Vector3 initialPosition;
+
     private void Start()
     {
-        if(Player.Instance != null)
-            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(UpgradeTextNow);
+
+        if (Player.Instance != null && GameManager.Instance.CurrentInGameState !=Enum.InGameState.Zombie)
+            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(ShowUpgradeText);
+
+        initialPosition = text.rectTransform.localPosition;
     }
+
     private void Update()
     {
-        if(timer < 0 && isOpenNow)
+        if (isShowing)
         {
-            gameObject.SetActive(false);
-            isOpenNow = false;
-            text.text = "";
+            timer -= Time.deltaTime;
+ 
+            text.rectTransform.localPosition += Vector3.up * floatSpeed * Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                text.text = "";
+                text.rectTransform.localPosition = initialPosition;
+                isShowing = false;
+            }
         }
-        timer -= Time.deltaTime;
     }
 
-    private void UpgradeTextNow()
+    private void ShowUpgradeText()
     {
-        text.text = "+2.5m";
-        isOpenNow = true;
-        timer = TimeAlive;
+        text.text = "+2.5m"; 
+        isShowing = true;
+        timer = timeAlive;
+        text.rectTransform.localPosition = initialPosition; 
     }
-
-
 }

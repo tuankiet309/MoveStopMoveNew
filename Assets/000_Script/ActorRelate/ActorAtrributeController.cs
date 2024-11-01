@@ -131,6 +131,8 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
     protected virtual void UpdateScore()
     {
         score++;
+        if(gameObject.CompareTag("Player"))
+            DataPersistenceManager.Instance.GameData.currentExp++;
         onScoreChanged?.Invoke();
         CheckForUpgrade();
     }
@@ -151,6 +153,10 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         circle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER);
         if (visualizeCircle != null)
             visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
+        if(gameObject.CompareTag("Player"))
+        {
+            SoundManager.Instance.Vibrate();
+        }
         onPlayerUpgraded?.Invoke();
     }
 

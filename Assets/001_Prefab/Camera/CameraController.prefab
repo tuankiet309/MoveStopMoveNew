@@ -260,3 +260,4 @@ MonoBehaviour:
   gameplayCamera: {fileID: 8997339014937692094}
   uiCamera: {fileID: 9114423101270965713}
   cameraDistanceScaler: 1.15
+  cameraDistanceScalerZC: 1.05

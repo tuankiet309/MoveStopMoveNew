@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 public class CameraController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Camera uiCamera;
 
     [SerializeField] private float cameraDistanceScaler = 1f;
+    [SerializeField] private float cameraDistanceScalerZC = 1f;
     private Transform playerTransform;
     private bool isFollowingPlayer = false;
     private Coroutine cameraTransitionCoroutine;
@@ -27,13 +29,20 @@ public class CameraController : MonoBehaviour
         else
             Destroy(gameObject);
 
-        posForCam = CONSTANT_VALUE.OFFSETWHENINPVP.OSposition;
     }
 
     private void OnEnable()
     {
-        
-        
+        if(GameManager.Instance.CurrentInGameState==Enum.InGameState.PVE)
+        {
+            posForCam = CONSTANT_VALUE.OFFSETWHENINPVP.OSposition;
+        }
+        else
+        {
+            posForCam = CONSTANT_VALUE.OFFSETWHENINZC.OSposition;
+
+        }
+
     }
 
     private void OnDisable()
@@ -55,11 +64,22 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
+        UpdateCameraPosToGameState(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
         if (Player.Instance != null)
         {
             Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(AdjustCameraDistance);
+            ZCAttributeController zC= Player.Instance.GetComponent<ActorAtributeController>() as ZCAttributeController;
+            if(zC != null)
+            {
+                zC.onPlayerUpgraded.RemoveListener(AdjustCameraDistance);
+                zC.onUpgradeStat.AddListener(AdjustCameraDistanceZC);
+                ZCStatPlayer zCStatPlayer = zC.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.CircleRange);
+                for (int i=0;i<zCStatPlayer.HowMuchUpgrade;i=i+10)
+                {
+                    AdjustCameraDistanceZC(zCStatPlayer);
+                }
+            }
         }
-        UpdateCameraPosToGameState(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
 
     private void UpdateCameraPosToGameState(Enum.GameState gameState, Enum.InGameState inGameState)
@@ -94,7 +114,7 @@ public class CameraController : MonoBehaviour
                 false
             ));
         }
-        else if (gameState == Enum.GameState.Ingame)
+        else if (gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.PVE)
         {
             if (Player.Instance != null)
             {
@@ -106,6 +126,19 @@ public class CameraController : MonoBehaviour
                 CONSTANT_VALUE.OFFSETWHENINPVP.OSrotation,
                 true
             ));
+        }
+        else if(gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.Zombie)
+        {
+            if (Player.Instance != null)
+            {
+                playerTransform = Player.Instance.transform;
+            }
+            uiCamera.gameObject.SetActive(false);
+            cameraTransitionCoroutine = StartCoroutine(SmoothTransitionToPlayer(
+            posForCam,
+            CONSTANT_VALUE.OFFSETWHENINPVP.OSrotation,
+            true
+        ));
         }
         else if (gameState == Enum.GameState.Win)
         {
@@ -147,13 +180,18 @@ public class CameraController : MonoBehaviour
     }
 
     private void AdjustCameraDistance()
-    {
-        if (GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie)
-            return;
+    { 
         Vector3 newOffset = posForCam * cameraDistanceScaler;
         posForCam = newOffset;
     }
-
+    private void AdjustCameraDistanceZC(ZCStatPlayer statPlayer)
+    {
+        if (statPlayer.Type == Enum.ZCUpgradeType.CircleRange)
+        {
+            Vector3 newOffset = posForCam * cameraDistanceScalerZC;
+            posForCam = newOffset;
+        }
+    }
     private void FollowPlayer()
     {
         Vector3 targetPosition = playerTransform.position + posForCam;

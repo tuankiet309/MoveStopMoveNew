@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: InGameZC
+  m_Controller: {fileID: 9100000, guid: 4c447fffc78287a4f8c25e7d5a888a07, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 3fec168b40b1cf34da08f890c09af178, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f98604e5571b33c4ab09e8f3ccce9227, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9acf7ba73ddf8f142a16dc8f53be5fce, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1b77353730782684ebb33bf7c5b63870, type: 2}

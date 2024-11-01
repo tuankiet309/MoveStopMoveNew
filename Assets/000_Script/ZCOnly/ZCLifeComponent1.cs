@@ -15,7 +15,11 @@ public class ZCLifeComponent1 : LifeComponent
     protected override void Start()
     {
         base.Start();
-        statProtect = attributeController.Stats.Find(x => x.Type == Enum.ZCUpgradeType.Protect);
+        if (attributeController != null)
+        {
+            attributeController.onUpgradeStat.AddListener(OnUpgradeProtect);
+            statProtect = attributeController.Stats.Find(x => x.Type == Enum.ZCUpgradeType.Protect); 
+        }
         if (statProtect != null)
         {
             numberOfUndyingTime = statProtect.HowMuchUpgrade;
@@ -42,6 +46,7 @@ public class ZCLifeComponent1 : LifeComponent
         if (health <= 0)
         {
             onLifeEnds?.Invoke(attackerName);
+            ParticleSpawner.Instance.PlayParticle(transform.position, actorMeshRenderer.sharedMaterial);
             return true;
         }
         else
@@ -77,5 +82,12 @@ public class ZCLifeComponent1 : LifeComponent
 
         isInvincibleNow = false; 
         protectedCircle.SetActive(false);
+    }
+    private void OnUpgradeProtect(ZCStatPlayer player)
+    {
+        if(player.Type == Enum.ZCUpgradeType.Protect)
+        {
+            numberOfUndyingTime = player.HowMuchUpgrade;
+        }
     }
 }

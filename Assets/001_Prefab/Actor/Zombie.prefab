@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 2963460255190871293}
   - component: {fileID: 4076313182266477817}
   - component: {fileID: 2471719595243253135}
-  - component: {fileID: 6150003662687594971}
   - component: {fileID: 5776636927531825440}
   - component: {fileID: 4000273548199038840}
   - component: {fileID: 5616467980838844060}
   - component: {fileID: 2555567760090318863}
   - component: {fileID: 4301188230654904276}
   - component: {fileID: 5628098154473442082}
+  - component: {fileID: 3989433716781196321}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Zombie
@@ -59,6 +59,9 @@ MonoBehaviour:
   onEnemyMoving:
     m_PersistentCalls:
       m_Calls: []
+  normalSpeed: 4.2
+  doubleSpeed: 12
+  detectionRange: 60
 --- !u!195 &2963460255190871293
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -68,10 +71,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 2750640466030363275}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 4.2
-  m_Acceleration: 8
-  avoidancePriority: 50
+  m_Acceleration: 20
+  avoidancePriority: 99
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -121,21 +124,6 @@ MonoBehaviour:
   lifeComponent: {fileID: 0}
   weaponComponent: {fileID: 0}
   zombieController: {fileID: 6133666149468591406}
---- !u!114 &6150003662687594971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2750640466030363275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33680b2cdd6d2eb4891b21006c35e584, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onLifeEnds:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5776636927531825440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c572a1824143614c90fbc06fd7eb0ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeComponent: {fileID: 6150003662687594971}
+  lifeComponent: {fileID: 3989433716781196321}
   skinnedMeshRenderer: {fileID: 4287178894957042459}
 --- !u!54 &5616467980838844060
 Rigidbody:
@@ -258,6 +246,22 @@ MonoBehaviour:
   nameText: {fileID: 0}
   scoreText: {fileID: 0}
   actorName: 
+--- !u!114 &3989433716781196321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750640466030363275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33680b2cdd6d2eb4891b21006c35e584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorMeshRenderer: {fileID: 4287178894957042459}
+  onLifeEnds:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1877904368134486914
 PrefabInstance:
   m_ObjectHideFlags: 0
