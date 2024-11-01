@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: GrowingWeapon
   m_EditorClassIdentifier: 
   powerName: Growing Weapon
+  powerDes: Weapon grow bigger by time
   powerImage: {fileID: 21300000, guid: 6fff86b09f945b54487777673e846363, type: 3}
   powerType: 7

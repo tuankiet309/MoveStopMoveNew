@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: IgnoreWall Attack
   m_EditorClassIdentifier: 
   powerName: Wall Break
+  powerDes: Ignore wall
   powerImage: {fileID: 21300000, guid: 18647e0f39953be419d5e1b2f3a843fc, type: 3}
   powerType: 13

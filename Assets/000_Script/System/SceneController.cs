@@ -24,22 +24,27 @@ public class SceneController : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LoadLoadingSceneAndAsyncFirstTime());
+        if (SceneManager.GetActiveScene().name == Enum.SceneName.LoadingScene.ToString())
+        {
+            StartCoroutine(LoadLoadingSceneAndAsyncFirstTime());
+        }
     }
     private IEnumerator LoadLoadingSceneAndAsyncFirstTime()
     {
-
         asyncOperation = SceneManager.LoadSceneAsync(Enum.SceneName.PVEScene.ToString());
-        asyncOperation.allowSceneActivation = false;
-        yield return new WaitForSeconds(1.5f);
+        asyncOperation.allowSceneActivation = false; 
+
+      
 
         while (asyncOperation.progress < 0.9f)
         {
-            yield return null;
+            yield return null; 
         }
 
         asyncOperation.allowSceneActivation = true;
+
     }
+
     public void LoadSceneRightAway(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -53,26 +58,27 @@ public class SceneController : MonoBehaviour
     private IEnumerator LoadLoadingSceneAndAsync(string sceneName)
     {
         AsyncOperation loadingSceneLoad = SceneManager.LoadSceneAsync(Enum.SceneName.LoadingScene.ToString());
-
         while (!loadingSceneLoad.isDone)
         {
             yield return null;
         }
+
         LoadingScreenUI loadingScreenUI = FindObjectOfType<LoadingScreenUI>();
         if (loadingScreenUI != null)
         {
             loadingScreenUI.ShowRandomPanel();
         }
+
         asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
 
-        yield return new WaitForSeconds(1.5f);
         while (asyncOperation.progress < 0.9f)
         {
             yield return null;
         }
 
-        asyncOperation.allowSceneActivation = true;
-    }
 
+        asyncOperation.allowSceneActivation = true;
+
+    }
 }

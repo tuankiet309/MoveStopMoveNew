@@ -7,7 +7,7 @@ public class SoundPool : ObjectPoolAbtract<SoundSource>
     [SerializeField] private SoundSource m_Source;
     protected override SoundSource CreateObject()
     {
-        SoundSource newAudioSource = Instantiate(m_Source);
+        SoundSource newAudioSource = Instantiate(m_Source, gameObject.transform);
         return newAudioSource;
     }
 }

@@ -90,6 +90,6 @@ public class LifeComponent : MonoBehaviour
         SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.Dead);
         int random = Random.Range(0, soundList.Sounds.Length);
         AudioClip clip = soundList.Sounds[random];
-        SoundManager.Instance.PlayThisOnWorld(clip, 0.25f, transform.position);
+        SoundManager.Instance.PlayThisOnWorld(clip, 1f, transform.position);
     }
 }

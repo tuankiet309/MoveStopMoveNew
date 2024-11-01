@@ -119,6 +119,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 09df03e0cdd3499439369fd6229f9903,
         type: 2}
+    - target: {fileID: 4853484545933479689, guid: e1dbb5c585123644d8bc782f68b17049,
+        type: 3}
+      propertyPath: actorMeshRenderer
+      value: 
+      objectReference: {fileID: 2671729962891423079}
     - target: {fileID: 6133666149468591406, guid: e1dbb5c585123644d8bc782f68b17049,
         type: 3}
       propertyPath: doubleSpeed

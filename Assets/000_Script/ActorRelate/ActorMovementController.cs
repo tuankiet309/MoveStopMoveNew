@@ -63,9 +63,9 @@ public class ActorMovementController : MonoBehaviour
 
     protected virtual void Update()
     {
-        rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, moveVelocity.z);
+        rb.velocity = new Vector3(moveVelocity.x , rb.velocity.y, moveVelocity.z);
         if (rotateDir != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(rotateDir);
+            transform.rotation = Quaternion.LookRotation(rotateDir*Time.deltaTime);
     }
     
     protected virtual void moveStickInputHandler(Vector2 inputValue)
@@ -73,7 +73,7 @@ public class ActorMovementController : MonoBehaviour
         float x = inputValue.x;
         float z = inputValue.y;
         
-        moveVelocity = new Vector3(x, 0, z).normalized * (moveSpeed + speedBuffFromZCPower + speedBuffFromSkin + speedBuffFromZCStat);
+        moveVelocity = new Vector3(x, 0, z).normalized * (moveSpeed + speedBuffFromZCPower + speedBuffFromSkin + speedBuffFromZCStat) * Time.deltaTime;
         rotateDir = inputValue == Vector2.zero ? rotateDir : new Vector3(x, 0, z);
         
         onActorMoving?.Invoke(moveVelocity);
@@ -90,11 +90,6 @@ public class ActorMovementController : MonoBehaviour
         }
         
     }
-    protected virtual void OnUpgradeMoveSpeed(ZCStatPlayer zC)
-    {
-        speedBuffFromZCStat = 0;
-        speedBuffFromZCStat = zC.HowMuchUpgrade * moveSpeed / 100;
-    }
     protected virtual void UpdateBuffFromSkin()
     {
         if (actorAtributeController.BuffValues.ContainsKey(Enum.AttributeBuffs.Speed))
@@ -102,6 +97,12 @@ public class ActorMovementController : MonoBehaviour
             speedBuffFromSkin = actorAtributeController.BuffValues[Enum.AttributeBuffs.Speed];
         }
     }
+    protected virtual void OnUpgradeMoveSpeed(ZCStatPlayer zC)
+    {
+        speedBuffFromZCStat = 0;
+        speedBuffFromZCStat = zC.HowMuchUpgrade * moveSpeed / 100;
+    }
+    
     protected virtual void RotateToTarget(GameObject target)
     {
         if (moveVelocity == Vector3.zero && target != null)

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Piercing Attack
   m_EditorClassIdentifier: 
   powerName: Piercing Attack
+  powerDes: Projectile continues flying after hit enemy
   powerImage: {fileID: 21300000, guid: 339c36e7bb99a51498928de75e8d45a8, type: 3}
   powerType: 9

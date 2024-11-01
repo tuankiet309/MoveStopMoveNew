@@ -18,7 +18,6 @@ public class ZCEndGameUI : MonoBehaviour
 
     [SerializeField] private Button claim;
     [SerializeField] private Button claimX3;
-    [SerializeField] private Button homeButton;
 
     private void Start()
     {
@@ -34,12 +33,8 @@ public class ZCEndGameUI : MonoBehaviour
         goldx3.text = (PlayerGoldInGameController.Instance.Gold*3).ToString();
         claim.onClick.AddListener(ClaimGoldAndRestart);
         claimX3.onClick.AddListener (ClaimGoldX3AndRestart);
-        homeButton.onClick.AddListener(GoToHome);
     }
-    private void GoToHome()
-    {
-        SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.PVEScene.ToString());
-    }
+
     private void ClaimGoldAndRestart()
     {
         PlayerGoldInGameController.Instance.OnEndCurrentLevel();

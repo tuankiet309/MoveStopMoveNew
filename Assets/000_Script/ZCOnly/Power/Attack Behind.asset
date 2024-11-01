@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Attack Behind
   m_EditorClassIdentifier: 
   powerName: Attack Behind
+  powerDes: One projectile fly behind
   powerImage: {fileID: 21300000, guid: 940f72f476e3ef34791e0f24fed0cb3e, type: 3}
   powerType: 1

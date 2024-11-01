@@ -85,7 +85,7 @@ public class Projectile : MonoBehaviour, IProjectile
             if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
             {
                 float rotationSpeed = CONSTANT_VALUE.PROJECTILE_ROTATE_SPEED;
-                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed, 0f);
+                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed * Time.deltaTime, 0f);
                 rb.MoveRotation(rb.rotation * rotation);
             }
             if(weaponType == WeaponType.Straight)
@@ -102,11 +102,11 @@ public class Projectile : MonoBehaviour, IProjectile
     {
         while(distanceTilDie  > Vector3.Distance(transform.position, initDistance) && !stopFlying)
         {
-            rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED );
+            rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED *Time.deltaTime);
             if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
             { 
                 float rotationSpeed = CONSTANT_VALUE.PROJECTILE_ROTATE_SPEED;
-                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed, 0f); 
+                Quaternion rotation = Quaternion.Euler(0f, rotationSpeed*Time.deltaTime, 0f); 
                 rb.MoveRotation(rb.rotation * rotation); 
             }
             yield return null;
@@ -116,11 +116,11 @@ public class Projectile : MonoBehaviour, IProjectile
             while (distanceComeBackAccept < Vector3.Distance(transform.position, actorAttacker.transform.position ))
             {
                 Vector3 returnDirection = (actorAttacker.transform.position - transform.position).normalized;
-                rb.velocity = returnDirection.normalized * CONSTANT_VALUE.COMEBACK_FLY_DISTANCE;
+                rb.velocity = returnDirection.normalized * CONSTANT_VALUE.COMEBACK_FLY_DISTANCE * Time.deltaTime;
                 if (weaponType == WeaponType.Rotate || weaponType==  WeaponType.Comeback)
                 {
                     float rotationSpeed = CONSTANT_VALUE.PROJECTILE_ROTATE_SPEED;
-                    Quaternion rotation = Quaternion.Euler(0f, rotationSpeed, 0f);
+                    Quaternion rotation = Quaternion.Euler(0f, rotationSpeed * Time.deltaTime, 0f);
                     rb.MoveRotation(rb.rotation * rotation);
                 }
 
@@ -134,7 +134,7 @@ public class Projectile : MonoBehaviour, IProjectile
     {
         while (distanceTilDie*2.5f > Vector3.Distance(transform.position, initDistance) && !stopFlying)
         {
-            rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED);
+            rb.velocity = flyDir.normalized * (CONSTANT_VALUE.PROJECTILE_FLY_SPEED*Time.deltaTime);
             transform.localScale = Vector3.Lerp(transform.localScale, tempoScale, 0.03f);
             if (weaponType == WeaponType.Rotate || weaponType == WeaponType.Comeback)
             {

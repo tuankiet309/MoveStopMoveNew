@@ -140,7 +140,7 @@ public class CameraController : MonoBehaviour
             true
         ));
         }
-        else if (gameState == Enum.GameState.Win)
+        else if (gameState == Enum.GameState.Win && inGameState == Enum.InGameState.PVE)
         {
             if (Player.Instance != null)
             {

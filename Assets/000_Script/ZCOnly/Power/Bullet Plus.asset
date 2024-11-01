@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Bullet Plus
   m_EditorClassIdentifier: 
   powerName: Bullet Plus
+  powerDes: Increase max weapon by 1
   powerImage: {fileID: 21300000, guid: 87266c7c5bdf1e34e8b3e543bfa5f000, type: 3}
   powerType: 2

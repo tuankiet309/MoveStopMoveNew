@@ -19,17 +19,21 @@ MonoBehaviour:
     type: 3}
   possibleSkinForThisWeapon:
   - skin: {fileID: 7167713677699941835, guid: 5da1ac6486a19fb4eac87fded003515a, type: 3}
+    gold: 200
     isLocked: 0
   - skin: {fileID: 7167713677699941835, guid: 57e7b10a07f882d4e95775020c88b3f3, type: 3}
+    gold: 200
     isLocked: 0
   - skin: {fileID: 7167713677699941835, guid: a698e8c9a5d578a4a9ee1656b5193e03, type: 3}
+    gold: 200
     isLocked: 1
   - skin: {fileID: 7167713677699941835, guid: 0c87643dc4625a44b86118d3eb48fbdb, type: 3}
+    gold: 200
     isLocked: 1
-  weaponOffsetPos: {x: -0.115, y: 0.037, z: -0.007}
+  weaponOffsetPos: {x: -0.17, y: 0.126, z: -0.033}
   weaponOffsetRot: {x: 0.00000015273685, y: -0.000000014901156, z: -0.7089426, w: 0.7052663}
   weaponOffsetOnThrowPos: {x: 0, y: 0, z: 0}
   weaponType: 0
   buff: 0
   buffMultiplyer: 2
-  currentIndexOfTheSkin: 1
+  currentIndexOfTheSkin: 0

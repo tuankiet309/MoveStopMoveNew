@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Tripple Attack
   m_EditorClassIdentifier: 
   powerName: Tripple Attack
+  powerDes: Shoot 2 more projectile
   powerImage: {fileID: 21300000, guid: 970925db9e357204d8c9cbfed938308d, type: 3}
   powerType: 12

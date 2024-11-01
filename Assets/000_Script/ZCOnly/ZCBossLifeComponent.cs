@@ -17,7 +17,7 @@ public class ZCBossLifeComponent : LifeComponent
         transform.localScale -= Vector3.one * 0.1f;
         if (health <= 0)
         {
-            ParticleSpawner.Instance.PlayParticle(transform.position,actorMeshRenderer.sharedMaterial);
+            ParticleSpawner.Instance.PlayParticle(transform.position + Vector3.up,actorMeshRenderer.sharedMaterial);
             onLifeEnds?.Invoke(attackerName);
             return true;
         }

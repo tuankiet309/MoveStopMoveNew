@@ -184,9 +184,8 @@ public class ZCAttacker : ActorAttacker
         }
         else
         {
-            Attack(targetToAttackPos, throwLocation.position, true);
             onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
-
+            Attack(targetToAttackPos, throwLocation.position, true);
         }
     }
 

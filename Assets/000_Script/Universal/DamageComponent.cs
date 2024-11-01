@@ -45,6 +45,6 @@ public class DamageComponent : MonoBehaviour
     {
         SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.WeaponSound);
         AudioClip audioClip = soundList.Sounds[0];
-        SoundManager.Instance.PlayThisOnWorld(audioClip, 0.25f, transform.position);
+        SoundManager.Instance.PlayThisOnWorld(audioClip, 1f, transform.position);
     }
 }

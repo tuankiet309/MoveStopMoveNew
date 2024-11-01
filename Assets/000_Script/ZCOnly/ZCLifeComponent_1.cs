@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ZCLifeComponent1 : LifeComponent
+public class ZCLifeComponent : LifeComponent
 {
     [SerializeField] private ZCAttributeController attributeController;
     [SerializeField] private GameObject protectedCircle;
@@ -24,7 +24,8 @@ public class ZCLifeComponent1 : LifeComponent
         {
             numberOfUndyingTime = statProtect.HowMuchUpgrade;
         }
-        protectedCircle.SetActive(false);
+        if(protectedCircle != null) 
+            protectedCircle.SetActive(false);
     }
 
     public override bool DamageHealth(string attackerName)
@@ -46,7 +47,7 @@ public class ZCLifeComponent1 : LifeComponent
         if (health <= 0)
         {
             onLifeEnds?.Invoke(attackerName);
-            ParticleSpawner.Instance.PlayParticle(transform.position, actorMeshRenderer.sharedMaterial);
+            ParticleSpawner.Instance.PlayParticle(transform.position+Vector3.up, actorMeshRenderer.sharedMaterial);
             return true;
         }
         else

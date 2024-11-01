@@ -54,11 +54,108 @@ MonoBehaviour:
     spawnPosHolder: {fileID: 0}
     mapToUse: {fileID: 0}
   ZCLevels:
-  - howManyZombie: 0
-    TypeOfEnemies: []
+  - howManyZombie: 25
+    whenToSpawnBoss: 0
+    respawnPosition: {x: 50, y: 2, z: 63}
+    bigBoss: {fileID: 0}
+    dogChances: 0
+  - howManyZombie: 50
+    whenToSpawnBoss: 0
     respawnPosition: {x: 0, y: 0, z: 0}
     bigBoss: {fileID: 0}
-  - howManyZombie: 0
-    TypeOfEnemies: []
+    dogChances: 0
+  - howManyZombie: 70
+    whenToSpawnBoss: 0
     respawnPosition: {x: 0, y: 0, z: 0}
     bigBoss: {fileID: 0}
+    dogChances: 0
+  - howManyZombie: 75
+    whenToSpawnBoss: 0
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 3149520320189211125, guid: ca4b8f0b3cb113a4695da1c1ce563f6f,
+      type: 3}
+    dogChances: 0
+  - howManyZombie: 75
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 3149520320189211125, guid: ca4b8f0b3cb113a4695da1c1ce563f6f,
+      type: 3}
+    dogChances: 0
+  - howManyZombie: 80
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 10
+  - howManyZombie: 85
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 10
+  - howManyZombie: 90
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 10
+  - howManyZombie: 95
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 10
+  - howManyZombie: 95
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 3149520320189211125, guid: b24247e7c7b957142b7bacf31e40b4aa,
+      type: 3}
+    dogChances: 10
+  - howManyZombie: 100
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 15
+  - howManyZombie: 105
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 15
+  - howManyZombie: 110
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 15
+  - howManyZombie: 115
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 15
+  - howManyZombie: 120
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 3149520320189211125, guid: ca4b8f0b3cb113a4695da1c1ce563f6f,
+      type: 3}
+    dogChances: 20
+  - howManyZombie: 125
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 20
+  - howManyZombie: 130
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 20
+  - howManyZombie: 140
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 20
+  - howManyZombie: 145
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 0}
+    dogChances: 20
+  - howManyZombie: 150
+    whenToSpawnBoss: 40
+    respawnPosition: {x: 0, y: 0, z: 0}
+    bigBoss: {fileID: 3149520320189211125, guid: ca4b8f0b3cb113a4695da1c1ce563f6f,
+      type: 3}
+    dogChances: 20

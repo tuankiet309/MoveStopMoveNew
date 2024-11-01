@@ -8,7 +8,7 @@ public class BuffPool : ObjectPoolAbtract<BuffGift>
 
     protected override BuffGift CreateObject()
     {
-        BuffGift newBuff = Instantiate(buffToPool);
+        BuffGift newBuff = Instantiate(buffToPool, gameObject.transform);
         return newBuff;
     }
 

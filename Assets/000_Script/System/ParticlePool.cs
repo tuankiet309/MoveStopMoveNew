@@ -8,7 +8,7 @@ public class ParticlePool : ObjectPoolAbtract<ParticleBurst>
 
     protected override ParticleBurst CreateObject()
     {
-        ParticleBurst particleBurst= Instantiate(burstPref);
+        ParticleBurst particleBurst= Instantiate(burstPref,gameObject.transform);
         return particleBurst;
     }
 }

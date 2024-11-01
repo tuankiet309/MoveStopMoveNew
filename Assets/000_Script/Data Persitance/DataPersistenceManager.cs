@@ -8,22 +8,24 @@ using UnityEngine.Events;
 public class DataPersistenceManager : MonoBehaviour
 {
     [SerializeField] private string fileName;
+
+    #region EssentialForNewGame
     [Header("NEW GAME CONFIG")]
     [SerializeField] private Weapon firstWeaponOfPlayer;
     [SerializeField] private Skin[] firstSkinOfPlayer;
     [SerializeField] private ShopItemWeapon[] shopItemWeaponFirst;
     [SerializeField] private ShopItemSkin[] shopItemSkinFirst;
     [SerializeField] private ZCStatItem[] zCStatItemFirst;
-
+    #endregion
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
     private FileDataHandler fileDataHandler;
     private static DataPersistenceManager instance;
 
     public static DataPersistenceManager Instance { get { return instance; } private set { } }
-
     public GameData GameData { get => gameData; private set{ } }
 
+    #region[Database]
     public Dictionary<string, Weapon> WeaponDatabase { get => weaponDatabase; set => weaponDatabase = value; }
     public Dictionary<string, Skin> SkinDatabase { get => skinDatabase; set => skinDatabase = value; }
     public Dictionary<string, SetSkin> SetSkinDatabase { get => setSkinDatabase; set => setSkinDatabase = value; }
@@ -31,7 +33,7 @@ public class DataPersistenceManager : MonoBehaviour
     private Dictionary<string, Weapon> weaponDatabase = new Dictionary<string, Weapon>();
     private Dictionary<string, Skin> skinDatabase = new Dictionary<string, Skin>();
     private Dictionary<string,SetSkin> setSkinDatabase = new Dictionary<string,SetSkin>();
-
+    #endregion
 
     public UnityEvent OnGoldChange;
     private void Awake()
@@ -72,6 +74,7 @@ public class DataPersistenceManager : MonoBehaviour
         Debug.Log("SceneLoaded Called");
         SaveGame();
     }
+    #region LoadDatabase
     private void LoadWeaponDatabase()
     {
         foreach (var shopItem in shopItemWeaponFirst)
@@ -109,6 +112,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
         Debug.Log("Skin database loaded with " + skinDatabase.Count + " items.");
     }
+    #endregion
     public bool AccessGold(int amount)
     {
         if (gameData.gold + amount < 0)

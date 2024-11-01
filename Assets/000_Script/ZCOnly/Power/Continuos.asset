@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Continuos
   m_EditorClassIdentifier: 
   powerName: Continous
+  powerDes: Attack twice
   powerImage: {fileID: 21300000, guid: 2b57b2cecf5455645ae72889f430667c, type: 3}
   powerType: 0

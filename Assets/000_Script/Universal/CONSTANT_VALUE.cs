@@ -12,9 +12,9 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const float CIRCLE_RADIUS_INCREASER = 0.75f;
     public const float BODY_SCALER_INCREASER = 0.15F;
     //////////////MOVEMENT_INFO/////////////////
-    public const float FIRST_MOVESPEED = 5f;
+    public const float FIRST_MOVESPEED = 350f;
     public const float FIRST_MOVESPEED_ENEMY = 5f;
-    public const float FIRST_ROTATIONSPEED = 15F;
+    public const float FIRST_ROTATIONSPEED = 250F;
     public const float AI_SEARCH_FOR_NEW_DES = 40f;
 
 
@@ -22,10 +22,10 @@ public class CONSTANT_VALUE : MonoBehaviour
     public const float FIRST_DELAYED_ATTACK = 0.75f;
     public const float FIRST_DELAYED_ATTACKZC = 0.25f;
 
-    public const float PROJECTILE_FLY_SPEED = 12f;
-    public const float PROJECTILE_ROTATE_SPEED = 8f;
+    public const float PROJECTILE_FLY_SPEED = 700f;
+    public const float PROJECTILE_ROTATE_SPEED = 1000;
     public const float DISTANCE_TIL_COMBACK = 0.5f;
-    public const float COMEBACK_FLY_DISTANCE = 15f;
+    public const float COMEBACK_FLY_DISTANCE = 700f;
     public const float OFFSET_DISTANCE = 2.0f;
     /////////////DECOR//////////////////////
     public const float DECORATION_TRANPARENT_VALUE = 0.2F;

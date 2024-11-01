@@ -228,7 +228,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3366483875928547241}
   - {fileID: 334085524889359430}
   - {fileID: 3524834826174316529}
   - {fileID: 602647535349402120}
@@ -601,7 +600,7 @@ PrefabInstance:
     - target: {fileID: 3030311257873918372, guid: c9ceb32d74f87494395cff7184965e84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.12
+      value: 0.272
       objectReference: {fileID: 0}
     - target: {fileID: 3030311257873918372, guid: c9ceb32d74f87494395cff7184965e84,
         type: 3}
@@ -1112,6 +1111,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1561272238552917545, guid: 402140b795fe99e459b0dfaf9750654e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3366483875928547241}
     - targetCorrespondingSourceObject: {fileID: 1319574734787282095, guid: 402140b795fe99e459b0dfaf9750654e,
         type: 3}
       insertIndex: -1
@@ -1273,7 +1276,7 @@ PrefabInstance:
     - target: {fileID: 3030311257873918372, guid: 8caf026b294968441ab9208e8093cad0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.12
+      value: 0.208
       objectReference: {fileID: 0}
     - target: {fileID: 3030311257873918372, guid: 8caf026b294968441ab9208e8093cad0,
         type: 3}
@@ -1450,7 +1453,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8212778581410472563}
+    m_TransformParent: {fileID: 4277786837517658750}
     m_Modifications:
     - target: {fileID: 973968816508901329, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}
@@ -1540,17 +1543,17 @@ PrefabInstance:
     - target: {fileID: 5278329770978790702, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5278329770978790702, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5278329770978790702, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5278329770978790702, guid: b58f69c8baa88ef44a5c470ccdee96aa,
         type: 3}

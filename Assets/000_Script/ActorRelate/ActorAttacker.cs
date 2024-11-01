@@ -227,7 +227,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         SoundList sound = SoundManager.Instance.SoundLists.FirstOrDefault(soundList => soundList.SoundListName == Enum.SoundType.WeaponSound);
         Debug.Log(sound.SoundListName);
         AudioClip audioToPlay = sound.Sounds[1];
-        SoundManager.Instance.PlayThisOnWorld(audioToPlay, 0.4f, throwLocation.position);
+        SoundManager.Instance.PlayThisOnWorld(audioToPlay, 1f, throwLocation.position);
     }
   
 }
