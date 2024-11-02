@@ -13,8 +13,11 @@ public class Skin : ScriptableObject
     [SerializeField] Quaternion skinRotOffsetOnWear;
     [SerializeField] Enum.AttributeBuffs attributeBuffs;
     [SerializeField] int buffMultiplyer;
+
     [SerializeField] bool isUnlock = false;
     [SerializeField] bool isUnlockedOnce = false;
+    [SerializeField] bool isUsedYet = false;
+
     private bool isEquiped = false;
     [SerializeField] int gold = 500;
 
@@ -30,6 +33,7 @@ public class Skin : ScriptableObject
     public bool IsUnlockedOnce { get => isUnlockedOnce; set => isUnlockedOnce = value; }
     public bool IsEquiped { get => isEquiped; set => isEquiped = value; }
     public string SkinId { get => skinId; set => skinId = value; }
+    public bool IsUsedYet { get => isUsedYet; set => isUsedYet = value; }
 
     [ContextMenu("GenerateID")]
     private void GenerateGUID()

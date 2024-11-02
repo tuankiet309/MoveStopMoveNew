@@ -15,7 +15,6 @@ public class DetectionCircle : MonoBehaviour
     public UnityEvent<GameObject,bool> onTriggerContact;
 
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(transform.tag)) return;

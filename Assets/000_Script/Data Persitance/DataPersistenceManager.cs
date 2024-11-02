@@ -154,7 +154,7 @@ public class DataPersistenceManager : MonoBehaviour
             for(int j = 0; j < shopItemSkinFirst[i].SkinToAttach.Length;j++)
             {
                 SkinShopItemData  skin = new SkinShopItemData();
-                skin.InitializeSkinData(shopItemSkinFirst[i].SkinToAttach[j].SkinId, false);
+                skin.InitializeSkinData(shopItemSkinFirst[i].SkinToAttach[j].SkinId, false,false,false);
                 shopItemSkinFirst[i].SkinToAttach[j].IsUnlock = false;
                 gameData.skinDatas.Add(skin);
 
@@ -162,7 +162,7 @@ public class DataPersistenceManager : MonoBehaviour
             for (int j = 0; j < shopItemSkinFirst[i].SetSkinToAttach.Length; j++)
             {
                 SkinShopItemData skin = new SkinShopItemData();
-                skin.InitializeSkinData(shopItemSkinFirst[i].SetSkinToAttach[j].SetID, false);
+                skin.InitializeSkinData(shopItemSkinFirst[i].SetSkinToAttach[j].SetID, false,false,false);
                 shopItemSkinFirst[i].SetSkinToAttach[j].IsUnlock = false;
                 gameData.skinDatas.Add(skin);
             }

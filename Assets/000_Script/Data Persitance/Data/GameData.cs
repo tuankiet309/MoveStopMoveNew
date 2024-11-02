@@ -70,10 +70,14 @@ public class SkinShopItemData
 {
     public string idOfSkin;
     public bool isPurchased;
-    public void InitializeSkinData(string idOfSkin, bool isPurchased)
+    public bool isUnlockOnce;
+    public bool isUseYet;
+    public void InitializeSkinData(string idOfSkin, bool isPurchased,bool isUnlockedOnce, bool isUseYet)
     {
         this.idOfSkin = idOfSkin;
         this.isPurchased= isPurchased;
+        this.isUnlockOnce = isUnlockedOnce;
+        this.isUseYet = isUseYet;
     }
 }
 

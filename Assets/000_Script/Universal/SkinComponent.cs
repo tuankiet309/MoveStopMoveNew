@@ -39,6 +39,11 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
         SaveOriginalMaterials();
         WearSkin(skinToChange);
         previousSkins = skinToChange;
+        GameManager.Instance.onStateChange.AddListener(CheckOnceTimeSkin);
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.onStateChange.RemoveListener(CheckOnceTimeSkin);
     }
 
     public void AssignNewSkin(Skin[] newSkin, bool isASet)
@@ -63,9 +68,32 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
             }
         this.isASet = isASet;
         WearSkin(skinToChange);
-        
     }
-    
+    private void CheckOnceTimeSkin(GameState gameState, InGameState inGameState)
+    {
+        if ((gameState == GameState.Ingame && inGameState == InGameState.PVE) || (gameState == GameState.Begin))
+        {
+            List<Skin> skinsToRemove = new List<Skin>();
+            foreach (Skin skin in skinToChange)
+            {
+                if (skin.IsUnlockedOnce == true)
+                {
+                    skin.IsUsedYet = true;
+                    skin.IsEquiped = false;
+                    skin.IsUnlockedOnce = false;
+                    skin.IsUnlock = false;
+
+                    skinsToRemove.Add(skin);
+                }
+            }
+
+            foreach (Skin skin in skinsToRemove)
+            {
+                skinToChange.Remove(skin);
+                previousSkins.Remove(skin);
+            }
+        }
+    }
     public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
     {
         if (this.isASet || isASet)
