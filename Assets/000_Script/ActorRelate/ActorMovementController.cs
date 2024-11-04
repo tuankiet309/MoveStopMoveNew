@@ -63,6 +63,7 @@ public class ActorMovementController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(GameManager.Instance.CurrentGameState != Enum.GameState.Dead || GameManager.Instance.CurrentGameState != Enum.GameState.Revive || GameManager.Instance.CurrentGameState != Enum.GameState.Win)
         rb.velocity = new Vector3(moveVelocity.x , rb.velocity.y, moveVelocity.z);
         if (rotateDir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(rotateDir);

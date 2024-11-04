@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5105019500197166428}
   - component: {fileID: 7135064454328916527}
   - component: {fileID: 7705661206538623317}
+  - component: {fileID: 1555684790862385896}
   m_Layer: 5
   m_Name: ImageToShow 1
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 140, y: 180}
+  m_SizeDelta: {x: 90, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7135064454328916527
 CanvasRenderer:
@@ -75,3 +76,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!210 &1555684790862385896
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058063915009727899}
+  m_Enabled: 1
+  m_SortingLayerID: -2123920729
+  m_SortingLayer: -1
+  m_SortingOrder: 10
+  m_SortAtRoot: 0

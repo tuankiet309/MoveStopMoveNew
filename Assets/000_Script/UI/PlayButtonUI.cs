@@ -8,7 +8,7 @@ public class PlayButtonUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI zone;
     void Start()
     {
-        zone.text = "Zone: "+(DataPersistenceManager.Instance.GameData.levelData.currentPVELevel+1).ToString();
+        zone.text = "Zone: "+(DataPersistenceManager.Instance.GameData.levelData.currentPVELevel+1).ToString() + " Max Score: "+DataPersistenceManager.Instance.GameData.maxScore;
     }
 
     // Update is called once per frame
