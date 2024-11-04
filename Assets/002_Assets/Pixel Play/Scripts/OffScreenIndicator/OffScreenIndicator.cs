@@ -1,4 +1,4 @@
-﻿using PixelPlay.OffScreenIndicator;
+﻿using NonEssential.OffScreenIndicator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,12 +55,12 @@ public class OffScreenIndicator : MonoBehaviour
                 float angle = float.MinValue;
                 OffScreenIndicatorCore.GetArrowIndicatorPositionAndAngle(ref screenPosition, ref angle, screenCentre, screenBounds);
                 indicator = GetIndicator(ref target.indicator, IndicatorType.ARROW); 
-                indicator.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); 
+                indicator.GetArrow().transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); 
             }
             if(indicator)
             {
                 indicator.SetImageColor(target.TargetColor);
-                indicator.SetDistanceText(distanceFromCamera);
+                indicator.SetDistanceText(target.ScoreText());
                 indicator.transform.position = screenPosition; 
                 indicator.SetTextRotation(Quaternion.identity); 
             }

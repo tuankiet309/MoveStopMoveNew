@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour, IPoolable
         if (weaponComponent != null)
         {
             weaponComponent.AssignWeapon(weapon);
+            weaponComponent.AssignWeapon(weapon);
         }
 
         if (actorInfomationController != null)

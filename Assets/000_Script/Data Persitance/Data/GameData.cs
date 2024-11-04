@@ -56,12 +56,14 @@ public class WeaponShopItemData
 {
     public string id;
     public bool isPurchased;
+    public int timeToWatchAdToPuchase;
     public List<int> skinArePurchased;
-    public void InitializeWeaponData(string indexOfWeapon, bool isPurchase, List<int> skinArePurchased)
+    public void InitializeWeaponData(string indexOfWeapon, bool isPurchase, int times, List<int> skinArePurchased)
     {
         this.id = indexOfWeapon;
         this.isPurchased = isPurchase;
         this.skinArePurchased = skinArePurchased;
+        this.timeToWatchAdToPuchase = times;
     }
 }
 

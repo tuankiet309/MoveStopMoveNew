@@ -40,6 +40,7 @@ public class DeadUIController : MonoBehaviour
         {
             reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
             reviveButton.gameObject.SetActive(true);
+            reviveButton.onClick.AddListener(ClaimGoldX3AndRestart);
         }
         gold.text = PlayerGoldInGameController.Instance.Gold.ToString();
         PlayLosingSound();
@@ -56,5 +57,11 @@ public class DeadUIController : MonoBehaviour
         SoundList soundList = SoundManager.Instance.SoundLists.FirstOrDefault(sound => sound.SoundListName == Enum.SoundType.DoneGame);
         AudioClip audioClip = soundList.Sounds[1];
         SoundManager.Instance.PlayThisOnScreen(audioClip, 0.5f);
+    }
+    private void ClaimGoldX3AndRestart()
+    {
+        PlayerGoldInGameController.Instance.Gold *= 3;
+        PlayerGoldInGameController.Instance.OnEndCurrentLevel();
+        SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.PVEScene.ToString());
     }
 }

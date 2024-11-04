@@ -12,17 +12,45 @@ public class DecorationObject : MonoBehaviour
         originalColor = _renderer.material.color;
     }
 
-    public void ChangeTransparentValue(bool Check)
-    {      
+    public void ChangeTransparentValue(bool check)
+    {
         Color color = _renderer.material.color;
-        if (Check)
+
+        if (check)
         {
-            color = new Color(0,0,0,CONSTANT_VALUE.DECORATION_TRANPARENT_VALUE);
+            color = new Color(originalColor.r, originalColor.g, originalColor.b, CONSTANT_VALUE.DECORATION_TRANPARENT_VALUE);
+            SetMaterialToFade(); 
         }
         else
         {
             color = originalColor;
+            SetMaterialToOpaque(); 
         }
+
         _renderer.material.color = color;
+    }
+
+    private void SetMaterialToFade()
+    {
+        _renderer.material.SetFloat("_Mode", 2);
+        _renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        _renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        _renderer.material.SetInt("_ZWrite", 0);
+        _renderer.material.DisableKeyword("_ALPHATEST_ON");
+        _renderer.material.EnableKeyword("_ALPHABLEND_ON");
+        _renderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        _renderer.material.renderQueue = 3000;
+    }
+
+    private void SetMaterialToOpaque()
+    {
+        _renderer.material.SetFloat("_Mode", 0);
+        _renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        _renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        _renderer.material.SetInt("_ZWrite", 1);
+        _renderer.material.EnableKeyword("_ALPHATEST_ON");
+        _renderer.material.DisableKeyword("_ALPHABLEND_ON");
+        _renderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        _renderer.material.renderQueue = -1;
     }
 }

@@ -158,6 +158,7 @@ MonoBehaviour:
   needBoxIndicator: 1
   needArrowIndicator: 1
   needDistanceText: 1
+  skinnedMeshRenderer: {fileID: 0}
   indicator: {fileID: 0}
 --- !u!23 &358822575
 MeshRenderer:
@@ -472,6 +473,7 @@ MonoBehaviour:
   needBoxIndicator: 1
   needArrowIndicator: 1
   needDistanceText: 1
+  skinnedMeshRenderer: {fileID: 0}
   indicator: {fileID: 0}
 --- !u!23 &825745129
 MeshRenderer:
@@ -818,6 +820,7 @@ MonoBehaviour:
   needBoxIndicator: 1
   needArrowIndicator: 1
   needDistanceText: 1
+  skinnedMeshRenderer: {fileID: 0}
   indicator: {fileID: 0}
 --- !u!23 &1456991377
 MeshRenderer:
@@ -1113,6 +1116,7 @@ MonoBehaviour:
   needBoxIndicator: 1
   needArrowIndicator: 1
   needDistanceText: 1
+  skinnedMeshRenderer: {fileID: 0}
   indicator: {fileID: 0}
 --- !u!23 &1925120178
 MeshRenderer:

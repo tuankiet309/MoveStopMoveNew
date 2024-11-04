@@ -10,6 +10,7 @@ public class RealMoneyUI : MonoBehaviour
     [SerializeField] Button GoldPurchase;
     [SerializeField] Button NoAdPurchase;
     [SerializeField] Button SkinUnlockPurchase;
+    [SerializeField] ShopSkinUI shop;
     private void Start()
     {
         closeButton.onClick.AddListener(CloseSelf);
@@ -38,5 +39,6 @@ public class RealMoneyUI : MonoBehaviour
         {
             skin.IsUnlock = true;
         }
+        shop.RefreshSkinUI();
     }
 }

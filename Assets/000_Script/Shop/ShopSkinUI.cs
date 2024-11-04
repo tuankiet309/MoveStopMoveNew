@@ -33,12 +33,14 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
     [SerializeField] RectTransform IfNotBuyYet;
     [SerializeField] Button buyButton;
     [SerializeField] Button buyOneTimeButton;
+    [SerializeField] TextMeshProUGUI buffInfo;
     [Space]
     [SerializeField] Button CloseButton;
 
     List<ButtonAndType> buttonList = new List<ButtonAndType>();
     private SkinComponent skinComp;
     private Skin[] currentTempSkin = null;
+    bool firstEnable = true;
 
     private Dictionary<Enum.SkinType, Skin> currentlyEquippedSkins = new Dictionary<Enum.SkinType, Skin>();
 
@@ -48,8 +50,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         {
             skinComp.RevertSkin(true);
         }
-        GameData gameData = DataPersistenceManager.Instance.GameData;
-        SaveData(ref gameData);
+
     }
     private bool buttonsInitialized = false; 
     private void Start()
@@ -60,16 +61,9 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
         fullSetButton.onClick.AddListener(() => ShowHolder(fullSetHolder, fullSetButton));
         CloseButton.onClick.AddListener(() => skinComp.RevertSkin(true));
     }
-    bool firstEnable = true;
     private void OnEnable()
     {
-        if (firstEnable)
-        {
-            firstEnable = false;
-            return;
-        }
         skinComp = Player.Instance.GetComponent<SkinComponent>();
-
         if (!buttonsInitialized)
         {
             CreateButton();
@@ -81,7 +75,6 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
     void CreateButton()
     {
         if (buttonsInitialized) return; 
-
         AssignButton(0, hatItems, hatHolder);
         AssignButton(0, leftHandItems, leftHandHolder);
         AssignButton(0, pantItems, pantHolder);
@@ -257,6 +250,7 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
 
 
             }
+            buffInfo.text = " + " + selectedSkin.BuffMultiplyer + " " + selectedSkin.AttributeBuffs.ToString();
             UnloadRing(thisButton);
         }
     }
@@ -299,17 +293,20 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
                 equipButton.gameObject.SetActive(false);
                 unequipButton.gameObject.SetActive(false);
                 IfNotBuyYet.gameObject.SetActive(true);
+                buyOneTimeButton.transform.parent.gameObject.SetActive(false);
                 buyButton.onClick.RemoveAllListeners();
                 buyButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = fullSetItems.SetSkinToAttach[index].Gold.ToString();
                 buyButton.onClick.AddListener(()=>BuyThisSet(fullSetItems.SetSkinToAttach[index],thisButton,index));
                 buyButton.onClick.AddListener(SoundManager.Instance.PlayClickSound);
             }
+            buffInfo.text = " + " + selectedSkinSet[0].BuffMultiplyer + " " + selectedSkinSet[0].AttributeBuffs.ToString();
+
             UnloadRing(thisButton);
 
         }
     }
 
-    private void RefreshSkinUI()
+    public void RefreshSkinUI()
     {
         foreach (Transform child in hatHolder) Destroy(child.gameObject);
         foreach (Transform child in leftHandHolder) Destroy(child.gameObject);

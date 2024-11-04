@@ -130,7 +130,7 @@ public class ZCAttacker : ActorAttacker
             newProjectile.FlyToPos(target);
         }
     }
-
+    private bool isMoreWeapon = true;
     public override void PrepareToAttack()
     {
         ZCPower power = zCAttributeController.ZCPower1;
@@ -164,7 +164,11 @@ public class ZCAttacker : ActorAttacker
                     Attack(targetToAttackPos,throwLocation.position, true);
                     break;
                 case Enum.ZCPowerUp.BulletPlus:
-                    moreWeapon++;
+                    if (isMoreWeapon)
+                    {
+                        moreWeapon++;
+                        isMoreWeapon = false;
+                    }
                     Attack(targetToAttackPos, throwLocation.position, true);
                     onActorAttack?.Invoke(targetToAttackPos);
 

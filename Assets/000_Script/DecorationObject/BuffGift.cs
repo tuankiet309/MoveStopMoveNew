@@ -11,10 +11,7 @@ public class BuffGift : MonoBehaviour
 
     private void Update()
     {
-        if (rb.velocity.y != 0)
-        {
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)

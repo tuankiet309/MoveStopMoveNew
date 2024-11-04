@@ -45,14 +45,10 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
         leftButton.onClick.AddListener(MoveLeft);
         rightButton.onClick.AddListener(MoveRight);
         purchaseBtn.onClick.AddListener(UnlockWeapon);
-        
+        watchAdBtn.onClick.AddListener(UnlockWeaponByWatchingAds);
     }
 
-    private void OnDisable()
-    {
-        GameData gameData = DataPersistenceManager.Instance.GameData;
-        SaveData(ref gameData);
-    }
+
     private void MoveRight()
     {
         if (weaponIndex < weaponItem.Length - 1)
@@ -106,6 +102,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
                 moneyButton.gameObject.SetActive(false);
                 alertText.gameObject.SetActive(true);
                 ButtonToBuyHolder.gameObject.SetActive(true);
+                watchAdBtn.transform.GetComponentInChildren<TextMeshProUGUI>().text = weaponItem[weaponIndex].TimeWatchAdsToPurchase.ToString() + "/2";
                 purchaseBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = weaponItem[weaponIndex].GoldCost.ToString();
                 equipButton.gameObject.SetActive(false);
                 unlockButton.gameObject.SetActive(false);
@@ -279,7 +276,15 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             LoadInfomationOfCurrentWeapon();
         }
     }
-
+    private void UnlockWeaponByWatchingAds()
+    {
+        weaponItem[weaponIndex].TimeWatchAdsToPurchase++;
+        if (weaponItem[weaponIndex].TimeWatchAdsToPurchase >= 2)
+        {
+            weaponItem[weaponIndex].IsPurchased = true;
+        }
+        LoadInfomationOfCurrentWeapon();
+    }
     public void LoadData(GameData gameData)
     {
         foreach (ShopItemWeapon shopItemWeapon in weaponItem)
@@ -289,6 +294,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             if (matchingWeaponData != null)
             {
                 shopItemWeapon.IsPurchased = matchingWeaponData.isPurchased;
+                shopItemWeapon.TimeWatchAdsToPurchase = matchingWeaponData.timeToWatchAdToPuchase;
 
                 foreach (var skin in shopItemWeapon.Weapon.PossibleSkinForThisWeapon)
                 {
@@ -316,6 +322,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             if (matchingWeaponData != null)
             {
                 matchingWeaponData.isPurchased = shopItemWeapon.IsPurchased;
+                matchingWeaponData.timeToWatchAdToPuchase = shopItemWeapon.TimeWatchAdsToPurchase;
                 matchingWeaponData.skinArePurchased.Clear(); 
 
                 for (int index = 0; index < shopItemWeapon.Weapon.PossibleSkinForThisWeapon.Length; index++)
@@ -329,7 +336,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
             else
             {
                 WeaponShopItemData newWeaponData = new WeaponShopItemData();
-                newWeaponData.InitializeWeaponData(shopItemWeapon.IdWeapon, shopItemWeapon.IsPurchased, new List<int>());
+                newWeaponData.InitializeWeaponData(shopItemWeapon.IdWeapon, shopItemWeapon.IsPurchased,shopItemWeapon.TimeWatchAdsToPurchase, new List<int>());
 
                 for (int index = 0; index < shopItemWeapon.Weapon.PossibleSkinForThisWeapon.Length; index++)
                 {

@@ -63,6 +63,7 @@ public class UIZC : MonoBehaviour
     private void OnEndGameHappen()
     {
         OnEndGame.gameObject.SetActive(true);  
+        IngameCanvas.gameObject.SetActive(false);
     }
 
     private void OpenSetting()

@@ -13,8 +13,8 @@ public class ZombieMovementController : MonoBehaviour
     public UnityEvent<Vector3> onEnemyMoving;
 
     [SerializeField] private float normalSpeed = 4.2f; 
-    [SerializeField] private float doubleSpeed = 7.0f; 
-    [SerializeField] private float detectionRange = 40f; 
+    [SerializeField] private float doubleSpeed = 12.0f; 
+    [SerializeField] private float detectionRange = 30f; 
 
     private void Start()
     {

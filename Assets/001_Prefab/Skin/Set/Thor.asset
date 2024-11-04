@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setID: 8b3db3d8-1f43-4c74-bd63-4c06e3a05bb6
   eachSkinOfSet:
-  - {fileID: 11400000, guid: beded4ab159a1fe438c99ed59a19079f, type: 2}
   - {fileID: 11400000, guid: a09d20a27c606894c93e15182a4db7a1, type: 2}
+  - {fileID: 11400000, guid: beded4ab159a1fe438c99ed59a19079f, type: 2}
   - {fileID: 11400000, guid: a7d16af7438d3d34d87d4e435133bc9d, type: 2}
   imageToShow: {fileID: 7705661206538623317, guid: 28bb006e3f4cbdf40890adcc0410c70f,
     type: 3}
-  isUnlock: 0
+  isUnlock: 1
   gold: 5000

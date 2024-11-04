@@ -214,7 +214,7 @@ PrefabInstance:
         type: 3}
       propertyPath: deadFX
       value: 
-      objectReference: {fileID: 5519497722551903807}
+      objectReference: {fileID: 0}
     - target: {fileID: 6004532825347738915, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: m_Enabled
@@ -425,6 +425,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6333a91f040a66246ade77abbe468991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4454687974691961013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 407018355103055742, guid: 967e129759ed1cb40b79bcd036fd1fba,
+    type: 3}
+  m_PrefabInstance: {fileID: 4067944627436308427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7767857429517512865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c71bbae383c4b542a7984318f507ca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &4536445463301264678 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 468531629716787949, guid: 967e129759ed1cb40b79bcd036fd1fba,
@@ -449,12 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!198 &5519497722551903807 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8425408046829953524, guid: 967e129759ed1cb40b79bcd036fd1fba,
-    type: 3}
-  m_PrefabInstance: {fileID: 4067944627436308427}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7767857429517512865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6032790747752298346, guid: 967e129759ed1cb40b79bcd036fd1fba,
@@ -491,6 +497,9 @@ MonoBehaviour:
   agent: {fileID: 1869036431221071663}
   attacker: {fileID: 8110726376909259059}
   weapon: {fileID: 2938341805698526503}
+  onEnemyMoving:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2803850775059420210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,10 +513,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetColor: {r: 0, g: 0, b: 0, a: 0.36862746}
-  needBoxIndicator: 0
+  needBoxIndicator: 1
   needArrowIndicator: 1
-  needDistanceText: 0
+  needDistanceText: 1
+  skinnedMeshRenderer: {fileID: 4689844336345976901}
   indicator: {fileID: 0}
+  actorAtributeController: {fileID: 4454687974691961013}
 --- !u!195 &1869036431221071663
 NavMeshAgent:
   m_ObjectHideFlags: 0

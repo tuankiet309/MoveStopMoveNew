@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Deadpool Pant
   m_EditorClassIdentifier: 
+  skinId: 
   skinToWear: {fileID: 4226770722443901611, guid: 7361cb8a10a111749be1216dc07b9a1d,
     type: 3}
   skinToShow: {fileID: 4226770722443901611, guid: 7361cb8a10a111749be1216dc07b9a1d,
@@ -19,5 +20,9 @@ MonoBehaviour:
   skinType: 1
   skinPosOffsetOnWear: {x: 0, y: 0, z: 0}
   skinRotOffsetOnWear: {x: 0, y: 0, z: 0, w: 0}
-  attributeBuffs: 0
-  buffMultiplyer: 0
+  attributeBuffs: 2
+  buffMultiplyer: 10
+  isUnlock: 0
+  isUnlockedOnce: 0
+  isUsedYet: 0
+  gold: 500

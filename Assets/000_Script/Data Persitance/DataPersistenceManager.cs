@@ -139,12 +139,12 @@ public class DataPersistenceManager : MonoBehaviour
 
             if (i == 0)
             {
-                weapon.InitializeWeaponData(shopItemWeaponFirst[i].IdWeapon, true, new List<int> { 0, 1 });
+                weapon.InitializeWeaponData(shopItemWeaponFirst[i].IdWeapon, true,2, new List<int> { 0, 1 });
                 shopItemWeaponFirst[i].IsPurchased = true;
             }
             else 
             { 
-                weapon.InitializeWeaponData(shopItemWeaponFirst[i].IdWeapon, false, new List<int> { 0, 1 });
+                weapon.InitializeWeaponData(shopItemWeaponFirst[i].IdWeapon, false,0, new List<int> { 0, 1 });
                 shopItemWeaponFirst[i].IsPurchased = false;
             }
             gameData.weaponDatas.Add(weapon);
@@ -213,7 +213,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
     private List<IDataPersistence> FindAllDataPersistence()
     {
-        IEnumerable<IDataPersistence> dataPersistences = FindObjectsOfType<MonoBehaviour>()
+        IEnumerable<IDataPersistence> dataPersistences = FindObjectsOfType<MonoBehaviour>(true)
             .OfType<IDataPersistence>();
         return new List<IDataPersistence> (dataPersistences);
     }

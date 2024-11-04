@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Devil Pant
   m_EditorClassIdentifier: 
+  skinId: 
   skinToWear: {fileID: 7265786607980737179, guid: 032338ff9827da443ab6eb87fe0b2879,
     type: 3}
   skinToShow: {fileID: 7265786607980737179, guid: 032338ff9827da443ab6eb87fe0b2879,
@@ -20,4 +21,8 @@ MonoBehaviour:
   skinPosOffsetOnWear: {x: 0, y: 0, z: 0}
   skinRotOffsetOnWear: {x: 0, y: 0, z: 0, w: 0}
   attributeBuffs: 0
-  buffMultiplyer: 0
+  buffMultiplyer: 5
+  isUnlock: 0
+  isUnlockedOnce: 0
+  isUsedYet: 0
+  gold: 500

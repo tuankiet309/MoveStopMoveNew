@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bf051d7a2c1574cbfdd206e972e8a4, type: 3}
   m_Name: Thor Hat
   m_EditorClassIdentifier: 
+  skinId: 
   skinToWear: {fileID: 4394959838402292199, guid: ddc6f0314ef348f46b95c03219304c7d,
     type: 3}
   skinToShow: {fileID: 4394959838402292199, guid: ddc6f0314ef348f46b95c03219304c7d,
@@ -19,5 +20,9 @@ MonoBehaviour:
   skinType: 0
   skinPosOffsetOnWear: {x: 0, y: -0.312, z: 0}
   skinRotOffsetOnWear: {x: 0, y: 0, z: 0, w: 0}
-  attributeBuffs: 0
-  buffMultiplyer: 0
+  attributeBuffs: 2
+  buffMultiplyer: 10
+  isUnlock: 0
+  isUnlockedOnce: 0
+  isUsedYet: 0
+  gold: 500

@@ -51,10 +51,8 @@ public class ZombieSpawner : Spawner<Zombie>
         Zombie.numberOfEnemyHasDie = 0;
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
 
-        // Add listener to detect game state changes
         GameManager.Instance.onStateChange.AddListener(SelfActive);
 
-        // Activate spawner if game state is already Begin
         SelfActive(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
 
@@ -84,24 +82,30 @@ public class ZombieSpawner : Spawner<Zombie>
         {
             if (CanSpawn())
                 SpawnEntity();
-            yield return new WaitForSeconds(0.2f);  // Adjust spawn rate as needed
+            yield return new WaitForSeconds(0.2f); 
         }
     }
 
     protected override void SpawnEntity()
     {
+        if (numberOfEnemiesLeft < whenToSpawnBoss && checkBossNotOut && bossZombie != null)
+        {
+            Zombie bossInstance = Instantiate(bossZombie, FindClosestSpawnPosition().position, Quaternion.identity);
+            numberOfMaxEnemies++;
+            numberOfEnemiesSpawned++;
+            numberOfEnemiesLeft++;  
+            checkBossNotOut = false; 
+            Debug.Log("Boss spawned! Increasing enemies left by 1.");
+            OnNumberOfEnemiesDecrease?.Invoke(numberOfEnemiesLeft);
+            return;  
+        }
+
         Zombie newEnemy = enemyPool.Get();
         InitializeEntity(newEnemy);
         numberOfEnemiesSpawned++;
         numberOfEnemiesLeft = numberOfMaxEnemies - Zombie.numberOfEnemyHasDie;
-        OnNumberOfEnemiesDecrease?.Invoke(numberOfEnemiesLeft);
 
-        if (numberOfEnemiesLeft < whenToSpawnBoss && checkBossNotOut && bossZombie != null)
-        {
-            Instantiate(bossZombie, FindClosestSpawnPosition().position, Quaternion.identity);
-            numberOfMaxEnemies++;
-            checkBossNotOut = false;
-        }
+        OnNumberOfEnemiesDecrease?.Invoke(numberOfEnemiesLeft);
     }
 
     protected override void InitializeEntity(Zombie enemy)
@@ -130,25 +134,22 @@ public class ZombieSpawner : Spawner<Zombie>
         {
             float distanceToPlayer = Vector3.Distance(player.position, spawnPoint.position);
 
-            // Add spawn points that are at least 20 units away from the player
             if (distanceToPlayer >= 20f)
                 validSpawnPoints.Add(spawnPoint);
         }
 
-        // Sort spawn points by distance and select the closest 5
         var closestSpawnPoints = validSpawnPoints
             .OrderBy(spawnPoint => Vector3.Distance(player.position, spawnPoint.position))
             .Take(5)
             .ToList();
 
-        // Randomly select one of the 5 closest spawn points
         if (closestSpawnPoints.Count > 0)
         {
             int randomIndex = Random.Range(0, closestSpawnPoints.Count);
             return closestSpawnPoints[randomIndex];
         }
 
-        return null;  // No valid spawn point found
+        return null;  
     }
 
     private Vector3 GetRandomOffset(float range)

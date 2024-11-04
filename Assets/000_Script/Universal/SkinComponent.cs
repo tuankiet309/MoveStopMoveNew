@@ -32,12 +32,12 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
 
     public UnityEvent<List<Skin>,List<Skin>> onWearNewSkin;
 
-
-
-    private void Start()
+    private void Awake()
     {
         SaveOriginalMaterials();
-        WearSkin(skinToChange);
+    }
+    private void Start()
+    {
         previousSkins = skinToChange;
         GameManager.Instance.onStateChange.AddListener(CheckOnceTimeSkin);
     }
@@ -161,25 +161,16 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
 
     private void SaveOriginalMaterials()
     {
-        foreach (Skin skin in skinToChange)
+        foreach (Skin skin in defaultSkin)
         {
             if (skin.SkinType == Enum.SkinType.Pant && originalPantMaterial == null)
             {
-                originalPantMaterial = pantToChange.sharedMaterial; 
+                originalPantMaterial = skin.SkinToWear.GetComponent<MeshRenderer>().sharedMaterial; 
             }
             if (skin.SkinType == Enum.SkinType.Body && originalSkinMaterial == null)
             {
-                originalSkinMaterial = playerSkinToChange.sharedMaterial;
+                originalSkinMaterial = skin.SkinToWear.GetComponent<MeshRenderer>().sharedMaterial;
             }
-        }
-
-        if (originalPantMaterial == null)
-        {
-            originalPantMaterial = pantToChange.sharedMaterial; 
-        }
-        if (originalSkinMaterial == null)
-        {
-            originalSkinMaterial = playerSkinToChange.sharedMaterial; 
         }
     }
     private void RevertOriginalMaterials()
@@ -291,6 +282,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
             }
         }
         isASet = gameData.playerData.isASet;
+        AssignNewSkin(skinToChange.ToArray(), isASet);
         previousSkins = skinToChange;
     }
 

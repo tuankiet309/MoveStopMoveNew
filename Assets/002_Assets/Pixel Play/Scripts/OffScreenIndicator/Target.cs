@@ -16,18 +16,23 @@ public class Target : MonoBehaviour
     [Tooltip("Select if distance text is required for this target")]
     [SerializeField] private bool needDistanceText = true;
 
-
+    [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     [HideInInspector] public Indicator indicator;
 
+    [SerializeField]private ActorAtributeController actorAtributeController;
+    private int score = 0;
 
     public Color TargetColor
     {
         get
         {
-            return targetColor;
+            return skinnedMeshRenderer.material.color;
         }
     }
-
+    public string ScoreText()
+    {
+        return actorAtributeController.Score.ToString();
+    }
 
     public bool NeedBoxIndicator
     {
@@ -61,14 +66,26 @@ public class Target : MonoBehaviour
         {
             OffScreenIndicator.TargetStateChanged.Invoke(this, true);
         }
+        if(actorAtributeController!=null)
+        {
+            actorAtributeController.onScoreChanged.AddListener(UpdateScore);
+        }
     }
 
+    private void UpdateScore()
+    {
+        score = actorAtributeController.Score;
+    }
 
     private void OnDisable()
     {
         if(OffScreenIndicator.TargetStateChanged != null)
         {
             OffScreenIndicator.TargetStateChanged.Invoke(this, false);
+        }
+        if (actorAtributeController != null)
+        {
+            actorAtributeController.onScoreChanged.RemoveListener(UpdateScore);
         }
     }
 

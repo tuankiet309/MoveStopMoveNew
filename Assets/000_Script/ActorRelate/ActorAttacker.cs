@@ -30,7 +30,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     public UnityEvent<GameObject> onHaveTarget;
     public UnityEvent<bool> onHaveUlti;
     public UnityEvent onKillSomeone;
-
+    public UnityEvent<GameObject> onActorStartAttack;
     protected virtual void OnEnable()
     {
         if (attackCircle != null)
@@ -90,6 +90,10 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             if (enemyAttackers.Count == 0)
                 onHaveTarget?.Invoke(null);
         }
+    }
+    public virtual void StartAttack()
+    {
+        onActorStartAttack?.Invoke(targetToAttack);
     }
     protected virtual void CleanUpDestroyedObjects()
     {

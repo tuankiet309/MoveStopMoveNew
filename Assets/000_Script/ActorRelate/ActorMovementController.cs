@@ -33,7 +33,7 @@ public class ActorMovementController : MonoBehaviour
         if (moveStick != null)
             moveStick.onThumbstickValueChanged.AddListener(moveStickInputHandler);
         if (attacker != null)
-            attacker.onHaveTarget.AddListener(RotateToTarget);
+            attacker.onActorStartAttack.AddListener(RotateToTarget);
         if(actorAtributeController != null)
         {
             actorAtributeController.onBuffChange.AddListener(UpdateBuffFromSkin);
@@ -54,7 +54,7 @@ public class ActorMovementController : MonoBehaviour
         if (moveStick != null)
             moveStick.onThumbstickValueChanged.RemoveListener(moveStickInputHandler);
         if (attacker != null)
-            attacker.onHaveTarget.RemoveListener(RotateToTarget);
+            attacker.onActorStartAttack.RemoveListener(RotateToTarget);
         if (actorAtributeController != null)
         {
             actorAtributeController.onBuffChange.RemoveListener(UpdateBuffFromSkin);
@@ -65,7 +65,7 @@ public class ActorMovementController : MonoBehaviour
     {
         rb.velocity = new Vector3(moveVelocity.x , rb.velocity.y, moveVelocity.z);
         if (rotateDir != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(rotateDir*Time.deltaTime);
+            transform.rotation = Quaternion.LookRotation(rotateDir);
     }
     
     protected virtual void moveStickInputHandler(Vector2 inputValue)

@@ -9,6 +9,8 @@ public class Indicator : MonoBehaviour
     [SerializeField] private IndicatorType indicatorType;
     private Image indicatorImage;
     private Text distanceText;
+    public GameObject arrowHolder;
+    public Image arrowImage;
 
     public bool Active
     {
@@ -25,7 +27,10 @@ public class Indicator : MonoBehaviour
             return indicatorType;
         }
     }
-
+    public GameObject GetArrow()
+    {
+        return arrowHolder;
+    }
     void Awake()
     {
         indicatorImage = transform.GetComponent<Image>();
@@ -35,13 +40,15 @@ public class Indicator : MonoBehaviour
 
     public void SetImageColor(Color color)
     {
-        indicatorImage.color = color;
+        indicatorImage.color = new Color(color.r,color.g,color.b,0.6f);
+        if(indicatorType == IndicatorType.ARROW)
+            arrowImage.color = indicatorImage.color;
     }
 
 
-    public void SetDistanceText(float value)
+    public void SetDistanceText(string value)
     {
-        distanceText.text = value >= 0 ? Mathf.Floor(value) + " m" : "";
+        distanceText.text = value;
     }
 
 
