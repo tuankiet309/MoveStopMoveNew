@@ -17,7 +17,6 @@ public class UpgradeText : MonoBehaviour
 
         if (Player.Instance != null && GameManager.Instance.CurrentInGameState !=Enum.InGameState.Zombie)
             Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(ShowUpgradeText);
-
         initialPosition = text.rectTransform.localPosition;
     }
 
@@ -38,7 +37,7 @@ public class UpgradeText : MonoBehaviour
         }
     }
 
-    private void ShowUpgradeText()
+    public void ShowUpgradeText()
     {
         text.text = "+2.5m"; 
         isShowing = true;

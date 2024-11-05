@@ -8,103 +8,89 @@ public class ActorMovementController : MonoBehaviour
 {
     [SerializeField] protected Stick moveStick;
     [SerializeField] protected Rigidbody rb;
-    [SerializeField] protected ActorAttacker attacker;
-    [SerializeField] protected ActorAtributeController actorAtributeController;
+
+    protected ActorAttacker attacker;
+    protected ActorAnimationController actorAnimationController;
+    protected ZCAttributeController zCAttributeController;
+
     protected float rotateSpeed;
     protected float moveSpeed;
     protected float speedBuffFromZCPower = 0;
     protected float speedBuffFromZCStat = 0;
     protected float speedBuffFromSkin = 0;
 
+
     protected Vector3 moveVelocity = Vector3.zero;
     protected Vector3 rotateDir = Vector3.zero;
 
-    public UnityEvent<Vector3> onActorMoving;
+    public void InitMovementController(ActorAttacker attacker,
+        ActorAnimationController actorAnimation, ZCAttributeController zCAttribute)
+    {
+        this.attacker = attacker;
+        actorAnimationController = actorAnimation;
+        zCAttributeController = zCAttribute;
+        if (moveStick != null)
+            moveStick.onThumbstickValueChanged.AddListener(moveStickInputHandler);
+        if (zCAttributeController != null)
+        {
+            zCAttributeController.onChoseZCPower.AddListener(UpdateBuffMovespeedFromZC);
+            zCAttributeController.onUpgradeStat.AddListener(OnUpgradeMoveSpeed);
+            UpdateBuffMovespeedFromZC();
+            OnUpgradeMoveSpeed(zCAttributeController.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.Speed));
+        }
 
-    protected ZCAttributeController ZCAttributeController;
-    protected virtual void Awake()
+    }    
+    public virtual void Awake()
     {
         rotateSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
         moveSpeed = CONSTANT_VALUE.FIRST_MOVESPEED;
     }
-
-    protected virtual void OnEnable()
-    {
-        if (moveStick != null)
-            moveStick.onThumbstickValueChanged.AddListener(moveStickInputHandler);
-        if (attacker != null)
-            attacker.onActorStartAttack.AddListener(RotateToTarget);
-        if(actorAtributeController != null)
-        {
-            actorAtributeController.onBuffChange.AddListener(UpdateBuffFromSkin);
-            ZCAttributeController = actorAtributeController as ZCAttributeController;
-            if(ZCAttributeController != null)
-            {
-                ZCAttributeController.onChoseZCPower.AddListener(UpdateBuffMovespeedFromZC);
-                ZCAttributeController.onUpgradeStat.AddListener(OnUpgradeMoveSpeed);
-                UpdateBuffMovespeedFromZC();
-                OnUpgradeMoveSpeed(ZCAttributeController.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.Speed));
-            }
-        }
- 
-    }
-
-    protected virtual void OnDisable()
+    public virtual void OnDisable()
     {
         if (moveStick != null)
             moveStick.onThumbstickValueChanged.RemoveListener(moveStickInputHandler);
         if (attacker != null)
             attacker.onActorStartAttack.RemoveListener(RotateToTarget);
-        if (actorAtributeController != null)
-        {
-            actorAtributeController.onBuffChange.RemoveListener(UpdateBuffFromSkin);
-        }
     }
 
-    protected virtual void Update()
+    public virtual void Move()
     {
         if(GameManager.Instance.CurrentGameState != Enum.GameState.Dead || GameManager.Instance.CurrentGameState != Enum.GameState.Revive || GameManager.Instance.CurrentGameState != Enum.GameState.Win)
         rb.velocity = new Vector3(moveVelocity.x , rb.velocity.y, moveVelocity.z);
         if (rotateDir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(rotateDir);
     }
-    
-    protected virtual void moveStickInputHandler(Vector2 inputValue)
+    public virtual void moveStickInputHandler(Vector2 inputValue)
     {
         float x = inputValue.x;
         float z = inputValue.y;
         
         moveVelocity = new Vector3(x, 0, z).normalized * (moveSpeed + speedBuffFromZCPower + speedBuffFromSkin + speedBuffFromZCStat) * Time.deltaTime;
         rotateDir = inputValue == Vector2.zero ? rotateDir : new Vector3(x, 0, z);
-        
-        onActorMoving?.Invoke(moveVelocity);
+        actorAnimationController.UpdateMoveAnimation(moveVelocity);
     }
-    protected virtual void UpdateBuffMovespeedFromZC()
+    public  virtual void UpdateBuffMovespeedFromZC()
     {
-        if(ZCAttributeController !=null)
+        if(zCAttributeController !=null)
         {
             speedBuffFromZCPower = 0;
-            if(ZCAttributeController.ZCPower1.PowerType == Enum.ZCPowerUp.MoveFaster)
+            if(zCAttributeController.ZCPower1.PowerType == Enum.ZCPowerUp.MoveFaster)
             {
                 speedBuffFromZCPower = 0.2f * moveSpeed;
             }
         }
-        
     }
-    protected virtual void UpdateBuffFromSkin()
+    public virtual void UpdateBuffFromSkin(float speed)
     {
-        if (actorAtributeController.BuffValues.ContainsKey(Enum.AttributeBuffs.Speed))
-        {
-            speedBuffFromSkin = actorAtributeController.BuffValues[Enum.AttributeBuffs.Speed];
-        }
+        speedBuffFromSkin = speed;
     }
-    protected virtual void OnUpgradeMoveSpeed(ZCStatPlayer zC)
+    public virtual void OnUpgradeMoveSpeed(ZCStatPlayer zC)
     {
         speedBuffFromZCStat = 0;
         speedBuffFromZCStat = zC.HowMuchUpgrade * moveSpeed / 100;
     }
     
-    protected virtual void RotateToTarget(GameObject target)
+    public virtual void RotateToTarget(GameObject target)
     {
         if (moveVelocity == Vector3.zero && target != null)
         {

@@ -6,33 +6,28 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
 {
     [SerializeField] private Transform attachedLocation;
     [SerializeField] private Weapon weapon;
-    [SerializeField] private ActorAttacker attacker;
-    
+
+    private ActorAttacker attacker;
+    private ActorAtributeController actorAtributeController;
+
+
     public UnityEvent<bool> onHavingWeapon;
-    public UnityEvent<Weapon,Weapon> onAssignNewWeapon;
+    bool isInZC = false;
 
-    bool isInZC;
-
-    private void Start()
+    public void InitWeapomComponent(ActorAttacker actorAttacker, ActorAtributeController actorAtribute)
     {
+        attacker = actorAttacker;
+        actorAtributeController = actorAtribute;
         AssignWeapon(weapon);
-        isInZC = GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie;
     }
 
     public void AssignWeapon(Weapon newWeapon)
     {  
-        onAssignNewWeapon?.Invoke(weapon,newWeapon);
+        attacker.InitWeapon(newWeapon);
+        actorAtributeController.ApplyBuffByWeapon(weapon, newWeapon);
         weapon = newWeapon;
-        InitWeapon();
-    }
-
-    private void InitWeapon()
-    {
-        if (weapon == null) return;
-        attacker.onActorAttack.AddListener(OnThrowAwayWeapon);
         onHavingWeapon?.Invoke(true);
     }
-
     public void ApplyWeaponSkin(GameObject weaponObject, int skinIndex)
     {
         MeshRenderer meshRenderer = weaponObject.GetComponent<MeshRenderer>();
@@ -41,7 +36,7 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
             meshRenderer.sharedMaterials = weapon.PossibleSkinForThisWeapon[skinIndex].Skin.GetComponent<MeshRenderer>().sharedMaterials;
         }
     }
-    private void OnThrowAwayWeapon(Vector2 hold)
+    public void OnThrowAwayWeapon()
     {
         attachedLocation.gameObject.SetActive(false);
         onHavingWeapon?.Invoke(false);
@@ -63,7 +58,6 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
         
         weapon = DataPersistenceManager.Instance.WeaponDatabase[gameData.playerData.playerCurrentWearingWeaponID];
         weapon.CurrentIndexOfTheSkin = gameData.playerData.currentIndexOfTheWeaponSkinPlayerWearing;
-        AssignWeapon(weapon);
     }
 
     public void SaveData(ref GameData gameData)

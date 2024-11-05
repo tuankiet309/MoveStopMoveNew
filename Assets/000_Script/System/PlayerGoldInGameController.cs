@@ -19,9 +19,8 @@ public class PlayerGoldInGameController : MonoBehaviour
     }
     private void Start()
     {
-        Player.Instance.GetComponent<ActorAtributeController>().onScoreChanged.AddListener(UpdateGold);
     }
-    private void UpdateGold()
+    public void UpdateGold()
     {
         gold += Random.Range(1, 6);
     }

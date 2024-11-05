@@ -5,9 +5,8 @@ using UnityEngine;
 public class ZCBossLifeComponent : LifeComponent
 {
     
-    protected override void Start()
+    public  void Start()
     {
-        base.Start();
         health = 15;    
     }
 

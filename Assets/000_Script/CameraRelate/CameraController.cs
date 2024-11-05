@@ -45,13 +45,7 @@ public class CameraController : MonoBehaviour
 
     }
 
-    private void OnDisable()
-    {
-        if (Player.Instance != null)
-        {
-            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.RemoveListener(AdjustCameraDistance);
-        }
-    }
+
 
     private void LateUpdate()
     {
@@ -67,11 +61,10 @@ public class CameraController : MonoBehaviour
         UpdateCameraPosToGameState(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
         if (Player.Instance != null)
         {
-            Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(AdjustCameraDistance);
             ZCAttributeController zC= Player.Instance.GetComponent<ActorAtributeController>() as ZCAttributeController;
             if(zC != null)
             {
-                zC.onPlayerUpgraded.RemoveListener(AdjustCameraDistance);
+                ///////////////////////////////////////////////////////////FIXXXX////////////////////////////////////////////////
                 zC.onUpgradeStat.AddListener(AdjustCameraDistanceZC);
                 ZCStatPlayer zCStatPlayer = zC.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.CircleRange);
                 for (int i=0;i<zCStatPlayer.HowMuchUpgrade;i=i+10)
@@ -179,12 +172,12 @@ public class CameraController : MonoBehaviour
         isFollowingPlayer = followPlayerAfterThis;
     }
 
-    private void AdjustCameraDistance()
+    public void AdjustCameraDistance()
     { 
         Vector3 newOffset = posForCam * cameraDistanceScaler;
         posForCam = newOffset;
     }
-    private void AdjustCameraDistanceZC(ZCStatPlayer statPlayer)
+    public void AdjustCameraDistanceZC(ZCStatPlayer statPlayer)
     {
         if (statPlayer.Type == Enum.ZCUpgradeType.CircleRange)
         {

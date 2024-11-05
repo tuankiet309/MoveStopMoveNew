@@ -9,6 +9,6 @@ public class ZomebieAttacker : ActorAttacker
         GetComponent<DamageComponent>().InitIAttacker(this);
     }
 
-    // Update is called once per frame
+    
   
 }

@@ -6,38 +6,24 @@ using UnityEngine.Events;
 public class LifeComponent : MonoBehaviour
 {
     [SerializeField] protected SkinnedMeshRenderer actorMeshRenderer;
+    protected ActorAnimationController actorAnimationController;
     protected int health = 1;
 
     public UnityEvent<string> onLifeEnds;
     protected bool isDead = false;
     protected string killerName = "";
-
     public bool IsDead { get => isDead; protected set { isDead = value; } }
     public string KillerName { get => killerName; protected set { killerName = value; } }
 
-    protected virtual void Start()
+    public virtual void InitLifeComponent(ActorAnimationController actorAnimationController)
     {
+        this.actorAnimationController = actorAnimationController;
         ResetLifeState();
-    }
-
-    protected virtual void OnEnable()
-    {
-        onLifeEnds.AddListener(UpdateDyingState);
-        ResetLifeState();
-        ToggleImportantComponents(true);
     }
 
     protected virtual void OnDisable()
     {
-        onLifeEnds.RemoveAllListeners();
         ResetLifeState();
-    }
-
-    protected virtual void UpdateDyingState(string killer)
-    {
-        IsDead = true;
-        KillerName = killer;
-        ToggleImportantComponents(false);
     }
 
     protected virtual void ToggleImportantComponents(bool isOn)
@@ -70,14 +56,22 @@ public class LifeComponent : MonoBehaviour
         health -= 1;
         if(health <=0)
         {
-            if(!gameObject.CompareTag("Zombie"))
-                PlayDyingSound();
-            ParticleSpawner.Instance.PlayParticle(transform.position + Vector3.up,actorMeshRenderer.sharedMaterial);
-            onLifeEnds?.Invoke(attackerName);
+            OnDeadEvent(attackerName);
             return true;
         }
         else
             return false;
+    }
+
+    public virtual void OnDeadEvent(string attackerName)
+    {
+        if (!gameObject.CompareTag("Zombie"))
+            PlayDyingSound();
+        ParticleSpawner.Instance.PlayParticle(transform.position + Vector3.up, actorMeshRenderer.sharedMaterial);
+        actorAnimationController.UpdatePlayerDead();
+        this.killerName = attackerName;
+        IsDead = true;
+        ToggleImportantComponents(false);
     }
 
     protected virtual void ResetLifeState()

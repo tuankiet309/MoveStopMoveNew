@@ -8,60 +8,34 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
     protected int scoreMilestone;
     protected int scoreMilestoneIncreaser;
     protected float bodyScalerIncreaser;
-
-    [SerializeField] protected DetectionCircle circle;
-    [SerializeField] protected ActorAttacker attacker;
     [SerializeField] protected Transform playerVisualize;
-    [SerializeField] protected RectTransform visualizeCircle;
 
-    [SerializeField] protected SkinComponent skinComponent;
-    [SerializeField] protected WeaponComponent weaponComponent;
+    protected ActorAttacker attacker;
+    protected ActorMovementController movementController;
+    protected ActorInformationController actorInformationController;
+
 
     private Dictionary<Enum.AttributeBuffs, float> buffValues = new Dictionary<Enum.AttributeBuffs, float>();
-
-
-    public UnityEvent onScoreChanged;
-
     public UnityEvent onPlayerUpgraded;
-
-    public UnityEvent onBuffChange;
-
     public int Score
     {
         get => score;
         protected set { }
     }
-
     public Dictionary<Enum.AttributeBuffs, float> BuffValues { get => buffValues; set => buffValues = value; }
-
     protected virtual void Awake()
     {
         scoreMilestone = CONSTANT_VALUE.FIRST_SCORE_MILESTONE;
         scoreMilestoneIncreaser = CONSTANT_VALUE.SCORE_MILESTONE_INCREASER;
         bodyScalerIncreaser = CONSTANT_VALUE.BODY_SCALER_INCREASER;
     }
-
-    protected virtual void OnEnable()
-    {
-        if (attacker != null)
-        {
-            attacker.onKillSomeone.AddListener(UpdateScore);
-            attacker.onHaveUlti.AddListener(RevertUpdate);
-        }
-
-        if (weaponComponent != null) 
-        {
-            weaponComponent.onAssignNewWeapon.AddListener(ApplyBuffByWeapon);
-        }
-        if(skinComponent != null)
-        {
-            skinComponent.onWearNewSkin.AddListener(ApplyBuffBySkin);
-        }
-       
+    public void InitAttribute(ActorAttacker attacker, ActorMovementController actorMovement, ActorInformationController actorInformation)
+    { 
+        this.attacker = attacker;
+        this.movementController = actorMovement;
+        this.actorInformationController = actorInformation;
     }
-
-
-    private void ApplyBuffByWeapon(Weapon oldWeapon, Weapon newWeapon)
+    public void ApplyBuffByWeapon(Weapon oldWeapon, Weapon newWeapon)
     {
         if (oldWeapon != null && oldWeapon.Buff == Enum.AttributeBuffs.Range)
         {
@@ -82,9 +56,13 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
                 buffValues[newWeapon.Buff] = newWeapon.BuffMultiplyer;
             }
         }
-        onBuffChange?.Invoke();
+        if (gameObject.CompareTag("Player"))
+        {
+            if (buffValues.ContainsKey(Enum.AttributeBuffs.Range))
+                attacker.UpgradeFromSkin(buffValues[Enum.AttributeBuffs.Range]);
+        }
     }
-    private void ApplyBuffBySkin(List<Skin> oldSkin, List<Skin> newSkin)
+    public void ApplyBuffBySkin(List<Skin> oldSkin, List<Skin> newSkin)
     {
         if (oldSkin != null)
         {
@@ -108,58 +86,52 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
                 buffValues[skin.AttributeBuffs] = skin.BuffMultiplyer;
             }
         }
-        onBuffChange?.Invoke();
-
-    }
-
-    protected virtual void Start()
-    {
-        if (circle != null )
+        if (gameObject.CompareTag("Player"))
         {
-            circle.UpdateCircleRadius(GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE ? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS);
+            if (buffValues.ContainsKey(Enum.AttributeBuffs.Speed))
+                movementController.UpdateBuffFromSkin(buffValues[Enum.AttributeBuffs.Speed]);
         }
-        if (visualizeCircle != null)
-            visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
     }
 
-    protected virtual void OnDisable()
+    public virtual void UpdateScore()
     {
-        if (attacker != null)
-            attacker.onKillSomeone.RemoveListener(UpdateScore);
-    }
-
-    protected virtual void UpdateScore()
-    {
-        score++;
-        if(gameObject.CompareTag("Player"))
-            DataPersistenceManager.Instance.GameData.currentExp++;
-        onScoreChanged?.Invoke();
+        score++;        
+        CallEVentIfScoreChange();
         CheckForUpgrade();
     }
-
+    public void CallEVentIfScoreChange()
+    {
+        actorInformationController.UpdateScoreDisplay(score);
+        if (gameObject.CompareTag("Player"))
+        {
+            DataPersistenceManager.Instance.GameData.currentExp++;
+            PlayerGoldInGameController.Instance.UpdateGold();
+        }
+        if (gameObject.CompareTag("Enemy"))
+        {
+            GetComponent<Target>().UpdateScore(score);
+        }
+    }
     protected virtual void CheckForUpgrade()
     {
         if (score >= scoreMilestone)
         {
             UpgradePlayer();
+            attacker.UpgradePlayer();
+            if(gameObject.CompareTag("Player"))
+                CameraController.Instance.AdjustCameraDistance();
             scoreMilestone += scoreMilestoneIncreaser;
             scoreMilestoneIncreaser += 1;
         }
     }
-
     protected virtual void UpgradePlayer()
     {
         playerVisualize.localScale += new Vector3(bodyScalerIncreaser, bodyScalerIncreaser, bodyScalerIncreaser);
-        circle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER);
-        if (visualizeCircle != null)
-            visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
         if(gameObject.CompareTag("Player"))
         {
             SoundManager.Instance.Vibrate();
         }
-        onPlayerUpgraded?.Invoke();
     }
-
     protected float updateTempo = 0;
     protected bool isHaveUlti = false;
 
@@ -168,8 +140,7 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         if (!isHaveUlti)
         {
             isHaveUlti = true;
-            TempoUpdate();
-            attacker.onHaveUlti?.Invoke(true);
+            attacker.SetUlti();
         }
         else
         {
@@ -177,32 +148,10 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         }
     }
 
-    protected virtual void TempoUpdate()
-    {
-        updateTempo = circle.CircleRadius * 0.5f;
-        circle.UpdateCircleRadius(updateTempo);
-        if (visualizeCircle != null)
-            visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
-    }
-
-    protected virtual void RevertUpdate(bool isStillHaveUlti)
-    {
-        if (!isStillHaveUlti)
-        {
-            circle.UpdateCircleRadius(-updateTempo);
-            if (visualizeCircle != null)
-                visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
-
-            updateTempo = 0;
-            isHaveUlti = false;
-        }
-    }
-
     public virtual void LoadData(GameData gameData)
     {
         
     }
-
     public virtual void SaveData(ref GameData gameData)
     {
         if(score > gameData.maxScore)

@@ -16,10 +16,10 @@ public class BuffGift : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ActorAtributeController actorAtributeController = other.GetComponent<ActorAtributeController>();
-        if (actorAtributeController != null)
+        ActorAttacker attacker = other.GetComponent<ActorAttacker>();
+        if (attacker != null)
         {
-            actorAtributeController.SetHaveUlti();
+            attacker.SetUlti();
             onBuffPickup?.Invoke();
 
         }

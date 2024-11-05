@@ -39,6 +39,11 @@ PrefabInstance:
       propertyPath: visualizeCircle
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 407018355103055742, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: movementController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 854349671573241227, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: m_Type
@@ -190,6 +195,11 @@ PrefabInstance:
       propertyPath: targetCircleInstance
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5258841791265605368, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: enemyMovementController
+      value: 
+      objectReference: {fileID: 4381523135996693944}
     - target: {fileID: 5592092807268804147, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: m_Pivot.y
@@ -382,6 +392,7 @@ PrefabInstance:
     - {fileID: 6301734774500193136, guid: 967e129759ed1cb40b79bcd036fd1fba, type: 3}
     m_RemovedGameObjects:
     - {fileID: 9023734466049787816, guid: 967e129759ed1cb40b79bcd036fd1fba, type: 3}
+    - {fileID: 5077210838239408173, guid: 967e129759ed1cb40b79bcd036fd1fba, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6032790747752298346, guid: 967e129759ed1cb40b79bcd036fd1fba,
@@ -494,8 +505,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7cd0ef15fea5a4f9f168de0b27465d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1869036431221071663}
+  moveStick: {fileID: 0}
+  rb: {fileID: 0}
   attacker: {fileID: 8110726376909259059}
+  actorAtributeController: {fileID: 4454687974691961013}
+  onActorMoving:
+    m_PersistentCalls:
+      m_Calls: []
+  agent: {fileID: 1869036431221071663}
+  attackerNew: {fileID: 8110726376909259059}
   weapon: {fileID: 2938341805698526503}
   onEnemyMoving:
     m_PersistentCalls:

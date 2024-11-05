@@ -129,6 +129,11 @@ PrefabInstance:
       propertyPath: attacker
       value: 
       objectReference: {fileID: 3132011460564326346}
+    - target: {fileID: 1203349884147329772, guid: 967e129759ed1cb40b79bcd036fd1fba,
+        type: 3}
+      propertyPath: actorAtributeController
+      value: 
+      objectReference: {fileID: 3494973600046819450}
     - target: {fileID: 2376270487827787543, guid: 967e129759ed1cb40b79bcd036fd1fba,
         type: 3}
       propertyPath: m_IsActive
@@ -254,16 +259,16 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4707840217428235374}
   m_SourcePrefab: {fileID: 100100000, guid: 967e129759ed1cb40b79bcd036fd1fba, type: 3}
---- !u!114 &495450597736628169 stripped
+--- !u!114 &123932995514340981 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2363902669474894209, guid: 967e129759ed1cb40b79bcd036fd1fba,
+  m_CorrespondingSourceObject: {fileID: 2852530234826930237, guid: 967e129759ed1cb40b79bcd036fd1fba,
     type: 3}
   m_PrefabInstance: {fileID: 2751265363738930760}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8473156000301930786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc12b6f9ca7abfe4f8bea20799cf48b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 45846da7bd6097349a12e603c108f8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &804478290878665598 stripped
@@ -320,6 +325,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2751265363738930760}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &6867962781534386630 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8746433057760434062, guid: 967e129759ed1cb40b79bcd036fd1fba,
+    type: 3}
+  m_PrefabInstance: {fileID: 2751265363738930760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6903780949846508428 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8782403517031345604, guid: 967e129759ed1cb40b79bcd036fd1fba,
+    type: 3}
+  m_PrefabInstance: {fileID: 2751265363738930760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473156000301930786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a507266a9f5d140835166d42004c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8473156000301930786 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6032790747752298346, guid: 967e129759ed1cb40b79bcd036fd1fba,
@@ -344,16 +367,9 @@ MonoBehaviour:
   weaponComponent: {fileID: 3935404030966449316}
   actorAtributeController: {fileID: 3494973600046819450}
   WeaponHolder: {fileID: 804478290878665598}
-  onActorAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  onHaveTarget:
-    m_PersistentCalls:
-      m_Calls: []
-  onHaveUlti:
-    m_PersistentCalls:
-      m_Calls: []
-  onKillSomeone:
+  enemyMovementController: {fileID: 0}
+  actorAnimationController: {fileID: 6903780949846508428}
+  onActorStartAttack:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &3494973600046819450
@@ -370,13 +386,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circle: {fileID: 5355367476804791104}
   attacker: {fileID: 3132011460564326346}
+  movementController: {fileID: 0}
   playerVisualize: {fileID: 2122239081334850614}
   visualizeCircle: {fileID: 9038883708192082193}
-  skinComponent: {fileID: 495450597736628169}
-  weaponComponent: {fileID: 3935404030966449316}
-  onScoreChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  actorInformationController: {fileID: 123932995514340981}
   onPlayerUpgraded:
     m_PersistentCalls:
       m_Calls: []
@@ -415,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dfb0519de59ab14a8320ba958ffd868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actorMeshRenderer: {fileID: 6867962781534386630}
   onLifeEnds:
     m_PersistentCalls:
       m_Calls: []

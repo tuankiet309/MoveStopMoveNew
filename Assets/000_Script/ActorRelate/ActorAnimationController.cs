@@ -5,79 +5,52 @@ using UnityEngine;
 public class ActorAnimationController : MonoBehaviour
 {
     [SerializeField] protected Animator anim;
-    [SerializeField] protected ActorMovementController actorMovementController;
-    [SerializeField] protected EnemyMovementController enemyMovementController;
-    [SerializeField] protected ActorAttacker attacker;
-    [SerializeField] protected LifeComponent lifeComponent;
-    [SerializeField] protected WeaponComponent weaponComponent;
+    protected EnemyMovementController enemyMovementController;
+    protected ActorAttacker attacker;
+    protected WeaponComponent weaponComponent;
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         GameManager.Instance.onStateChange.AddListener(UpdateIsWon);
         GameManager.Instance.onStateChange.AddListener(UpdateIsDance);
     }
-
-    
-
-    protected virtual void OnEnable()
+    public virtual void OnEnable()
     {
         EnableEventListeners();
         EnableEventListeners();
     }
-    protected virtual void OnDisable()
+    public virtual void OnDisable()
     {
         DisableEventListeners();
     }
-    protected virtual void EnableEventListeners()
+    public virtual void EnableEventListeners()
     {
         if (weaponComponent != null)
             weaponComponent.onHavingWeapon.AddListener(UpdateHavingWeapon);
 
-        if (actorMovementController != null)
-            actorMovementController.onActorMoving.AddListener(UpdateMoveAnimation);
 
-        if (lifeComponent != null)
-            lifeComponent.onLifeEnds.AddListener(UpdatePlayerDead);
 
-        if (attacker != null)
-        {
-            attacker.onHaveTarget.AddListener(UpdateHaveTarget);
-            attacker.onHaveUlti.AddListener(UpdateHaveUlti);
-        }
         if (enemyMovementController != null)
             enemyMovementController.onEnemyMoving.AddListener(UpdateMoveAnimation);
     }
-    protected virtual void DisableEventListeners()
+    public virtual void DisableEventListeners()
     {
         if (weaponComponent != null)
             weaponComponent.onHavingWeapon.RemoveListener(UpdateHavingWeapon);
-
-        if (actorMovementController != null)
-            actorMovementController.onActorMoving.RemoveListener(UpdateMoveAnimation);
-
-        if (lifeComponent != null)
-            lifeComponent.onLifeEnds.RemoveListener(UpdatePlayerDead);
-
-        if (attacker != null)
-        {
-            attacker.onHaveTarget.RemoveListener(UpdateHaveTarget);
-            attacker.onHaveUlti.RemoveListener(UpdateHaveUlti);
-        }
         if (enemyMovementController != null)
             enemyMovementController.onEnemyMoving.RemoveListener(UpdateMoveAnimation);
         if(GameManager.Instance != null)
             GameManager.Instance.onStateChange.RemoveListener(UpdateIsWon);
     }
-    protected virtual void UpdateMoveAnimation(Vector3 moveVec)
+    public virtual void UpdateMoveAnimation(Vector3 moveVec)
     {
         anim.SetBool("isMoving", moveVec != Vector3.zero);
     }
-    protected virtual void UpdatePlayerDead(string temp)
+    public virtual void UpdatePlayerDead()
     {
         anim.SetTrigger("isDead");
-        lifeComponent.onLifeEnds.RemoveListener(UpdatePlayerDead);
     }
-    protected virtual void UpdateHaveTarget(GameObject target)
+    public virtual void UpdateHaveTarget(GameObject target)
     {
         if (target != null)
         {
@@ -88,22 +61,22 @@ public class ActorAnimationController : MonoBehaviour
             anim.SetBool("haveEnemy", false);
         }
     }
-    protected virtual void UpdateHaveUlti(bool haveUlti)
+    public virtual void UpdateHaveUlti(bool haveUlti)
     {
         anim.SetBool("haveUlti", haveUlti);
     }
-    protected virtual void UpdateHavingWeapon(bool haveWeapon)
+    public virtual void UpdateHavingWeapon(bool haveWeapon)
     {
         anim.SetBool("haveWeapon", haveWeapon);
     }
-    protected virtual void UpdateIsWon(Enum.GameState gameState, Enum.InGameState inGameState)
+    public virtual void UpdateIsWon(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         if (gameState == Enum.GameState.Win)
         {
             anim.SetTrigger("isWon");
         }
     }
-    protected virtual void UpdateIsDance(Enum.GameState state, Enum.InGameState inGameState)
+    public virtual void UpdateIsDance(Enum.GameState state, Enum.InGameState inGameState)
     {
         anim.SetBool("isDance", state == Enum.GameState.SkinShop);
     }

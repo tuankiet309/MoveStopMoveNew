@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class DetectionCircle : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class DetectionCircle : MonoBehaviour
 
     [SerializeField] private Transform centerOfCircle;
     [SerializeField] private SphereCollider colliderToChanged;
+    [SerializeField] protected RectTransform visualizeCircle;
 
     public float CircleRadius { get => circleRadius; }
 
@@ -54,6 +56,8 @@ public class DetectionCircle : MonoBehaviour
     {
         circleRadius += howMuc;
         colliderToChanged.radius = circleRadius;
+        if (visualizeCircle != null)
+            visualizeCircle.sizeDelta = new Vector2(circleRadius * 2, circleRadius * 2);
     }
 
   

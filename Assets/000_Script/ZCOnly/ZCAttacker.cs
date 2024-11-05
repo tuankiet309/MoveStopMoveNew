@@ -10,13 +10,12 @@ public class ZCAttacker : ActorAttacker
 
     private bool isGrowing = false;
 
-    protected override void Start()
+    public  void Start()
     {
-        base.Start();
+        
         zCAttributeController = actorAtributeController as ZCAttributeController;
-        zCAttributeController.onPlayerUpgraded.AddListener(OnPlayerUpgrade);
     }
-    protected override GameObject GetFirstValidTarget()
+    public override GameObject GetFirstValidTarget()
     {
         GameObject closestTarget = null;
         float closestDistance = float.MaxValue;
@@ -36,11 +35,11 @@ public class ZCAttacker : ActorAttacker
 
         return closestTarget; 
     }
-    protected override void CleanUpDestroyedObjects()
+    public override void CleanUpDestroyedObjects()
     {
         enemyAttackers.RemoveWhere(item => item == null || !item.activeInHierarchy );
     }
-    protected override void UpdateEnemyList(GameObject target, bool isInCircle)
+    public override void UpdateEnemyList(GameObject target, bool isInCircle)
     {
         if (isInCircle)
         {
@@ -48,17 +47,18 @@ public class ZCAttacker : ActorAttacker
             {
                 enemyAttackers.Add(target);
             }
-            onHaveTarget?.Invoke(target);
+                CallEventRelateToHaveTarget(target);
         }
         else
         {
             enemyAttackers.Remove(target);
             if (enemyAttackers.Count == 0)
-                onHaveTarget?.Invoke(null);
+               {
+                CallEventRelateToHaveTarget(null);
+            }
         }
     }
-
-    protected override void Attack(Vector3 enemyLoc,Vector3 throwLocationTempo, bool isMainAttack)
+    public override void Attack(Vector3 enemyLoc,Vector3 throwLocationTempo, bool isMainAttack)
     {
         if (isMainAttack)
         {
@@ -112,7 +112,7 @@ public class ZCAttacker : ActorAttacker
         }
     }
     //////////////////////////Attack theo gameobjet////////////////////
-    protected void Attack(GameObject target)
+    public void Attack(GameObject target)
     {
 
 
@@ -170,29 +170,28 @@ public class ZCAttacker : ActorAttacker
                         isMoreWeapon = false;
                     }
                     Attack(targetToAttackPos, throwLocation.position, true);
-                    onActorAttack?.Invoke(targetToAttackPos);
+                    CallEventRelateToAttack();
 
                     break;
                 case Enum.ZCPowerUp.Continous:
                     Attack(targetToAttackPos, throwLocation.position, true);
                     Vector3 temp = targetToAttackPos;
                     Vector3 temp2 = throwLocation.position;
-                    onActorAttack?.Invoke(targetToAttackPos);
+                    CallEventRelateToAttack();
                     StartCoroutine(ContinousAttack(temp,temp2));
                     break;
                 default:
                     Attack(targetToAttackPos, throwLocation.position,true);
-                    onActorAttack?.Invoke(targetToAttackPos);
+                    CallEventRelateToAttack();
                     break;
             }
         }
         else
         {
-            onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+            CallEventRelateToAttack();
             Attack(targetToAttackPos, throwLocation.position, true);
         }
     }
-
     private void SetPiercingThroughEnemy()
     {
         weaponToThrow.GetComponent<DamageComponent>().IsDestroyedAfterCollide = false;
@@ -213,12 +212,11 @@ public class ZCAttacker : ActorAttacker
         Attack(targetToAttackPos, throwLocation.position, true);
         Attack(oppositeAttackPos, throwLocation.position, false);
 
-        onActorAttack?.Invoke(targetToAttackPos);
+        CallEventRelateToAttack();
     }
-
     private void ChaseAttack()
     {
-        onActorAttack?.Invoke(new Vector2(targetToAttack.transform.position.x, targetToAttack.transform.position.z));
+        CallEventRelateToAttack();
         Attack(targetToAttack);
     }
     private void CrossAttack()
@@ -239,7 +237,7 @@ public class ZCAttacker : ActorAttacker
 
         Attack(leftAttackPos, transform.position, false);
         Attack(rightAttackPos, transform.position, false);
-        onActorAttack?.Invoke(targetToAttackPos);
+        CallEventRelateToAttack();
         targetToAttackPos = Vector3.zero;
     }
     private void TrippleAttack()
@@ -264,20 +262,17 @@ public class ZCAttacker : ActorAttacker
 
         Attack(leftAttackPos, throwLocation.position, false);
         Attack(rightAttackPos, throwLocation.position, false);
-        onActorAttack?.Invoke(targetToAttackPos);
+        CallEventRelateToAttack();
 
         targetToAttackPos = Vector3.zero;
     }
-
     IEnumerator ContinousAttack(Vector3 temp,Vector3 throwLoc)
     {
         yield return new WaitForSeconds(0.2f);
         Attack(temp, throwLoc, true);
     }
-    protected virtual void OnPlayerUpgrade()
+    public virtual void OnPlayerUpgrade()
     {
         moreWeapon++;
     }
-
-
 }

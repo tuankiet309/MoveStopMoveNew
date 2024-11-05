@@ -9,8 +9,6 @@ using static Enum;
 
 public class SkinComponent : MonoBehaviour,IDataPersistence
 {
-
-
     [Header("Essential")]
     [SerializeField] Transform hatHolder;
     [SerializeField] Transform LHandHolder;
@@ -19,11 +17,12 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
     [SerializeField] SkinnedMeshRenderer pantToChange;
     [SerializeField] SkinnedMeshRenderer playerSkinToChange;
     [Space]
+    [Header("Essential")]
     [SerializeField] TextMeshProUGUI nameToChange;
     [SerializeField] Image imageToChange;
-
     [SerializeField] Skin[] defaultSkin;
 
+    private ActorAtributeController atributeController;
     private bool isASet = false;
     private List<Skin> skinToChange = new List<Skin>();
     private List<Skin> previousSkins = new List<Skin>();
@@ -45,10 +44,15 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
     {
         GameManager.Instance.onStateChange.RemoveListener(CheckOnceTimeSkin);
     }
+    public void InitSkinComponent(ActorAtributeController actorAtribute)
+    {
+        atributeController = actorAtribute;
+        AssignNewSkin(skinToChange.ToArray(),isASet);
+    }
 
     public void AssignNewSkin(Skin[] newSkin, bool isASet)
     {
-        onWearNewSkin?.Invoke(previousSkins,skinToChange);
+        atributeController.ApplyBuffBySkin(previousSkins, skinToChange);
         skinToChange = newSkin.ToList();
         if (this.isASet || isASet)
         {
@@ -82,11 +86,9 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
                     skin.IsEquiped = false;
                     skin.IsUnlockedOnce = false;
                     skin.IsUnlock = false;
-
                     skinsToRemove.Add(skin);
                 }
             }
-
             foreach (Skin skin in skinsToRemove)
             {
                 skinToChange.Remove(skin);
@@ -158,7 +160,6 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
             }
         }
     }
-
     private void SaveOriginalMaterials()
     {
         foreach (Skin skin in defaultSkin)
@@ -189,7 +190,6 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
         Skin equippedSkin = previousSkins.FirstOrDefault(s => s.SkinType == skinType);
         return equippedSkin != null && equippedSkin == skin;
     }
-
     public bool IsSetCurrentlyEquipped(Skin[] skinSet)
     {
         foreach (Skin skin in skinSet)
@@ -202,7 +202,6 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
         }
         return true;
     }
-
     public void ClearSkin(Enum.SkinType typeToDelete)
     {
         if (typeToDelete == Enum.SkinType.Hair || typeToDelete == Enum.SkinType.Set)
@@ -282,7 +281,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
             }
         }
         isASet = gameData.playerData.isASet;
-        AssignNewSkin(skinToChange.ToArray(), isASet);
+        //AssignNewSkin(skinToChange.ToArray(), isASet);
         previousSkins = skinToChange;
     }
 

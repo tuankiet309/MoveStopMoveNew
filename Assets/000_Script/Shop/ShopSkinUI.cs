@@ -129,7 +129,6 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
             button1.onClick.AddListener(SoundManager.Instance.PlayClickSound);
             buttonList.Add(new ButtonAndType(button1,shopItemSkin.SkinType));
             index++;
-
             if(skinComp.IsSkinCurrentlyEquipped(item.SkinType,item))
             {
                 button1.transform.GetChild(2).gameObject.SetActive(true);

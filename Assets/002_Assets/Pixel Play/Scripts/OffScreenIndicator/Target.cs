@@ -66,15 +66,12 @@ public class Target : MonoBehaviour
         {
             OffScreenIndicator.TargetStateChanged.Invoke(this, true);
         }
-        if(actorAtributeController!=null)
-        {
-            actorAtributeController.onScoreChanged.AddListener(UpdateScore);
-        }
+
     }
 
-    private void UpdateScore()
+    public void UpdateScore(int scoreACT)
     {
-        score = actorAtributeController.Score;
+        score = scoreACT;
     }
 
     private void OnDisable()
@@ -83,10 +80,7 @@ public class Target : MonoBehaviour
         {
             OffScreenIndicator.TargetStateChanged.Invoke(this, false);
         }
-        if (actorAtributeController != null)
-        {
-            actorAtributeController.onScoreChanged.RemoveListener(UpdateScore);
-        }
+
     }
 
 

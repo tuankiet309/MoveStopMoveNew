@@ -12,21 +12,21 @@ public class ZCLifeComponent : LifeComponent
     private int numberOfUndyingTime = 0;
     private bool isInvincibleNow;
 
-    protected override void Start()
-    {
-        base.Start();
-        if (attributeController != null)
-        {
-            attributeController.onUpgradeStat.AddListener(OnUpgradeProtect);
-            statProtect = attributeController.Stats.Find(x => x.Type == Enum.ZCUpgradeType.Protect); 
-        }
-        if (statProtect != null)
-        {
-            numberOfUndyingTime = statProtect.HowMuchUpgrade;
-        }
-        if(protectedCircle != null) 
-            protectedCircle.SetActive(false);
-    }
+    //public override void InitInitLifeComponent()
+    //{
+    //    base.Start();
+    //    if (attributeController != null)
+    //    {
+    //        attributeController.onUpgradeStat.AddListener(OnUpgradeProtect);
+    //        statProtect = attributeController.Stats.Find(x => x.Type == Enum.ZCUpgradeType.Protect); 
+    //    }
+    //    if (statProtect != null)
+    //    {
+    //        numberOfUndyingTime = statProtect.HowMuchUpgrade;
+    //    }
+    //    if(protectedCircle != null) 
+    //        protectedCircle.SetActive(false);
+    //}
 
     public override bool DamageHealth(string attackerName)
     {

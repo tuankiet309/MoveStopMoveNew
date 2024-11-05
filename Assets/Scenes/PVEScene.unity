@@ -691,12 +691,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1472131190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &651163871 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8212778581410472563, guid: 967e129759ed1cb40b79bcd036fd1fba,
-    type: 3}
-  m_PrefabInstance: {fileID: 968599783}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &661436673 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3629714482102578777, guid: 658cdca2a3e12b346a2cd2eb9139c16c,
@@ -1013,18 +1007,9 @@ PrefabInstance:
       propertyPath: moveStick
       value: 
       objectReference: {fileID: 1987986860540765909}
-    - target: {fileID: 9141126953071209702, guid: 967e129759ed1cb40b79bcd036fd1fba,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8212778581410472563, guid: 967e129759ed1cb40b79bcd036fd1fba,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1148358048}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 967e129759ed1cb40b79bcd036fd1fba, type: 3}
 --- !u!1 &1110890902
@@ -1091,46 +1076,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1472131190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1148358047
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1148358048}
-  - component: {fileID: 1148358049}
-  m_Layer: 7
-  m_Name: Ear
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1148358048
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1148358047}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 651163871}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1148358049
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1148358047}
-  m_Enabled: 1
 --- !u!1 &1191067838
 GameObject:
   m_ObjectHideFlags: 0

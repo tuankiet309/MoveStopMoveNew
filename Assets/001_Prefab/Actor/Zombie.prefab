@@ -218,16 +218,12 @@ MonoBehaviour:
   weaponComponent: {fileID: 0}
   actorAtributeController: {fileID: 0}
   WeaponHolder: {fileID: 0}
-  onActorAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  onHaveTarget:
-    m_PersistentCalls:
-      m_Calls: []
-  onHaveUlti:
-    m_PersistentCalls:
-      m_Calls: []
+  enemyMovementController: {fileID: 0}
+  actorAnimationController: {fileID: 2471719595243253135}
   onKillSomeone:
+    m_PersistentCalls:
+      m_Calls: []
+  onActorStartAttack:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5628098154473442082
@@ -242,7 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45846da7bd6097349a12e603c108f8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attributesController: {fileID: 0}
   nameText: {fileID: 0}
   scoreText: {fileID: 0}
   actorName: 

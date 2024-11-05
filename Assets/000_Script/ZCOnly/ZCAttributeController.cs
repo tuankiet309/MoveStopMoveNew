@@ -15,22 +15,17 @@ public class ZCAttributeController : ActorAtributeController
 
     public UnityEvent onChoseZCPower;
     public UnityEvent<ZCStatPlayer> onUpgradeStat;
-
+    ZCAttacker attackerZC;
     int checkForUpgrade = 1;
-    protected override void Start()
-    {
-        base.Start();
-        scoreMilestone = 10;
-        LoadCircleUpgrade();
-        onUpgradeStat?.AddListener(UpgradeCircle);
+    //protected override void Start()
+    //{
+    //    //base.Start();
+    //    //attackerZC = attacker as ZCAttacker;
+    //    //scoreMilestone = 10;
+    //    //LoadCircleUpgrade();
+    //    //onUpgradeStat?.AddListener(UpgradeCircle);
 
-    }
-    protected override void UpdateScore()
-    {
-        score++;
-        onScoreChanged?.Invoke();
-        CheckForUpgrade();
-    }
+    //}
 
     protected override void CheckForUpgrade()
     {
@@ -50,19 +45,19 @@ public class ZCAttributeController : ActorAtributeController
     }
     protected override void UpgradePlayer()
     {
-        onPlayerUpgraded?.Invoke();
+
         if (gameObject.CompareTag("Player"))
         {
             SoundManager.Instance.Vibrate();
+            attackerZC.OnPlayerUpgrade();
         }
     }
-    protected virtual void BiggerOnStart()
-    {
-        playerVisualize.localScale += new Vector3(bodyScalerIncreaser, bodyScalerIncreaser, bodyScalerIncreaser);
-        circle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER);
-        if (visualizeCircle != null)
-            visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius * 2, circle.CircleRadius * 2);
-    }
+    //protected virtual void BiggerOnStart()
+    //{
+    //    playerVisualize.localScale += new Vector3(bodyScalerIncreaser, bodyScalerIncreaser, bodyScalerIncreaser);
+    //    circle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER);
+
+    //}
 
     public void UpgradeStat(ZCStatPlayer newStat)
     {
@@ -70,29 +65,28 @@ public class ZCAttributeController : ActorAtributeController
         stats.Add(newStat);
         onUpgradeStat?.Invoke(newStat);
     }
-    private void LoadCircleUpgrade()
-    {
-        ZCStatPlayer zCStatPlayer = stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.CircleRange);
-        for(int i=0;i<zCStatPlayer.HowMuchUpgrade;i=i+10)
-        {
-            UpgradeCircle(zCStatPlayer);
-        }
-    }
-    private void UpgradeCircle(ZCStatPlayer statPlayer)
-    {
-        if (statPlayer.Type == Enum.ZCUpgradeType.CircleRange)
-        {
-            circle.UpdateCircleRadius(CONSTANT_VALUE.FIRST_CIRCLE_RADIUS * 0.1f);
-            visualizeCircle.sizeDelta = new Vector2(circle.CircleRadius*2, circle.CircleRadius*2);
-        }
-    }
+    //private void LoadCircleUpgrade()
+    //{
+    //    ZCStatPlayer zCStatPlayer = stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.CircleRange);
+    //    for(int i=0;i<zCStatPlayer.HowMuchUpgrade;i=i+10)
+    //    {
+    //        UpgradeCircle(zCStatPlayer);
+    //    }
+    //}
+    //private void UpgradeCircle(ZCStatPlayer statPlayer)
+    //{
+    //    if (statPlayer.Type == Enum.ZCUpgradeType.CircleRange)
+    //    {
+    //        circle.UpdateCircleRadius(CONSTANT_VALUE.FIRST_CIRCLE_RADIUS * 0.1f);
+    //    }
+    //}
     public void SetZCPower(ZCPower zCPower)
     {
         this.ZCPower = zCPower;
         onChoseZCPower?.Invoke();
         if(ZCPower.PowerType == Enum.ZCPowerUp.Bigger)
         {
-            this.BiggerOnStart();
+            //this.BiggerOnStart();
         }
     }
     public override void LoadData(GameData gameData)

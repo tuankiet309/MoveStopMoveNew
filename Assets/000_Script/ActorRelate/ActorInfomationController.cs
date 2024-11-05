@@ -5,37 +5,17 @@ using UnityEngine;
 
 public class ActorInformationController : MonoBehaviour,IDataPersistence
 {
-    // Components to manage the UI
-    [SerializeField] private ActorAtributeController attributesController; 
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private string actorName;
 
     public string Name { get => actorName; set => actorName = value; }
 
-    private void OnEnable()
+    public void UpdateScoreDisplay(int score)
     {
-        if (attributesController != null)
-            attributesController.onScoreChanged.AddListener(UpdateScoreDisplay); 
-    }
-
-    private void OnDisable()
-    {
-        if (attributesController != null)
-            attributesController.onScoreChanged.RemoveListener(UpdateScoreDisplay); 
-    }
-
-    private void Start()
-    {
-        UpdateScoreDisplay(); 
-    }
-
-    private void UpdateScoreDisplay()
-    {
-        if (attributesController != null)
-        {
-            scoreText.text = attributesController.Score.ToString(); 
-        }
+        if (gameObject.CompareTag("Zombie"))
+            return; 
+        scoreText.text = score.ToString(); 
     }
 
     public void UpdateName(string name)
@@ -44,11 +24,11 @@ public class ActorInformationController : MonoBehaviour,IDataPersistence
         nameText.text = this.actorName; 
     }
 
-    internal string GetName()
+    public string GetName()
     {
-        return "Hahah";
+        return actorName;
     }
-    internal int GetScore()
+    public int GetScore()
     {
         return int.Parse(scoreText.text);
     }

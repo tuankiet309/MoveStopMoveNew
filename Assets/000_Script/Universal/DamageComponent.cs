@@ -23,7 +23,7 @@ public class DamageComponent : MonoBehaviour
             bool check = lifeComponent.DamageHealth(initiator.GetComponent<ActorInformationController>().GetName());
             PlayHitSound();
             if(check)
-                initiator.EventIfKillSomeone();
+                initiator.CallEventIfKillSomeOne();
             if (gameObject.CompareTag("Zombie"))
                 return;
             SelfDestroyAfterCollide(isDestroyedAfterCollide);

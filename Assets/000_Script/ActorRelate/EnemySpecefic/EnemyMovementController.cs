@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EnemyMovementController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private ActorAttacker attacker;
+    [SerializeField] private ActorAttacker attackerNew;
     [SerializeField] private WeaponComponent weapon;
 
     private float rotationSpeed;
@@ -16,7 +16,6 @@ public class EnemyMovementController : MonoBehaviour
     private Vector3 rotatedDir;
     private bool isAttacking;
     private Transform targetDes = null;
-
     public UnityEvent<Vector3> onEnemyMoving;
 
     private void Awake()
@@ -25,26 +24,17 @@ public class EnemyMovementController : MonoBehaviour
         agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
     }
 
-
     private void OnEnable()
     {
         agent.ResetPath(); 
         agent.isStopped = false; 
         isWaiting = false;
         agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
-        attacker.onHaveTarget.AddListener(IsTargetInRange);
-        attacker.onActorAttack.AddListener(IsAttackingRightNow);
         weapon.onHavingWeapon.AddListener(OnHavingWeapon);
     }
     private void Start()
     {
         SetNewDestination();
-    }
-    private void OnDisable()
-    {
-        attacker.onHaveTarget.RemoveListener(IsTargetInRange);
-        attacker.onActorAttack.AddListener(IsAttackingRightNow);
-        weapon.onHavingWeapon.RemoveListener( OnHavingWeapon);
     }
 
     private void Update()
@@ -57,7 +47,6 @@ public class EnemyMovementController : MonoBehaviour
         {
             RotateTowardsMovementDirection();
         }
-
         if (agent.isStopped == true)
         {
             onEnemyMoving?.Invoke(Vector3.zero);
@@ -66,7 +55,6 @@ public class EnemyMovementController : MonoBehaviour
         {
             onEnemyMoving?.Invoke(agent.velocity);
         }
-
         if (!isAttacking && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && !isWaiting)
         {
             StartCoroutine(WaitAndSetNewDestination());
@@ -126,7 +114,7 @@ public class EnemyMovementController : MonoBehaviour
         isWaiting = false;
     }
 
-    private void IsTargetInRange(GameObject target)
+    public void IsTargetInRange(GameObject target)
     {
         if (target != null && haveWeapon)
         {
@@ -143,15 +131,14 @@ public class EnemyMovementController : MonoBehaviour
         {
             targetDes = null;
             isAttacking = false;
-            agent.isStopped = false; 
-            
+            agent.isStopped = false;    
         }
     }
-    private void OnHavingWeapon(bool haveWeapon)
+    public void OnHavingWeapon(bool haveWeapon)
     {
         this.haveWeapon = haveWeapon;
     }
-    private void IsAttackingRightNow(Vector2 pos)
+    public void IsAttackingRightNow(Vector2 pos)
     {
         rotatedDir = pos;
     }

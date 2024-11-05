@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IAttacker
 {
     void PrepareToAttack();
-    void EventIfKillSomeone();
+    void CallEventIfKillSomeOne();
 
 }
  

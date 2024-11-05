@@ -5,76 +5,49 @@ using System.Linq;
 
 public class ActorAttacker : MonoBehaviour, IAttacker
 {
-    [SerializeField] protected DetectionCircle attackCircle;
+    [SerializeField] protected Transform WeaponHolder;
     [SerializeField] protected Transform throwLocation;
     [SerializeField] protected GameObject targetCircleInstance;
-    [SerializeField] protected WeaponComponent weaponComponent;
-    [SerializeField] protected ActorAtributeController actorAtributeController;
-    [SerializeField] protected Transform WeaponHolder;
+
+    protected DetectionCircle attackCircle;
+    protected WeaponComponent weaponComponent;
+    protected ActorAtributeController actorAtributeController;
+    protected EnemyMovementController enemyMovementController;
+    protected ActorAnimationController actorAnimationController;
+    protected ActorMovementController actorMovementController;
 
     protected HashSet<GameObject> enemyAttackers = new HashSet<GameObject>();
     protected GameObject targetToAttack = null;
     protected Vector3 targetToAttackPos = Vector3.zero;
 
     protected float distanceBuff = 0;
-
     protected Weapon weapon;
     protected Projectile weaponToThrow;
     protected GameObject weaponOnHand;
 
     private bool isUlti = false;
-
-    
-    
-    public UnityEvent<Vector2> onActorAttack;
-    public UnityEvent<GameObject> onHaveTarget;
-    public UnityEvent<bool> onHaveUlti;
-    public UnityEvent onKillSomeone;
     public UnityEvent<GameObject> onActorStartAttack;
-    protected virtual void OnEnable()
-    {
-        if (attackCircle != null)
-        {
-            attackCircle.onTriggerContact.AddListener(UpdateEnemyList);
-        }
-        if (weaponComponent != null) 
-        {
-            weaponComponent.onAssignNewWeapon.AddListener(InitWeapon);
-        }
-        if(actorAtributeController != null)
-        {
-            actorAtributeController.onPlayerUpgraded.AddListener(OnUpgrade);
-        }
-        ResetState();
-        onHaveUlti.AddListener(SetUlti);
-        
-    }
-    protected virtual void OnDisable()
-    {
-        if (attackCircle != null)
-        {
-            attackCircle.onTriggerContact.RemoveListener(UpdateEnemyList);
-        }
-        if (weaponComponent != null)
-        {
-            weaponComponent.onAssignNewWeapon.RemoveListener(InitWeapon);
-        }
-        if (actorAtributeController != null)
-        {
-            actorAtributeController.onPlayerUpgraded.RemoveListener(OnUpgrade);
 
-        }
-        ResetState();
-    }
-    protected virtual void Start()
+    public void InitAttacker(DetectionCircle detectionCircle,WeaponComponent weaponComponent, 
+        ActorAtributeController actorAtributeController, EnemyMovementController enemyMovementController,
+        ActorAnimationController actorAnimationController, ActorMovementController actorMovementController)
     {
-
+        attackCircle = detectionCircle;
+        this.weaponComponent = weaponComponent;
+        this.actorAnimationController = actorAnimationController;
+        this.actorAtributeController = actorAtributeController;
+        this.enemyMovementController = enemyMovementController;   
+        this.actorMovementController = actorMovementController;
+        ResetState();
+        attackCircle.UpdateCircleRadius(GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE ? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS);
     }
-    protected virtual void LateUpdate()
+
+
+    public virtual void LateUpdateCheck()
     {
         CheckAndUpdateTargetCircle();
     }
-    protected virtual void UpdateEnemyList(GameObject target, bool isInCircle)
+    public virtual void UpdateEnemyList(GameObject target, bool isInCircle)
     {
         if (isInCircle && IsTargetAlive(target))
         {
@@ -82,24 +55,36 @@ public class ActorAttacker : MonoBehaviour, IAttacker
             {
                 enemyAttackers.Add(target);
             }
-            onHaveTarget?.Invoke(target);
+            CallEventRelateToHaveTarget(target);
         }
         else
         {
             enemyAttackers.Remove(target);
             if (enemyAttackers.Count == 0)
-                onHaveTarget?.Invoke(null);
+            {
+                CallEventRelateToHaveTarget(null);
+            }
         }
     }
+
+    public void CallEventRelateToHaveTarget(GameObject target)
+    {
+        if (gameObject.CompareTag("Zombie"))
+            return;
+        actorAnimationController.UpdateHaveTarget(target);
+        if (gameObject.CompareTag("Enemy"))
+            enemyMovementController.IsTargetInRange(target);
+    }
+
     public virtual void StartAttack()
     {
-        onActorStartAttack?.Invoke(targetToAttack);
+        actorMovementController.RotateToTarget(GetFirstValidTarget());
     }
-    protected virtual void CleanUpDestroyedObjects()
+    public virtual void CleanUpDestroyedObjects()
     {
         enemyAttackers.RemoveWhere(item => item == null || !item.activeInHierarchy || !IsTargetAlive(item));
     }
-    protected virtual GameObject GetFirstValidTarget()
+    public virtual GameObject GetFirstValidTarget()
     {
         foreach (var target in enemyAttackers)
         {
@@ -110,13 +95,13 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         }
         return null;
     }
-    protected virtual void CheckAndUpdateTargetCircle()
+    public virtual void CheckAndUpdateTargetCircle()
     {
         CleanUpDestroyedObjects();
         targetToAttack = GetFirstValidTarget();
         if (targetToAttack != null)
         {
-            onHaveTarget?.Invoke(targetToAttack);
+            CallEventRelateToHaveTarget(targetToAttack);
             targetToAttackPos = targetToAttack.transform.position;
             if (targetCircleInstance != null)
             {
@@ -127,7 +112,7 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         }
         else
         {
-            onHaveTarget?.Invoke(null);
+            CallEventRelateToHaveTarget(null);
             if (targetCircleInstance != null)
             {
                 targetCircleInstance.SetActive(false);
@@ -135,13 +120,12 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         }
     }
 
-    protected virtual bool IsTargetAlive(GameObject target)
+    public virtual bool IsTargetAlive(GameObject target)
     {
         LifeComponent deadController = target.GetComponent<LifeComponent>();
         return deadController != null && !deadController.IsDead;
     }
-    //////////////////Attack theo dir//////////////////
-    protected virtual void Attack(Vector3 enemyLoc)
+    public virtual void Attack(Vector3 enemyLoc)
     {
         Vector3 throwDirection = enemyLoc - throwLocation.position;
         throwDirection.y = 0;
@@ -152,58 +136,61 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         newProjectile.FlyToPos(enemyLoc, isUlti);
         if (isUlti)
         {
-            onHaveUlti?.Invoke(false);
+            isUlti = false;
+            actorAnimationController.UpdateHaveUlti(false);
         }
     }
-    protected virtual void Attack(Vector3 enemyLoc, Vector3 throwLocationTemp, bool isMainAttack)
+    public virtual void Attack(Vector3 enemyLoc, Vector3 throwLocationTemp, bool isMainAttack)
     {
-        //Overload for child class use cases.
     }
-    public void EventIfKillSomeone()
+    public void CallEventIfKillSomeOne()
     {
-        onKillSomeone?.Invoke();
+        if (gameObject.CompareTag("Zombie"))
+            return;
+        actorAtributeController.UpdateScore();
     }
 
     public virtual void PrepareToAttack()
     {
-        Vector3 attackDir = targetToAttackPos - transform.position;
-        onActorAttack?.Invoke(new Vector2(attackDir.x, attackDir.z));
+        CallEventRelateToAttack();
         Attack(targetToAttackPos);
         targetToAttackPos = Vector3.zero;
     }
-    protected virtual void InitWeapon(Weapon oldWeapon,Weapon newWeapon)
+
+    public virtual void CallEventRelateToAttack()
+    {
+        if (gameObject.CompareTag("Zombie"))
+            return;
+        Vector3 attackDir = targetToAttackPos - transform.position;
+        if (gameObject.CompareTag("Enemy"))
+        {
+            enemyMovementController.IsAttackingRightNow(new Vector2(attackDir.x, attackDir.z));
+        }
+        weaponComponent.OnThrowAwayWeapon();
+    }
+
+    public virtual void InitWeapon(Weapon newWeapon)
     {
         ClearOldWeapon();
         weapon = newWeapon;
-
         weaponOnHand = Instantiate(weapon.WeaponOnHand, WeaponHolder);
         if (gameObject.CompareTag("Player"))
         {
-
             weaponComponent.ApplyWeaponSkin(weaponOnHand, weapon.CurrentIndexOfTheSkin);
         }
-
         else
         {
             weaponComponent.ApplyWeaponSkin(weaponOnHand, weapon.TempoIndex);
         }
-
         weaponToThrow = Instantiate(weapon.WeaponThrowAway, transform);
         GameObject visualize = Instantiate(weaponOnHand, this.weaponToThrow.transform);
-
-
         weaponOnHand.transform.localPosition = weapon.WeaponOffsetPos;
         weaponOnHand.transform.localRotation = weapon.WeaponOffsetRot;
-        
-        
-
         weaponToThrow.transform.rotation = Quaternion.Euler(Vector3.zero);
         weaponToThrow.gameObject.SetActive(false);
-        
         visualize.transform.localPosition = weapon.WeaponOffsetOnThrow;
-        
     }
-    protected void ClearOldWeapon()
+    public void ClearOldWeapon()
     {
         if(weaponOnHand!=null)
         Destroy(weaponOnHand.gameObject);
@@ -211,20 +198,33 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         Destroy(weaponToThrow.gameObject);
     }
 
-    protected void ResetState()
+    public void ResetState()
     {
         enemyAttackers.Clear();
-        onHaveTarget?.Invoke(null);
+        CallEventRelateToHaveTarget(null);
         targetToAttack = null;
         targetToAttackPos = Vector3.zero;
     }
-    protected void SetUlti(bool isHaveUlti)
+    public void SetUlti()
     {
-        isUlti = isHaveUlti;
+        if (!isUlti)
+        {
+            isUlti = true;
+            actorAnimationController.UpdateHaveUlti(true);
+        }
     }
-    protected virtual void OnUpgrade()
+    public virtual void UpgradeFromSkin(float distance)
+    {
+        distanceBuff += distance;
+    }
+    public virtual void UpgradePlayer()
     {
         distanceBuff += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER + 0.5f;
+        UpgradeCircle(1);
+    }
+    public virtual void UpgradeCircle(int multiplier)
+    {
+        attackCircle.UpdateCircleRadius(CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER * multiplier);
     }
     public virtual void PlayAttackSound()
     {

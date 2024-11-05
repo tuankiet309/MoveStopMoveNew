@@ -7158,6 +7158,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908409036}
   m_CullTransparentMesh: 1
+--- !u!114 &919797479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3494973600046819450, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
+    type: 3}
+  m_PrefabInstance: {fileID: 1525366609}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc89d9022ec947b49a13ebcb83850293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &919797486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 123932995514340981, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
+    type: 3}
+  m_PrefabInstance: {fileID: 1525366609}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45846da7bd6097349a12e603c108f8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &919797487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6903780949846508428, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
+    type: 3}
+  m_PrefabInstance: {fileID: 1525366609}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a507266a9f5d140835166d42004c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &930874476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7808,7 +7844,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3135634193128959420, guid: 2dbdd0cd68afaa04abdd564d2a8c2d06, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10658,6 +10695,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.726
       objectReference: {fileID: 0}
+    - target: {fileID: 3132011460564326346, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
+        type: 3}
+      propertyPath: actorAnimationController
+      value: 
+      objectReference: {fileID: 919797487}
+    - target: {fileID: 3494973600046819450, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
+        type: 3}
+      propertyPath: actorInformationController
+      value: 
+      objectReference: {fileID: 919797486}
+    - target: {fileID: 3935404030966449316, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
+        type: 3}
+      propertyPath: actorAtributeController
+      value: 
+      objectReference: {fileID: 919797479}
     - target: {fileID: 4707840217428235374, guid: ce79fb973d5d37d438ca7cff2ec5aa57,
         type: 3}
       propertyPath: actorMeshRenderer

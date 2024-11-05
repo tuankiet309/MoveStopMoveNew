@@ -9,8 +9,39 @@ public class Player : MonoBehaviour
     private static Player instance;
     public static Player Instance { get { return instance; } private set { } }
 
+
     [SerializeField] private Canvas[] CanvasNeedToTurnOnOff;
-    [SerializeField] private Transform[] transformHolder;
+
+
+    [Header("Essential Player Component")]
+    public ActorAttacker attacker;
+    public ActorAnimationController animationController;
+    public ActorMovementController movementController;
+    public ActorInformationController informationController;
+    public ActorAtributeController atributeController;
+    public WeaponComponent weaponComponent;
+    public SkinComponent skinComponent;
+    public LifeComponent lifeComponent;
+    public DetectionCircle detectionCircle;
+
+    public void Init()
+    {
+        attacker.InitAttacker(detectionCircle, weaponComponent, atributeController, null, animationController,movementController);
+        atributeController.InitAttribute(attacker,movementController,informationController);
+        movementController.InitMovementController(attacker, animationController, null);
+
+        weaponComponent.InitWeapomComponent(attacker, atributeController);
+        skinComponent.InitSkinComponent(atributeController);
+
+    }
+    public void PlayerAction()
+    {
+        movementController.Move();
+    }
+    public void PlayerLateAction()
+    {
+        attacker.LateUpdateCheck();
+    }
     private void Awake()
     {
         if (instance == null)
@@ -19,14 +50,14 @@ public class Player : MonoBehaviour
         }
         else
             Destroy(gameObject);
-        
-
     }
     private void Start()
     {
         GameManager.Instance.onStateChange.AddListener(PrepareGamestate);
         PrepareGamestate(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
+        Init();
     }
+
     private void PrepareGamestate(Enum.GameState gameState, Enum.InGameState inGameState)
     {
         
@@ -51,11 +82,6 @@ public class Player : MonoBehaviour
         {
             TurnWorldCanvas(false);
         }
-        //if(gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.Zombie)
-        //{
-        //    Vector3 random = transformHolder[ Random.Range(0, transformHolder.Length)].position;
-        //    transform.position = new Vector3(random.x, transform.position.y, random.y);
-        //}
     }
 
     private void TurnWorldCanvas(bool check)
