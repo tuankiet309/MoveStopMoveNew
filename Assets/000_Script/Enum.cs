@@ -12,6 +12,7 @@ public class Enum : MonoBehaviour
     }
     public enum GameState
     {
+        //---------------Will Delete Later------------
         Ingame,
         Setting,
         Hall,
@@ -21,12 +22,22 @@ public class Enum : MonoBehaviour
         Ads,
         Revive,
         Begin,
+
+
+        HallState,
+        GameplayState,
+        ZombieState
     }
 
-    public enum InGameState
+    public enum GameplayState
     {
+        //---------------Will Delete Later------------
         PVE,
-        Zombie
+        Zombie,
+
+        WinState,
+        DeadState,
+        ReviveState
     }
 
     public enum AttributeBuffs
@@ -46,8 +57,7 @@ public class Enum : MonoBehaviour
         Wing,
         Body,
         Set
-    }
-
+    } 
     public enum ZCUpgradeType 
     {
         Protect,

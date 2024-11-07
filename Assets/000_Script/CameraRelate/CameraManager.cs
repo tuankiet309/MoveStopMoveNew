@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-public class CameraController : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [SerializeField] private Transform CameraFollow;
     [SerializeField] private Transform CameraArm;
@@ -17,37 +17,37 @@ public class CameraController : MonoBehaviour
     private bool isFollowingPlayer = false;
     private Coroutine cameraTransitionCoroutine;
 
-    private static CameraController instance;
-    public static CameraController Instance { get { return instance; } }
+    private static CameraManager instance;
+    public static CameraManager Instance { get { return instance; } }
 
     private Vector3 posForCam;
 
-    private void Awake()
+    public void InitCameraManager()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
 
+        if (GameManager.Instance.CurrentGameState == Enum.GameState.HallState)
+        {
+            posForCam = CONSTANT_VALUE.OFFSETWHENHALL.OSposition;
+        }
+        else if(GameManager.Instance.CurrentGameState == Enum.GameState.ZombieState)
+        {
+            posForCam = CONSTANT_VALUE.OFFSETWHENINZC.OSposition;
+        }
     }
 
     private void OnEnable()
     {
-        if(GameManager.Instance.CurrentInGameState==Enum.InGameState.PVE)
-        {
-            posForCam = CONSTANT_VALUE.OFFSETWHENINPVP.OSposition;
-        }
-        else
-        {
-            posForCam = CONSTANT_VALUE.OFFSETWHENINZC.OSposition;
-
-        }
+ 
 
     }
 
 
 
-    private void LateUpdate()
+    public void CameraLateFollow()
     {
         if (isFollowingPlayer && playerTransform != null)
         {
@@ -55,27 +55,26 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
-        UpdateCameraPosToGameState(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
-        if (Player.Instance != null)
-        {
-            ZCAttributeController zC= Player.Instance.GetComponent<ActorAtributeController>() as ZCAttributeController;
-            if(zC != null)
-            {
-                ///////////////////////////////////////////////////////////FIXXXX////////////////////////////////////////////////
-                zC.onUpgradeStat.AddListener(AdjustCameraDistanceZC);
-                ZCStatPlayer zCStatPlayer = zC.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.CircleRange);
-                for (int i=0;i<zCStatPlayer.HowMuchUpgrade;i=i+10)
-                {
-                    AdjustCameraDistanceZC(zCStatPlayer);
-                }
-            }
-        }
-    }
+    //private void Start()
+    //{
+    //    GameManager.Instance.onStateChange.AddListener(UpdateCameraPosToGameState);
+    //    UpdateCameraPosToGameState(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
+    //    //if (Player.Instance != null)
+    //    //{
+    //    //    ZCAttributeController zC= Player.Instance.GetComponent<ActorAtributeController>() as ZCAttributeController;
+    //    //    if(zC != null)
+    //    //    {
+    //    //        zC.onUpgradeStat.AddListener(AdjustCameraDistanceZC);
+    //    //        ZCStatPlayer zCStatPlayer = zC.Stats.FirstOrDefault(stat => stat.Type == Enum.ZCUpgradeType.CircleRange);
+    //    //        for (int i=0;i<zCStatPlayer.HowMuchUpgrade;i=i+10)
+    //    //        {
+    //    //            AdjustCameraDistanceZC(zCStatPlayer);
+    //    //        }
+    //    //    }
+    //    //}
+    //}
 
-    private void UpdateCameraPosToGameState(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void UpdateCameraPosToGameState(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if (cameraTransitionCoroutine != null)
         {
@@ -107,7 +106,7 @@ public class CameraController : MonoBehaviour
                 false
             ));
         }
-        else if (gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.PVE)
+        else if (gameState == Enum.GameState.Ingame && inGameState == Enum.GameplayState.PVE)
         {
             if (Player.Instance != null)
             {
@@ -120,7 +119,7 @@ public class CameraController : MonoBehaviour
                 true
             ));
         }
-        else if(gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.Zombie)
+        else if(gameState == Enum.GameState.Ingame && inGameState == Enum.GameplayState.Zombie)
         {
             if (Player.Instance != null)
             {
@@ -133,7 +132,7 @@ public class CameraController : MonoBehaviour
             true
         ));
         }
-        else if (gameState == Enum.GameState.Win && inGameState == Enum.InGameState.PVE)
+        else if (gameState == Enum.GameState.Win && inGameState == Enum.GameplayState.PVE)
         {
             if (Player.Instance != null)
             {

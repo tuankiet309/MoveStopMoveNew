@@ -30,14 +30,14 @@ public class UIManager : MonoBehaviour
     private void SwitchToGamePlayUI()
     {
         UIGameplay.gameObject.SetActive(true);
-        GameManager.Instance.SetGameStates(Enum.GameState.Ingame, Enum.InGameState.PVE);
+        GameManager.Instance.SetGameStates(Enum.GameState.Ingame, Enum.GameplayState.PVE);
         thisCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
     }
     private void SwitchToHallUI()
     {
         TurnOffUI();
         UIHall.gameObject.SetActive(true);
-        GameManager.Instance.SetGameStates(Enum.GameState.Hall, Enum.InGameState.PVE);
+        GameManager.Instance.SetGameStates(Enum.GameState.Hall, Enum.GameplayState.PVE);
         thisCanvas.renderMode = RenderMode.ScreenSpaceCamera;
     }
     private void TurnOffUI()

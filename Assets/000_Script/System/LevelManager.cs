@@ -12,45 +12,21 @@ public class LevelManager : MonoBehaviour, IDataPersistence
     [SerializeField] List<ZCLevel> ZCLevels = new List<ZCLevel>();
 
 
-
-    private static LevelManager instance;
-    public static LevelManager Instance { get { return instance; } }
-
     public int CurrentPVELevel { get => currentPVELevel; set => currentPVELevel = value; }
     public int CurrentZCLevel { get => currentZCLevel; set => currentZCLevel = value; }
     public List<PVELevel> PVELevels1 { get => PVELevels; set => PVELevels = value; }
     public List<ZCLevel> ZCLevels1 { get => ZCLevels; set => ZCLevels = value; }
 
-    private void Awake()
+    public void Init()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    private void Start()
-    {
-        LoadLevel(); 
-    }
-    private void LoadLevel()
-    {
-        if(GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE)
-        {
-            EnemySpawner.Instance.NumberOfMaxEnemies = PVELevels[currentPVELevel].NumberOfEnemyToSpawn;
+            GameManager.Instance.gameplayManager.enemySpawner.numberOfMaxEnemies = PVELevels1[currentPVELevel].NumberOfEnemyToSpawn;
             PVELevels[currentPVELevel].MapToUse.SetActive(true);
-            EnemySpawner.Instance.TransformHolder = PVELevels[currentPVELevel].SpawnPosHolder;
-        }
-        if(GameManager.Instance.CurrentInGameState == Enum.InGameState.Zombie)
-        {
-            ZombieSpawner.Instance.NumberOfMaxEnemies = ZCLevels[currentZCLevel].HowManyZombie;
-            ZombieSpawner.Instance.BossZombie = ZCLevels[currentZCLevel].BigBoss;
-            ZombieSpawner.Instance.WhenToSpawnBoss = ZCLevels[currentZCLevel].WhenToSpawnBoss;
-            ZombieSpawner.Instance.GetComponent<ZombiePool>().DogRandom = ZCLevels[currentZCLevel].DogChances;
-        }
+            GameManager.Instance.gameplayManager.enemySpawner.TransformHolder = PVELevels[currentPVELevel].SpawnPosHolder;
+            
+            //ZombieSpawner.Instance.NumberOfMaxEnemies = ZCLevels[currentZCLevel].HowManyZombie;
+            //ZombieSpawner.Instance.BossZombie = ZCLevels[currentZCLevel].BigBoss;
+            //ZombieSpawner.Instance.WhenToSpawnBoss = ZCLevels[currentZCLevel].WhenToSpawnBoss;
+            //ZombieSpawner.Instance.GetComponent<ZombiePool>().DogRandom = ZCLevels[currentZCLevel].DogChances;
     }
 
     public void LoadData(GameData gameData)
@@ -73,10 +49,12 @@ public class PVELevel
     [SerializeField] private int numberOfEnemyToSpawn;
     [SerializeField] private Transform spawnPosHolder;
     [SerializeField] private GameObject mapToUse;
+    [SerializeField] private bool haveBuff;
 
     public int NumberOfEnemyToSpawn { get => numberOfEnemyToSpawn; set => numberOfEnemyToSpawn = value; }
     public GameObject MapToUse { get => mapToUse; set => mapToUse = value; }
     public Transform SpawnPosHolder { get => spawnPosHolder; set => spawnPosHolder = value; }
+    public bool HaveBuff { get => haveBuff; set => haveBuff = value; }
 }
 [Serializable]
 public class ZCLevel

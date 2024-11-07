@@ -39,7 +39,7 @@ public class ZCCountDownUI : MonoBehaviour
         }
 
         Joystick.gameObject.SetActive(true);
-        GameManager.Instance.SetGameStates(Enum.GameState.Begin, Enum.InGameState.Zombie);
+        GameManager.Instance.SetGameStates(Enum.GameState.Begin, Enum.GameplayState.Zombie);
         gameObject.SetActive(false);
     }
 

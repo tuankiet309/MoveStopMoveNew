@@ -43,35 +43,33 @@ public class ShopSkinUI : MonoBehaviour,IDataPersistence
     bool firstEnable = true;
 
     private Dictionary<Enum.SkinType, Skin> currentlyEquippedSkins = new Dictionary<Enum.SkinType, Skin>();
+    private bool buttonsInitialized = false;
 
-    private void OnDisable()
+    public void InitShopSkin()
     {
-        if (skinComp != null)
-        {
-            skinComp.RevertSkin(true);
-        }
-
-    }
-    private bool buttonsInitialized = false; 
-    private void Start()
-    {
+        skinComp = GameplayManager.Instance.player.skinComponent;
+        CreateButton();
         hatButton.onClick.AddListener(() => ShowHolder(hatHolder, hatButton));
         pantButton.onClick.AddListener(() => ShowHolder(pantHolder, pantButton));
         leftHandButton.onClick.AddListener(() => ShowHolder(leftHandHolder, leftHandButton));
         fullSetButton.onClick.AddListener(() => ShowHolder(fullSetHolder, fullSetButton));
         CloseButton.onClick.AddListener(() => skinComp.RevertSkin(true));
     }
-    private void OnEnable()
+
+    public void OnOpenShopSkin()
     {
-        skinComp = Player.Instance.GetComponent<SkinComponent>();
-        if (!buttonsInitialized)
-        {
-            CreateButton();
-            buttonsInitialized = true;
-        }
         ShowHolder(hatHolder, hatButton);
     }
 
+
+
+    public void UninitShopSkin()
+    {
+        if (skinComp != null)
+        {
+            skinComp.RevertSkin(true);
+        }
+    }
     void CreateButton()
     {
         if (buttonsInitialized) return; 

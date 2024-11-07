@@ -207,7 +207,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7767754163679310357}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1 &9161202983411315137
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5239107990145869264}
-  - component: {fileID: 7117837417928831499}
+  - component: {fileID: 6845197832691728335}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -241,7 +241,7 @@ Transform:
   - {fileID: 4199032712940038824}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7117837417928831499
+--- !u!114 &6845197832691728335
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9161202983411315137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b597122532fc2b94bb856a69a8079e40, type: 3}
+  m_Script: {fileID: 11500000, guid: f89075a608c70a1489f29ede10f4dce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CameraFollow: {fileID: 5239107990145869264}
@@ -259,5 +259,5 @@ MonoBehaviour:
   rotationSpeed: 5
   gameplayCamera: {fileID: 8997339014937692094}
   uiCamera: {fileID: 9114423101270965713}
-  cameraDistanceScaler: 1.15
-  cameraDistanceScalerZC: 1.05
+  cameraDistanceScaler: 1.01
+  cameraDistanceScalerZC: 1.01

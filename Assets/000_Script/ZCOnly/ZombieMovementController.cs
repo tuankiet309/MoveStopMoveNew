@@ -67,7 +67,7 @@ public class ZombieMovementController : MonoBehaviour
         }
     }
 
-    private void OnMoving(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void OnMoving(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if (gameObject.activeInHierarchy == false)
             return;

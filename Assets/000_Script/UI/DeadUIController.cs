@@ -24,27 +24,27 @@ public class DeadUIController : MonoBehaviour
 
     private void Start()
     {
-        continueBtn.onClick.AddListener(OnContinueClick);
-        rankedText.text = (EnemySpawner.Instance.NumberOfEnemiesLeft + 1).ToString();
-        KillerText.text = Player.Instance.GetComponent<LifeComponent>().KillerName;
-        int score = Player.Instance.GetComponent<ActorInformationController>().GetScore();
-        int randomEmpathy = Random.Range(0,empathysForRhapsody.Length);
-        empathyText.text = empathysForRhapsody[randomEmpathy];
-        originalSize = reviveHolder.sizeDelta.x;
-        if(score < 5)
-        {
-            reviveHolder.sizeDelta = new Vector2(reviveHolder.sizeDelta.x / 3, reviveHolder.sizeDelta.y);
-            reviveButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
-            reviveButton.gameObject.SetActive(true);
-            reviveButton.onClick.AddListener(ClaimGoldX3AndRestart);
-        }
-        gold.text = PlayerGoldInGameController.Instance.Gold.ToString();
-        PlayLosingSound();
-        DataPersistenceManager.Instance.SaveGame();
+        //continueBtn.onClick.AddListener(OnContinueClick);
+        //rankedText.text = (EnemySpawner.Instance.NumberOfEnemiesLeft + 1).ToString();
+        //KillerText.text = Player.Instance.GetComponent<LifeComponent>().KillerName;
+        //int score = Player.Instance.GetComponent<ActorInformationController>().GetScore();
+        //int randomEmpathy = Random.Range(0,empathysForRhapsody.Length);
+        //empathyText.text = empathysForRhapsody[randomEmpathy];
+        //originalSize = reviveHolder.sizeDelta.x;
+        //if(score < 5)
+        //{
+        //    reviveHolder.sizeDelta = new Vector2(reviveHolder.sizeDelta.x / 3, reviveHolder.sizeDelta.y);
+        //    reviveButton.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    reviveHolder.sizeDelta = new Vector2(originalSize, reviveHolder.sizeDelta.y);
+        //    reviveButton.gameObject.SetActive(true);
+        //    reviveButton.onClick.AddListener(ClaimGoldX3AndRestart);
+        //}
+        //gold.text = PlayerGoldInGameController.Instance.Gold.ToString();
+        //PlayLosingSound();
+        //DataPersistenceManager.Instance.SaveGame();
     }
    
     private void OnContinueClick()

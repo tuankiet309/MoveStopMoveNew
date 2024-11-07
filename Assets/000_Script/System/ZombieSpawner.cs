@@ -171,11 +171,11 @@ public class ZombieSpawner : Spawner<Zombie>
         if (numberOfEnemiesLeft <= 0 && !gameStateChanged && GameManager.Instance.CurrentGameState != Enum.GameState.Dead)
         {
             gameStateChanged = true;
-            GameManager.Instance.SetGameStates(Enum.GameState.Win, Enum.InGameState.Zombie);
+            GameManager.Instance.SetGameStates(Enum.GameState.Win, Enum.GameplayState.Zombie);
         }
     }
 
-    private void SelfActive(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void SelfActive(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if (gameState == Enum.GameState.Win || gameState == Enum.GameState.Ingame)
         {

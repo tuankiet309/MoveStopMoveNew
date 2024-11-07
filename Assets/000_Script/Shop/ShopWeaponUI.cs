@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopItemUI : MonoBehaviour,IDataPersistence
+public class ShopWeaponUI : MonoBehaviour,IDataPersistence
 {
     [SerializeField] TextMeshProUGUI weaponName;
     [SerializeField] TextMeshProUGUI attributeBuff;
@@ -34,11 +34,7 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
     private int weaponIndex = 0;
     private int currentIndexOfTheSkin = 0;
 
-    private void Awake()
-    {
-
-    }
-    private void Start()
+    public void InitShopWeapon()
     {
         LoadInfomationOfCurrentWeapon();
         equipButton.onClick.AddListener(AttachWeapon);
@@ -47,8 +43,6 @@ public class ShopItemUI : MonoBehaviour,IDataPersistence
         purchaseBtn.onClick.AddListener(UnlockWeapon);
         watchAdBtn.onClick.AddListener(UnlockWeaponByWatchingAds);
     }
-
-
     private void MoveRight()
     {
         if (weaponIndex < weaponItem.Length - 1)

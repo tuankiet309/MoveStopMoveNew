@@ -34,7 +34,7 @@ public class MenuHallUIController : MonoBehaviour
     }
     private void SwitchToMainHall()
     {
-        GameManager.Instance.SetGameStates(Enum.GameState.Hall, Enum.InGameState.PVE);
+        GameManager.Instance.SetGameStates(Enum.GameState.Hall, Enum.GameplayState.PVE);
         TurnOffUI();
         menuCanvas.gameObject.SetActive(true);
         
@@ -49,7 +49,7 @@ public class MenuHallUIController : MonoBehaviour
     {
         
         shopSkinCanvas.gameObject.SetActive(true);
-        GameManager.Instance.SetGameStates(Enum.GameState.SkinShop, Enum.InGameState.PVE);
+        GameManager.Instance.SetGameStates(Enum.GameState.SkinShop, Enum.GameplayState.PVE);
     }
     private void SwitchToRealShop()
     {

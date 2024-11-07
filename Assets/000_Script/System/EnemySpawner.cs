@@ -16,12 +16,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Weapon[] weaponToSpawnWith;
     [SerializeField] private string[] nameToSpawnWith;
     [SerializeField] private Transform transformHolder;
-    [SerializeField] private int numberOfMaxEnemies = 0;
-    [SerializeField][Range(0,12)] protected int numberOfMaxEnemiesAtATime = 0;
 
-    private int numberOfEnemiesSpawned = 0;
-    private int numberOfEnemiesLeft;
-    private int previousNumberOfEnemiesLeft;
+    public int numberOfEnemiesSpawned = 0;
+    public int numberOfEnemiesLeft;
+    public int numberOfMaxEnemies = 0;
+    [Range(0, 12)] public int numberOfMaxEnemiesAtATime = 0;
+
     private bool gameStateChanged = false;
     private Camera mainCamera;
 
@@ -29,52 +29,30 @@ public class EnemySpawner : MonoBehaviour
 
     public UnityEvent<int> OnNumberOfEnemiesDecrease;
 
-    private static EnemySpawner instance;
-    public static EnemySpawner Instance { get { return instance; } }
 
-    public int NumberOfEnemiesLeft { get => numberOfEnemiesLeft; private set { } }
-
-    public int NumberOfMaxEnemies { get => numberOfMaxEnemies; set => numberOfMaxEnemies = value; }
     public Transform TransformHolder { get => transformHolder; set => transformHolder = value; }
 
-    private void OnEnable()
-    {
-        OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
-    }
-    private void Awake()
+    public void Init()
     {
         mainCamera = Camera.main;
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(gameObject);
-    }
-
-    private void Start()
-    {
         numberOfEnemiesSpawned = 0;
         numberOfEnemiesLeft = numberOfMaxEnemies;
-        previousNumberOfEnemiesLeft = numberOfEnemiesLeft;
-        Enemy.numberOfEnemyHasDie = 0;
         OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
         availableBodySkins = new List<Skin>(bodyToSpawn);
         GameManager.Instance.onStateChange.AddListener(SelfActive);
-        SelfActive(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
     }
-
-    private void Update()
+    public void EnemyDoSpawn()
     {
         if (CanSpawn())
         {
             SpawnEntity();
         }
-
         UpdateEnemyCount();
     }
 
     protected virtual bool CanSpawn()
     {
-        return numberOfEnemiesSpawned < numberOfMaxEnemies && Enemy.numberOfEnemyRightnow < numberOfMaxEnemiesAtATime && availableBodySkins.Count > 0;
+        return numberOfEnemiesSpawned < numberOfMaxEnemies && availableBodySkins.Count > 0;
     }
 
     protected virtual void SpawnEntity()
@@ -82,14 +60,12 @@ public class EnemySpawner : MonoBehaviour
         Enemy newEnemy = enemyPool.Get();
         InitializeEntity(newEnemy);
         numberOfEnemiesSpawned++;
-        numberOfEnemiesLeft = numberOfMaxEnemies - Enemy.numberOfEnemyHasDie;
         OnNumberOfEnemiesDecrease?.Invoke(numberOfEnemiesLeft);
     }
 
     protected virtual void InitializeEntity(Enemy enemy)
     {
         int bodySkinIndex = Random.Range(0, availableBodySkins.Count);
-
         int randomPant = Random.Range(0, pantToSpawn.Length);
         int randomHeadset = Random.Range(0, headSetToSpawn.Length);
         int randomLeftHand = Random.Range(0, leftHandToSpawn.Length);
@@ -105,9 +81,6 @@ public class EnemySpawner : MonoBehaviour
 
         enemy.transform.position = pos;
         enemy.Initialize (availableBodySkins[bodySkinIndex], pantToSpawn[randomPant], headSetToSpawn[randomHeadset], leftHandToSpawn[randomLeftHand], weaponToSpawnWith[randomWeapon], nameToSpawnWith[randomName], enemyPool);
-        Skin body = availableBodySkins[bodySkinIndex];
-        enemy.onEnemyDie.AddListener(() => ReturnSkinToPool(body));
-        availableBodySkins.Remove(availableBodySkins[bodySkinIndex]);
     }
 
     private bool IsOnScreen(Vector3 position)
@@ -118,21 +91,14 @@ public class EnemySpawner : MonoBehaviour
 
     private void UpdateEnemyCount()
     {
-        numberOfEnemiesLeft = numberOfMaxEnemies - Enemy.numberOfEnemyHasDie;
-        if (numberOfEnemiesLeft != previousNumberOfEnemiesLeft)
-        {
-            OnNumberOfEnemiesDecrease.Invoke(numberOfEnemiesLeft);
-            previousNumberOfEnemiesLeft = numberOfEnemiesLeft;
-        }
-
         if (numberOfEnemiesLeft <= 0 && !gameStateChanged && GameManager.Instance.CurrentGameState != Enum.GameState.Dead)
         {
             gameStateChanged = true;
-            GameManager.Instance.SetGameStates(Enum.GameState.Win, Enum.InGameState.PVE);
+            GameManager.Instance.SetGameStates(Enum.GameState.Win, Enum.GameplayState.PVE);
         }
     }
 
-    private void SelfActive(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void SelfActive(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if (gameState == Enum.GameState.Win || gameState == Enum.GameState.Hall)
             gameObject.SetActive(false);

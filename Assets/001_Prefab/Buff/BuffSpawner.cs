@@ -5,22 +5,26 @@ public class BuffSpawner : MonoBehaviour
 {
     [SerializeField] private BuffPool buffPool; 
     [SerializeField] private Transform spawnLocations; 
-    [SerializeField] private int maxBuffsAtATime = 3; 
+    [SerializeField] private int maxBuffsAtATime = 5; 
     [SerializeField] private float spawnCooldown = 5f; 
 
     private int currentBuffCount = 0; 
     private bool isSpawning = false;
 
-    private void Start()
-    {
-        StartCoroutine(SpawnBuffs());
-    }
 
+    public void InitBuffSpawner()
+    {
+        if (GameManager.Instance.levelManager.PVELevels1[GameManager.Instance.levelManager.CurrentPVELevel].HaveBuff)
+        {
+            StartCoroutine(SpawnBuffs());
+
+        }
+    }
     private IEnumerator SpawnBuffs()
     {
         while (true)
         {
-            if (!isSpawning && currentBuffCount < maxBuffsAtATime)
+            if (!isSpawning && currentBuffCount <= maxBuffsAtATime)
             {
                 SpawnBuff();
             }

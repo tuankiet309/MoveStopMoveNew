@@ -47,7 +47,7 @@ public class ZCLifeComponent : LifeComponent
         if (health <= 0)
         {
             onLifeEnds?.Invoke(attackerName);
-            ParticleSpawner.Instance.PlayParticle(transform.position+Vector3.up, actorMeshRenderer.sharedMaterial);
+            ParticleManager.Instance.PlayParticle(transform.position+Vector3.up, actorMeshRenderer.sharedMaterial);
             return true;
         }
         else

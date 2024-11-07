@@ -9,7 +9,7 @@ using static Enum;
 
 public class SkinComponent : MonoBehaviour,IDataPersistence
 {
-    [Header("Essential")]
+    [Header("Essential Component ")]
     [SerializeField] Transform hatHolder;
     [SerializeField] Transform LHandHolder;
     [SerializeField] Transform wingHolder;
@@ -17,7 +17,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
     [SerializeField] SkinnedMeshRenderer pantToChange;
     [SerializeField] SkinnedMeshRenderer playerSkinToChange;
     [Space]
-    [Header("Essential")]
+    [Header("Essential Info Component")]
     [SerializeField] TextMeshProUGUI nameToChange;
     [SerializeField] Image imageToChange;
     [SerializeField] Skin[] defaultSkin;
@@ -29,24 +29,11 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
     private Material originalPantMaterial;
     private Material originalSkinMaterial;
 
-    public UnityEvent<List<Skin>,List<Skin>> onWearNewSkin;
-
-    private void Awake()
-    {
-        SaveOriginalMaterials();
-    }
-    private void Start()
-    {
-        previousSkins = skinToChange;
-        GameManager.Instance.onStateChange.AddListener(CheckOnceTimeSkin);
-    }
-    private void OnDisable()
-    {
-        GameManager.Instance.onStateChange.RemoveListener(CheckOnceTimeSkin);
-    }
     public void InitSkinComponent(ActorAtributeController actorAtribute)
     {
         atributeController = actorAtribute;
+        SaveOriginalMaterials();
+        previousSkins = skinToChange;
         AssignNewSkin(skinToChange.ToArray(),isASet);
     }
 
@@ -73,10 +60,8 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
         this.isASet = isASet;
         WearSkin(skinToChange);
     }
-    private void CheckOnceTimeSkin(GameState gameState, InGameState inGameState)
+    private void CheckOnceTimeSkin(GameState gameState, GameplayState inGameState)
     {
-        if ((gameState == GameState.Ingame && inGameState == InGameState.PVE) || (gameState == GameState.Begin))
-        {
             List<Skin> skinsToRemove = new List<Skin>();
             foreach (Skin skin in skinToChange)
             {
@@ -94,7 +79,6 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
                 skinToChange.Remove(skin);
                 previousSkins.Remove(skin);
             }
-        }
     }
     public void AssignTempoSkin(Skin[] tempoSkin,bool isASet)
     {
@@ -255,7 +239,7 @@ public class SkinComponent : MonoBehaviour,IDataPersistence
         skinToChange.RemoveAll(skin => skin.SkinType == skinType);
         previousSkins.RemoveAll(skin => skin.SkinType == skinType);
     }
-    void ClearAllSkinComponents()
+    public void ClearAllSkinComponents()
     {
         ClearSkin(Enum.SkinType.Hair);
         ClearSkin(Enum.SkinType.LHand);

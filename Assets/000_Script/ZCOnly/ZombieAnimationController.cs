@@ -5,17 +5,17 @@ using UnityEngine;
 public class ZombieAnimationController : ActorAnimationController
 {
     [SerializeField] ZombieMovementController zombieController;
-    public override void OnEnable()
+    //public override void OnEnable()
+    //{
+    //    zombieController.onEnemyMoving.AddListener( UpdateMoveAnimation);
+    //}
+    //public override void OnDisable()
+    //{
+    //    zombieController .onEnemyMoving.RemoveAllListeners();
+    //}
+    public override void UpdateIsWon(Enum.GameState state, Enum.GameplayState inGameState)
     {
-        zombieController.onEnemyMoving.AddListener( UpdateMoveAnimation);
-    }
-    public override void OnDisable()
-    {
-        zombieController .onEnemyMoving.RemoveAllListeners();
-    }
-    public override void UpdateIsWon(Enum.GameState state, Enum.InGameState inGameState)
-    {
-        if (inGameState == Enum.InGameState.PVE)
+        if (inGameState == Enum.GameplayState.PVE)
             return;
         anim.SetBool("isWon",state==Enum.GameState.Dead || state==Enum.GameState.Revive);
     }

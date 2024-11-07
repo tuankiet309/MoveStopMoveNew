@@ -51,7 +51,6 @@ public class DetectionCircle : MonoBehaviour
             onTriggerContact?.Invoke(other.gameObject, false);
         }
     }
-
     public void UpdateCircleRadius(float howMuc)
     {
         circleRadius += howMuc;

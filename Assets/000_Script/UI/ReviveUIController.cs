@@ -46,7 +46,7 @@ public class ReviveUIController : MonoBehaviour
         if (!isDenied)
         {
             isDenied = true;
-            GameManager.Instance.SetGameStates(Enum.GameState.Dead, Enum.InGameState.PVE);
+            GameManager.Instance.SetGameStates(Enum.GameState.Dead, Enum.GameplayState.PVE);
         }
     }
     private void PlayCountDownSound(int which)

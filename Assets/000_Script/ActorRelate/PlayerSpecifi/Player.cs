@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Canvas[] CanvasNeedToTurnOnOff;
 
-
+    [Space]
     [Header("Essential Player Component")]
     public ActorAttacker attacker;
     public ActorAnimationController animationController;
@@ -24,15 +24,17 @@ public class Player : MonoBehaviour
     public LifeComponent lifeComponent;
     public DetectionCircle detectionCircle;
 
+
     public void Init()
     {
         attacker.InitAttacker(detectionCircle, weaponComponent, atributeController, null, animationController,movementController);
-        atributeController.InitAttribute(attacker,movementController,informationController);
+        atributeController.InitAttribute(attacker,movementController,informationController,null);
         movementController.InitMovementController(attacker, animationController, null);
-
-        weaponComponent.InitWeapomComponent(attacker, atributeController);
+        lifeComponent.InitLifeComponent(animationController);
+        
+        weaponComponent.InitWeapomComponent(attacker, atributeController,animationController,null);
         skinComponent.InitSkinComponent(atributeController);
-
+        PrepareGamestate(GameManager.Instance.CurrentGameState);
     }
     public void PlayerAction()
     {
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour
     }
     public void PlayerLateAction()
     {
-        attacker.LateUpdateCheck();
+        attacker.CheckAndUpdateTargetCircle();
     }
     private void Awake()
     {
@@ -51,34 +53,35 @@ public class Player : MonoBehaviour
         else
             Destroy(gameObject);
     }
-    private void Start()
-    {
-        GameManager.Instance.onStateChange.AddListener(PrepareGamestate);
-        PrepareGamestate(GameManager.Instance.CurrentGameState, GameManager.Instance.CurrentInGameState);
-        Init();
-    }
 
-    private void PrepareGamestate(Enum.GameState gameState, Enum.InGameState inGameState)
+    public void PrepareGamestate(Enum.GameState gameState)
     {
-        
-        if (gameState == Enum.GameState.Hall )
+
+        if (gameState == Enum.GameState.HallState)
         {
             transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(0, 180, 0);
             TurnWorldCanvas(false);
         }
-        if ((gameState == Enum.GameState.Ingame && inGameState == Enum.InGameState.PVE)|| (gameState == Enum.GameState.Begin && inGameState == Enum.InGameState.Zombie))
+        if (gameState == Enum.GameState.GameplayState)
         {
-            if(inGameState == Enum.InGameState.PVE)
-                transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(0, 0, 0);
             TurnWorldCanvas(true);
         }
+        if (gameState == Enum.GameState.ZombieState)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            TurnWorldCanvas(true);
+        }
+    }
+
+    public void PrepareGameplayState(Enum.GameState gameState)
+    {
         if (gameState == Enum.GameState.Dead)
         {
             TurnWorldCanvas(false);
         }
-        if(gameState == Enum.GameState.Win)
+        if (gameState == Enum.GameState.Win)
         {
             TurnWorldCanvas(false);
         }

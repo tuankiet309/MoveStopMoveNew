@@ -6,8 +6,8 @@ using UnityEngine.Events;
 public class EnemyMovementController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private ActorAttacker attackerNew;
-    [SerializeField] private WeaponComponent weapon;
+
+    private ActorAnimationController animationController;
 
     private float rotationSpeed;
     private bool isWaiting = false;
@@ -16,50 +16,82 @@ public class EnemyMovementController : MonoBehaviour
     private Vector3 rotatedDir;
     private bool isAttacking;
     private Transform targetDes = null;
-    public UnityEvent<Vector3> onEnemyMoving;
 
-    private void Awake()
+    public void InitEMovementController(ActorAnimationController actorAnimationController)
     {
+        animationController = actorAnimationController;
         rotationSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
         agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
-    }
-
-    private void OnEnable()
-    {
-        agent.ResetPath(); 
-        agent.isStopped = false; 
+        agent.ResetPath();
+        agent.isStopped = false;
         isWaiting = false;
-        agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
-        weapon.onHavingWeapon.AddListener(OnHavingWeapon);
-    }
-    private void Start()
-    {
+        agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY; 
         SetNewDestination();
     }
+    //private void Awake()
+    //{
+    //    rotationSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
+    //    agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
+    //}
 
-    private void Update()
+    //private void OnEnable()
+    //{
+    //    agent.ResetPath(); 
+    //    agent.isStopped = false; 
+    //    isWaiting = false;
+    //    agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY;
+    //}
+    //private void Start()
+    //{
+    //    SetNewDestination();
+    //}
+
+    public void EnemyMove()
     {
-        if (isAttacking && targetDes != null && agent.speed !=0)
+        if (isAttacking && targetDes != null && agent.speed != 0)
         {
             RotateTowardsTarget();
         }
-        else 
+        else
         {
             RotateTowardsMovementDirection();
         }
         if (agent.isStopped == true)
         {
-            onEnemyMoving?.Invoke(Vector3.zero);
+            animationController.UpdateMoveAnimation(Vector3.zero);
         }
         else
         {
-            onEnemyMoving?.Invoke(agent.velocity);
+            animationController.UpdateMoveAnimation(agent.velocity);
         }
         if (!isAttacking && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && !isWaiting)
         {
             StartCoroutine(WaitAndSetNewDestination());
         }
     }
+    //private void Update()
+    //{
+    //    if (isAttacking && targetDes != null && agent.speed !=0)
+    //    {
+    //        RotateTowardsTarget();
+    //    }
+    //    else 
+    //    {
+    //        RotateTowardsMovementDirection();
+    //    }
+    //    if (agent.isStopped == true)
+    //    {
+    //        animationController.UpdateMoveAnimation(Vector3.zero);
+    //    }
+    //    else
+    //    {
+    //        animationController.UpdateMoveAnimation(agent.velocity);
+    //    }
+    //    if (!isAttacking && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && !isWaiting)
+    //    {
+    //        StartCoroutine(WaitAndSetNewDestination());
+    //    }
+    //}
 
     private void RotateTowardsMovementDirection()
     {
@@ -106,9 +138,8 @@ public class EnemyMovementController : MonoBehaviour
     {
         isWaiting = true;
         agent.isStopped = true; 
-        float randomWaitTime = Random.Range(1f, 3f); 
+        float randomWaitTime = Random.Range(1f, 3f);
         yield return new WaitForSeconds(randomWaitTime);
-
         agent.isStopped = false; 
         SetNewDestination();
         isWaiting = false;
@@ -133,6 +164,10 @@ public class EnemyMovementController : MonoBehaviour
             isAttacking = false;
             agent.isStopped = false;    
         }
+    }
+    public void AplyBuff(float howMuch)
+    {
+        agent.speed = CONSTANT_VALUE.FIRST_MOVESPEED_ENEMY + howMuch;
     }
     public void OnHavingWeapon(bool haveWeapon)
     {

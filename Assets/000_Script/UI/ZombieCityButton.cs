@@ -12,8 +12,8 @@ public class ZombieCityButton : MonoBehaviour
 
     private void Start()
     {
-        button.onClick.AddListener(() => SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.ZCScene.ToString()));
-        levelText.text = (LevelManager.Instance.CurrentZCLevel + 1).ToString();
+        //button.onClick.AddListener(() => SceneController.Instance.LoadSceneAsyncWay(Enum.SceneName.ZCScene.ToString()));
+        //levelText.text = (LevelManager.Instance.CurrentZCLevel + 1).ToString();
     }
 
 }

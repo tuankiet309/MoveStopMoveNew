@@ -26,6 +26,9 @@ public class ActorMovementController : MonoBehaviour
     public void InitMovementController(ActorAttacker attacker,
         ActorAnimationController actorAnimation, ZCAttributeController zCAttribute)
     {
+        rotateSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
+        moveSpeed = CONSTANT_VALUE.FIRST_MOVESPEED;
+
         this.attacker = attacker;
         actorAnimationController = actorAnimation;
         zCAttributeController = zCAttribute;
@@ -40,18 +43,18 @@ public class ActorMovementController : MonoBehaviour
         }
 
     }    
-    public virtual void Awake()
-    {
-        rotateSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
-        moveSpeed = CONSTANT_VALUE.FIRST_MOVESPEED;
-    }
-    public virtual void OnDisable()
-    {
-        if (moveStick != null)
-            moveStick.onThumbstickValueChanged.RemoveListener(moveStickInputHandler);
-        if (attacker != null)
-            attacker.onActorStartAttack.RemoveListener(RotateToTarget);
-    }
+    //public virtual void Awake()
+    //{
+    //    rotateSpeed = CONSTANT_VALUE.FIRST_ROTATIONSPEED;
+    //    moveSpeed = CONSTANT_VALUE.FIRST_MOVESPEED;
+    //}
+    //public virtual void OnDisable()
+    //{
+    //    if (moveStick != null)
+    //        moveStick.onThumbstickValueChanged.RemoveListener(moveStickInputHandler);
+    //    if (attacker != null)
+    //        attacker.onActorStartAttack.RemoveListener(RotateToTarget);
+    //}
 
     public virtual void Move()
     {

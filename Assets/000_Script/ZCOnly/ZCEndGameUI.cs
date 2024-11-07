@@ -48,19 +48,19 @@ public class ZCEndGameUI : MonoBehaviour
     }
     private void Won()
     {
-        title.text = "You survive day " + (LevelManager.Instance.CurrentZCLevel + 1).ToString();
-        starHolder.gameObject.SetActive(true);
-        numberStarHolder.gameObject.SetActive(true);
-        int index = LevelManager.Instance.CurrentZCLevel % 5 + 1;
-        for (int i = 0; i < 5; i++)
-        {
-            if (i < index)
-                daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
-            daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index + 2 + i).ToString();
+        //title.text = "You survive day " + (LevelManager.Instance.CurrentZCLevel + 1).ToString();
+        //starHolder.gameObject.SetActive(true);
+        //numberStarHolder.gameObject.SetActive(true);
+        //int index = LevelManager.Instance.CurrentZCLevel % 5 + 1;
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    if (i < index)
+        //        daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
+        //    daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index + 2 + i).ToString();
 
-        }
-        LevelManager.Instance.CurrentZCLevel++;
-        PlayWinningSound();
+        //}
+        //LevelManager.Instance.CurrentZCLevel++;
+        //PlayWinningSound();
     }
     private void PlayWinningSound()
     {
@@ -70,22 +70,22 @@ public class ZCEndGameUI : MonoBehaviour
     }
     private void Lose()
     {
-        title.text = "You lose";
-        starHolder.gameObject.SetActive(false);
-        numberStarHolder.gameObject.SetActive(false);
-        int index = LevelManager.Instance.CurrentZCLevel % 5+1;
-        for (int i = 0; i < 5; i++)
-        {
-            if (i < index)
-                daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
-            daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index + 2 + i).ToString();
-            if (i == index-1)
-            {
-                daysHolder.GetChild(i).GetChild(1).gameObject.SetActive(true);
-                daysHolder.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.red;
-            }
-        }
-        PlayLosingSound();
+        //title.text = "You lose";
+        //starHolder.gameObject.SetActive(false);
+        //numberStarHolder.gameObject.SetActive(false);
+        //int index = LevelManager.Instance.CurrentZCLevel % 5+1;
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    if (i < index)
+        //        daysHolder.GetChild(i).GetChild(0).gameObject.SetActive(true);
+        //    daysHolder.GetChild(i).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + (LevelManager.Instance.CurrentZCLevel - index + 2 + i).ToString();
+        //    if (i == index-1)
+        //    {
+        //        daysHolder.GetChild(i).GetChild(1).gameObject.SetActive(true);
+        //        daysHolder.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.red;
+        //    }
+        //}
+        //PlayLosingSound();
     }
     private void PlayLosingSound()
     {

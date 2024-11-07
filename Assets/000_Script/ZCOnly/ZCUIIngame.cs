@@ -12,18 +12,18 @@ public class ZCUIIngame : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldText;
     private void Start()
     {
-        if (ZombieSpawner.Instance != null)
-        {
-            ZombieSpawner.Instance.OnNumberOfEnemiesDecrease.AddListener(UpdateAlive);
-            UpdateAlive(ZombieSpawner.Instance.NumberOfEnemiesLeft);
-        }
+        //if (ZombieSpawner.Instance != null)
+        //{
+        //    ZombieSpawner.Instance.OnNumberOfEnemiesDecrease.AddListener(UpdateAlive);
+        //    UpdateAlive(ZombieSpawner.Instance.NumberOfEnemiesLeft);
+        //}
 
-        Day.text = "Day " + (LevelManager.Instance.CurrentZCLevel + 1).ToString();
-        if (DataPersistenceManager.Instance != null)
-        {
-            goldText.text = DataPersistenceManager.Instance.GameData.gold.ToString();
-            DataPersistenceManager.Instance.OnGoldChange.AddListener(UpdateGoldText);
-        }
+        //Day.text = "Day " + (LevelManager.Instance.CurrentZCLevel + 1).ToString();
+        //if (DataPersistenceManager.Instance != null)
+        //{
+        //    goldText.text = DataPersistenceManager.Instance.GameData.gold.ToString();
+        //    DataPersistenceManager.Instance.OnGoldChange.AddListener(UpdateGoldText);
+        //}
     }
     private void UpdateAlive(int number)
     {

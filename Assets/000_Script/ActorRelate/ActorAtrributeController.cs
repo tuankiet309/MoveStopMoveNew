@@ -13,6 +13,7 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
     protected ActorAttacker attacker;
     protected ActorMovementController movementController;
     protected ActorInformationController actorInformationController;
+    protected EnemyMovementController enemyMovementController;
 
 
     private Dictionary<Enum.AttributeBuffs, float> buffValues = new Dictionary<Enum.AttributeBuffs, float>();
@@ -23,17 +24,17 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         protected set { }
     }
     public Dictionary<Enum.AttributeBuffs, float> BuffValues { get => buffValues; set => buffValues = value; }
-    protected virtual void Awake()
+
+    public void InitAttribute(ActorAttacker attacker, ActorMovementController actorMovement,
+        ActorInformationController actorInformation, EnemyMovementController enemyMovement)
     {
         scoreMilestone = CONSTANT_VALUE.FIRST_SCORE_MILESTONE;
         scoreMilestoneIncreaser = CONSTANT_VALUE.SCORE_MILESTONE_INCREASER;
         bodyScalerIncreaser = CONSTANT_VALUE.BODY_SCALER_INCREASER;
-    }
-    public void InitAttribute(ActorAttacker attacker, ActorMovementController actorMovement, ActorInformationController actorInformation)
-    { 
         this.attacker = attacker;
         this.movementController = actorMovement;
         this.actorInformationController = actorInformation;
+        this.enemyMovementController = enemyMovement;
     }
     public void ApplyBuffByWeapon(Weapon oldWeapon, Weapon newWeapon)
     {
@@ -44,7 +45,6 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
                 buffValues[oldWeapon.Buff] -= oldWeapon.BuffMultiplyer;
             }
         }
-
         if (newWeapon.Buff == Enum.AttributeBuffs.Range)
         {
             if (buffValues.ContainsKey(newWeapon.Buff))
@@ -88,7 +88,7 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         }
         if (gameObject.CompareTag("Player"))
         {
-            if (buffValues.ContainsKey(Enum.AttributeBuffs.Speed))
+            if (buffValues.ContainsKey(Enum.AttributeBuffs.Speed) && movementController!=null)
                 movementController.UpdateBuffFromSkin(buffValues[Enum.AttributeBuffs.Speed]);
         }
     }
@@ -117,9 +117,8 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         if (score >= scoreMilestone)
         {
             UpgradePlayer();
-            attacker.UpgradePlayer();
             if(gameObject.CompareTag("Player"))
-                CameraController.Instance.AdjustCameraDistance();
+                CameraManager.Instance.AdjustCameraDistance();
             scoreMilestone += scoreMilestoneIncreaser;
             scoreMilestoneIncreaser += 1;
         }
@@ -131,6 +130,7 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
         {
             SoundManager.Instance.Vibrate();
         }
+        attacker.UpgradePlayer();
     }
     protected float updateTempo = 0;
     protected bool isHaveUlti = false;
@@ -147,10 +147,8 @@ public class ActorAtributeController : MonoBehaviour,IDataPersistence
             Debug.Log("Ultimate already activated.");
         }
     }
-
     public virtual void LoadData(GameData gameData)
-    {
-        
+    {   
     }
     public virtual void SaveData(ref GameData gameData)
     {

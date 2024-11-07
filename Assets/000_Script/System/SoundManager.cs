@@ -13,18 +13,25 @@ public class SoundManager : MonoBehaviour,IDataPersistence
     [SerializeField] private bool isUnvibrate = false;
     private static SoundManager instance;
     public static SoundManager Instance { get { return instance; } }
-    private void Awake()
+    
+    
+    public void InitSoundManager()
     {
         if(instance == null)
-        {
+        { 
             instance = this;
-        }    
+        }
         else
         {
             Destroy(gameObject);
         }
+
+        Button[] allButtons = Resources.FindObjectsOfTypeAll<Button>();
+        foreach (Button button in allButtons)
+        {
+            button.onClick.AddListener(() => PlayClickSound());
+        }
     }
-    
 
     [SerializeField] private SoundList[] soundLists;
     [SerializeField] private SoundPool soundPool;
@@ -48,16 +55,7 @@ public class SoundManager : MonoBehaviour,IDataPersistence
         soundSource.Initialize(soundPool, position);
         soundSource.PlayAndReturnToPool(audioClipToPlay, volume);
     }
-    private void Start()
-    {
-       Button[] allButtons = Resources.FindObjectsOfTypeAll<Button>();
 
-
-        foreach (Button button in allButtons)
-        {
-            button.onClick.AddListener(() => PlayClickSound());
-        }
-    }
     public void PlayClickSound()
     {
         if(isMuted) return;

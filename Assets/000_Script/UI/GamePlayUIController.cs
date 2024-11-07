@@ -20,7 +20,7 @@ public class GamePlayUIController : MonoBehaviour
         continueBtn.onClick.AddListener(SwitchToIngame);
         settingBtn.onClick.AddListener(SwitchToSetting);
         restartBtn.onClick.AddListener(SwitchToHallUI);
-        close.onClick.AddListener(()=>GameManager.Instance.SetGameStates(Enum.GameState.Dead, Enum.InGameState.PVE));
+        close.onClick.AddListener(()=>GameManager.Instance.SetGameStates(Enum.GameState.Dead, Enum.GameplayState.PVE));
         GameManager.Instance.onStateChange.AddListener(SwitchToWinUI);
         GameManager.Instance.onStateChange.AddListener(SwitchToDeadUI);
         GameManager.Instance.onStateChange.AddListener(SwitchToRevieUI);
@@ -36,7 +36,7 @@ public class GamePlayUIController : MonoBehaviour
         TurnOffOtherUI();
         settingUI.gameObject.SetActive(true);
     }
-    private void SwitchToDeadUI(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void SwitchToDeadUI(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if (gameState == Enum.GameState.Dead)
         {
@@ -44,7 +44,7 @@ public class GamePlayUIController : MonoBehaviour
             deadUI.gameObject.SetActive(true);
         }
     }
-    private void SwitchToWinUI(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void SwitchToWinUI(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if (gameState == Enum.GameState.Win)
         {
@@ -52,7 +52,7 @@ public class GamePlayUIController : MonoBehaviour
             winUI.gameObject.SetActive(true);
         }
     }
-    private void SwitchToRevieUI(Enum.GameState gameState, Enum.InGameState inGameState)
+    private void SwitchToRevieUI(Enum.GameState gameState, Enum.GameplayState inGameState)
     {
         if(gameState == Enum.GameState.Revive)
         {

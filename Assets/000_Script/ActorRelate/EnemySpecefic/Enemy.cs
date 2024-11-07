@@ -4,33 +4,47 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 
-public class Enemy : MonoBehaviour, IPoolable
+public class Enemy : MonoBehaviour
 {
-    public static int numberOfEnemyRightnow = 0;
-    public static int numberOfEnemyHasDie = 0;
     private EnemyPool pool;
     private Material currentSkin;
 
-    public UnityEvent onEnemyDie;
-    private void OnEnable()
+
+    [Space]
+    [Header("Essential Enemy Component")]
+    public ActorAttacker attacker;
+    public ActorAnimationController animationController;
+    public EnemyMovementController movementController;
+    public ActorInformationController informationController;
+    public ActorAtributeController atributeController;
+    public WeaponComponent weaponComponent;
+    public SkinComponent skinComponent;
+    public LifeComponent lifeComponent;
+    public DetectionCircle detectionCircle;
+
+    public void Init()
     {
-        numberOfEnemyRightnow++;
+        attacker.InitAttacker(detectionCircle, weaponComponent, atributeController, movementController, animationController, null);
+        atributeController.InitAttribute(attacker, null, informationController,movementController);
+        movementController.InitEMovementController(animationController);
+
+        lifeComponent.InitLifeComponent(animationController);
+        weaponComponent.InitWeapomComponent(attacker, atributeController, animationController, movementController);
+        skinComponent.InitSkinComponent(atributeController);
 
     }
-
-    private void OnDisable()
+    public void EnemyAction()
     {
-        
-        numberOfEnemyRightnow--;
-        numberOfEnemyHasDie++;
-        
+        movementController.EnemyMove();
+    }
+    public void EnemyLateAction()
+    {
+        attacker.CheckAndUpdateTargetCircle();
     }
 
     public void PrepareForDestroy()
     {
-        onEnemyDie?.Invoke();
         pool.Release(this);
-        onEnemyDie.RemoveAllListeners();
     }
     public void Initialize(Skin pant, Skin body, Skin head, Skin leftHand, Weapon weapon, string name, EnemyPool pool)
     {
@@ -57,11 +71,5 @@ public class Enemy : MonoBehaviour, IPoolable
         if(pool != null)
             this.pool = pool;
     }
-    public void New()
-    {
-    }
 
-    public void Free()
-    {
-    }
 }

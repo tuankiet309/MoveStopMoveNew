@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleSpawner : MonoBehaviour
+public class ParticleManager : MonoBehaviour
 {
     [SerializeField] private ParticlePool particlePool;
-    private static ParticleSpawner instance;
-    public static ParticleSpawner Instance {  get { return instance; } }
-    private void Awake()
+    private static ParticleManager instance;
+    public static ParticleManager Instance {  get { return instance; } }
+    public void InitParticleManager()
     {
         if (instance == null)
         {

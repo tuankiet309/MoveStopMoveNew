@@ -39,14 +39,10 @@ public class ActorAttacker : MonoBehaviour, IAttacker
         this.enemyMovementController = enemyMovementController;   
         this.actorMovementController = actorMovementController;
         ResetState();
-        attackCircle.UpdateCircleRadius(GameManager.Instance.CurrentInGameState == Enum.InGameState.PVE ? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS);
+        attackCircle.UpdateCircleRadius(GameManager.Instance.CurrentInGameState == Enum.GameplayState.PVE ? CONSTANT_VALUE.FIRST_CIRCLE_RADIUS : CONSTANT_VALUE.ZC_FIRST_CIRCLE_RADIUS);
     }
 
 
-    public virtual void LateUpdateCheck()
-    {
-        CheckAndUpdateTargetCircle();
-    }
     public virtual void UpdateEnemyList(GameObject target, bool isInCircle)
     {
         if (isInCircle && IsTargetAlive(target))
@@ -221,6 +217,9 @@ public class ActorAttacker : MonoBehaviour, IAttacker
     {
         distanceBuff += CONSTANT_VALUE.CIRCLE_RADIUS_INCREASER + 0.5f;
         UpgradeCircle(1);
+        weaponToThrow.transform.localScale += new Vector3(CONSTANT_VALUE.BODY_SCALER_INCREASER,
+                                                          CONSTANT_VALUE.BODY_SCALER_INCREASER,
+                                                          CONSTANT_VALUE.BODY_SCALER_INCREASER);
     }
     public virtual void UpgradeCircle(int multiplier)
     {

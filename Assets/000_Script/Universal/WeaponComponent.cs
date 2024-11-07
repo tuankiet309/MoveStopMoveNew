@@ -9,15 +9,19 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
 
     private ActorAttacker attacker;
     private ActorAtributeController actorAtributeController;
-
+    private ActorAnimationController actorAnimationController;
+    private EnemyMovementController enemyMovementController;
 
     public UnityEvent<bool> onHavingWeapon;
     bool isInZC = false;
 
-    public void InitWeapomComponent(ActorAttacker actorAttacker, ActorAtributeController actorAtribute)
+    public void InitWeapomComponent(ActorAttacker actorAttacker, ActorAtributeController actorAtribute,
+        ActorAnimationController actorAnimation, EnemyMovementController enemyMovementController)
     {
         attacker = actorAttacker;
         actorAtributeController = actorAtribute;
+        actorAnimationController = actorAnimation;
+        this.enemyMovementController = enemyMovementController;
         AssignWeapon(weapon);
     }
 
@@ -26,7 +30,7 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
         attacker.InitWeapon(newWeapon);
         actorAtributeController.ApplyBuffByWeapon(weapon, newWeapon);
         weapon = newWeapon;
-        onHavingWeapon?.Invoke(true);
+        EventsRelateToHavingWeapon(true);
     }
     public void ApplyWeaponSkin(GameObject weaponObject, int skinIndex)
     {
@@ -38,8 +42,7 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
     }
     public void OnThrowAwayWeapon()
     {
-        attachedLocation.gameObject.SetActive(false);
-        onHavingWeapon?.Invoke(false);
+        EventsRelateToHavingWeapon(false);
         StartCoroutine(GetWeaponBack());
     }
     private IEnumerator GetWeaponBack()
@@ -48,11 +51,18 @@ public class WeaponComponent : MonoBehaviour,IDataPersistence
             yield return new WaitForSeconds(CONSTANT_VALUE.FIRST_DELAYED_ATTACKZC + (weapon.Buff == Enum.AttributeBuffs.AttackSpeed ? weapon.BuffMultiplyer : 0));
         else
             yield return new WaitForSeconds(CONSTANT_VALUE.FIRST_DELAYED_ATTACK + (weapon.Buff == Enum.AttributeBuffs.AttackSpeed ? weapon.BuffMultiplyer : 0) );
-        attachedLocation.gameObject.SetActive(true);
-        onHavingWeapon?.Invoke(true);
+        EventsRelateToHavingWeapon(true);
 
     }
-
+    private void EventsRelateToHavingWeapon(bool checkThrow)
+    {
+        attachedLocation.gameObject.SetActive(checkThrow);
+        actorAnimationController.UpdateHavingWeapon(checkThrow);
+        if (enemyMovementController != null) 
+        {
+            enemyMovementController.OnHavingWeapon(checkThrow);
+        }
+    }
     public void LoadData(GameData gameData)
     {
         

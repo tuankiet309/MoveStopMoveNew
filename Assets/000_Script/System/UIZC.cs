@@ -30,7 +30,7 @@ public class UIZC : MonoBehaviour
         
     }
 
-    private void UpdateCanvas(Enum.GameState state, Enum.InGameState inGameState)
+    private void UpdateCanvas(Enum.GameState state, Enum.GameplayState inGameState)
     {
         if(state == Enum.GameState.Dead || state == Enum.GameState.Win || state == Enum.GameState.Revive)
         {

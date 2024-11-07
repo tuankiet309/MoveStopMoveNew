@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class LifeComponent : MonoBehaviour
 {
     [SerializeField] protected SkinnedMeshRenderer actorMeshRenderer;
+
     protected ActorAnimationController actorAnimationController;
     protected int health = 1;
 
@@ -21,10 +22,6 @@ public class LifeComponent : MonoBehaviour
         ResetLifeState();
     }
 
-    protected virtual void OnDisable()
-    {
-        ResetLifeState();
-    }
 
     protected virtual void ToggleImportantComponents(bool isOn)
     {
@@ -67,7 +64,7 @@ public class LifeComponent : MonoBehaviour
     {
         if (!gameObject.CompareTag("Zombie"))
             PlayDyingSound();
-        ParticleSpawner.Instance.PlayParticle(transform.position + Vector3.up, actorMeshRenderer.sharedMaterial);
+        ParticleManager.Instance.PlayParticle(transform.position + Vector3.up, actorMeshRenderer.sharedMaterial);
         actorAnimationController.UpdatePlayerDead();
         this.killerName = attackerName;
         IsDead = true;

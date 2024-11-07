@@ -15,7 +15,7 @@ public class UpgradeText : MonoBehaviour
     private void Start()
     {
 
-        if (Player.Instance != null && GameManager.Instance.CurrentInGameState !=Enum.InGameState.Zombie)
+        if (Player.Instance != null && GameManager.Instance.CurrentInGameState !=Enum.GameplayState.Zombie)
             Player.Instance.GetComponent<ActorAtributeController>().onPlayerUpgraded.AddListener(ShowUpgradeText);
         initialPosition = text.rectTransform.localPosition;
     }

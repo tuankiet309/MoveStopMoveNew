@@ -10,6 +10,8 @@ public class Joystick : Stick
     [SerializeField] private RectTransform background;
     [SerializeField] private RectTransform thumbStick;
 
+    private bool interactable = false;
+
     public override void OnDrag(PointerEventData eventData)
     {
         Vector2 touchPos = eventData.position;

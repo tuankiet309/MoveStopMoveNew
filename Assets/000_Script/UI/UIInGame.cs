@@ -12,12 +12,12 @@ public class UIInGame : MonoBehaviour
 
     private void Start()
     {
-        if (EnemySpawner.Instance != null)
-        {
-            EnemySpawner.Instance.OnNumberOfEnemiesDecrease.AddListener(UpdateAlive);
-            UpdateAlive(EnemySpawner.Instance.NumberOfEnemiesLeft);
-        }
-        StartCoroutine(DoFPS());
+        //if (EnemySpawner.Instance != null)
+        //{
+        //    EnemySpawner.Instance.OnNumberOfEnemiesDecrease.AddListener(UpdateAlive);
+        //    UpdateAlive(EnemySpawner.Instance.NumberOfEnemiesLeft);
+        //}
+        //StartCoroutine(DoFPS());
     }
 
     private void UpdateAlive(int number)
